@@ -83,6 +83,38 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional: Add a box shadow for a subtle effect */
         }
+
+        .title-information {
+            text-align: center;
+        }
+
+        .expand_key_area {
+            background-color: #e9ecef;
+            justify-content: space-between;
+            border-radius: 5px;
+            padding: 6px 12px;
+        }
+
+        /* CSS cho Tab */
+        .nav-pills .nav-link {
+            cursor: pointer;
+            font-weight: bold;
+            border: 1px solid #eeeeee;
+            border-radius: 0px;
+        }
+
+        /* Cách hiển thị tab nội dung */
+        .tab-content {
+            padding: 20px;
+            border: 1px solid #eeeeee;
+        }
+
+        .hr-information {
+            border: 0;
+            border-top: 2px dashed #000000;
+        }
+
+
     </style>
 </head>
 <%
@@ -102,6 +134,8 @@
     int s4 = OrderService.getInstance().ordersNumber(user.getId() + "", 4);
 %>
 <body>
+
+
 <div class="container p-4 rounded">
     <div class="fw-bold text-start" style="font-size: 30px; color: #0dcaf0">
         <div>
@@ -110,203 +144,224 @@
         </div>
     </div>
     <div>
-        <div class="mb-3">
-        <span style="font-size: 20px; font-weight: bold; cursor: pointer; text-decoration: underline"
-              onclick="toggleInfor()">Thông tin tài khoản
-        </span>
-            <div class="input-group d-flex justify-content-center">
-                <div class="w-50">
-                    <div class="text-warning fst-italic text-center" id="notifyChanged"></div>
-                    <div id="toggleInforBox" style="display: none">
-                        <label for="input_name">Tên tài khoản: </label>
-                        <input type="text" class="form-control"
-                               disabled
-                               id="input_name"
-                               name="input_name"
-                               value="<%=user.getName()%>">
-                        <div class="input-group-append d-flex">
-                            <button class="btn btn-outline-warning" type="button"
-                                    onclick="editName()"
-                                    id="edit_name"
-                            >Thay đổi
-                            </button>
-                            <button class="btn btn-outline-warning" type="button"
-                                    onclick="cancelName()"
-                                    style="display: none"
-                                    id="cancel_name"
-                            >Hủy bỏ
-                            </button>
-                            <%--                        edit--%>
-                            <button class="btn btn-outline-success" type="button"
-                                    onclick="changeName()"
-                                    style="display: none"
-                                    id="save_name"
-                            >Lưu thay đổi
-                            </button>
-                        </div>
-                        <%--                    --%>
-                        <div>
-                            <label for="input_name">Số điện thoại: </label>
-                            <input type="text" class="form-control"
-                                   disabled
-                                   id="input_phone"
-                                   name="input_phone"
-                                   value="<%=user.getPhoneNumber()%>">
-                            <div class="input-group-append d-flex">
-                                <button class="btn btn-outline-warning" type="button"
-                                        onclick="editPhone()"
-                                        id="edit_phone"
-                                >Thay đổi
-                                </button>
-                                <button class="btn btn-outline-warning" type="button"
-                                        onclick="cancelPhone()"
-                                        style="display: none"
-                                        id="cancel_phone"
-                                >Hủy bỏ
-                                </button>
-                                <%--                        edit--%>
-                                <button class="btn btn-outline-success" type="button"
-                                        onclick="changePhone()"
-                                        style="display: none"
-                                        id="save_phone"
-                                >Lưu thay đổi
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="input_email">Email: </label>
-                            <input type="text" class="form-control"
-                                   disabled
-                                   id="input_email"
-                                   name="input_phone"
-                                   value="<%=user.getEmail()%>">
-                        </div>
-                        <div class="my-1 text-end">
-                            <a class="text-decoration-none"
-                               href="<%=request.getContextPath()%>/forgotpassword">Đặt
-                                lại
-                                mật
-                                khẩu?</a>
-                        </div>
+        <h3 class="title-information">Chào bạn, <%=user.getName()%> !</h3>
+
+        <div class="container mt-4">
+            <div class="row">
+                <!-- Sidebar (Tab dọc) -->
+                <div class="col-12 col-md-3">
+                    <div class="nav flex-column nav-pills" id="profileTab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="info-tab" data-bs-toggle="pill" href="#info" role="tab"
+                           aria-controls="info" aria-selected="true">Thông tin cá nhân</a>
+                        <a class="nav-link" id="security-tab" data-bs-toggle="pill" href="#security" role="tab"
+                           aria-controls="security" aria-selected="false">Thiết lập bảo mật</a>
+                        <a class="nav-link" id="order-history-tab" data-bs-toggle="pill" href="#order-history"
+                           role="tab" aria-controls="order-history" aria-selected="false">Lịch sử mua hàng</a>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div style="font-size: 20px; font-weight: bold;">Lịch sử đơn hàng</div>
-        <div class="btn-group mr-2 mb-2" role="group" aria-label="First group">
-            <button type="button" class="btn btn-info" onclick="orderFilter(<%=user.getId()%>, <%=3%>)">
-                Tất cả
-                <span><%=all > 0 ? "(" + all + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-warning" onclick="orderFilter(<%=user.getId()%>, <%=3%>,0)">
-                Chờ xác nhận
-                <span><%=s0 > 0 ? "(" + s0 + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-secondary" style="background-color: cadetblue"
-                    onclick="orderFilter(<%=user.getId()%>, <%=3%>,1)">
-                Đang đóng gói
-                <span><%=s1 > 0 ? "(" + s1 + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-primary" onclick="orderFilter(<%=user.getId()%>, <%=3%>,2)">
-                Đang giao
-                <span><%=s2 > 0 ? "(" + s2 + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-success" onclick="orderFilter(<%=user.getId()%>, <%=3%>,3)">
-                Thành công
-                <span><%=s3 > 0 ? "(" + s3 + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-danger" onclick="orderFilter(<%=user.getId()%>, <%=3%>,4)">
-                Đã hủy
-                <span><%=s4 > 0 ? "(" + s4 + ")" : ""%></span>
-            </button>
-        </div>
-        <div>
-            <table id="data" class="table table-light gfg">
-                <thead>
-                <tr class="text-center sticky-top">
-                    <th class="text-nowrap">Sản phẩm</th>
-                    <th class="text-nowrap">Địa Chỉ Giao</th>
-                    <th class="text-nowrap">Ngày Đặt Hàng</th>
-                    <th class="text-nowrap">Tổng Tiền Hóa Đơn</th>
-                    <th class="text-nowrap">Trạng thái</th>
-                </tr>
-                </thead>
-                <tbody>
-                <%
-                    for (int i = 0; i < showLimit; i++) {
-                        Order o = orders.get(i);
-                        if (o != null) {
-                            showCouter += 1;
-                            User customer = UserService.getInstance().getUserById(o.getUserId() + "");
-                %>
-                <tr class="text-center" style=" cursor: pointer"
-                    onclick="showOrderDetails(event,this)"
-                    id="<%=o.getId()%>"
-                >
-                    <td class="geeks" style="border: 1px solid #c9c9c9;">
-                        <%!Product p;%>
-                        <%
-                            for (OrderDetail orderDetail : OrderService.getInstance().getOrderDetailsByOrderId(o.getId()
-                                    + "")) {
-                                p = ProductService.getInstance().getProductById(orderDetail.getProductId() + "");
-                        %>
-                        <div class="d-flex mb-2">
-                            <div>
-                                <img src="<%=request.getContextPath()+"/"+ ImageService.pathImageOnly(p.getId())%>"
-                                     alt="" width="100px">
-                            </div>
-                            <div style="width: 150px; display:flex; align-items: center">
-                                <%=p.getName()%>
+
+                <!-- Nội dung của các tab -->
+                <div class="col-12 col-md-9">
+                    <div class="tab-content" id="profileTabContent">
+                        <!-- Tab Thông tin cá nhân -->
+                        <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                            <h3>Thông tin cá nhân</h3>
+                            <hr class="hr-information">
+                            <div class="mb-2">
+                                <div class="row input-group d-flex justify-content-center">
+                                    <div class="col-12 col-md-5  left-info">
+                                        <div class="text-warning fst-italic text-center" id="notifyChanged"></div>
+                                        <div id="toggleInforBox">
+                                            <label for="input_name">Tên tài khoản: </label>
+                                            <input type="text" class="form-control" disabled id="input_name"
+                                                   name="input_name" value="<%=user.getName()%>">
+                                            <div class="input-group-append d-flex">
+                                                <button class="btn btn-outline-warning" type="button"
+                                                        onclick="editName()" id="edit_name">Thay đổi
+                                                </button>
+                                                <button class="btn btn-outline-warning" type="button"
+                                                        onclick="cancelName()" style="display: none" id="cancel_name">
+                                                    Hủy bỏ
+                                                </button>
+                                                <button class="btn btn-outline-success" type="button"
+                                                        onclick="changeName()" style="display: none" id="save_name">Lưu
+                                                    thay đổi
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="input_phone">Số điện thoại: </label>
+                                            <input type="text" class="form-control" disabled id="input_phone"
+                                                   name="input_phone" value="<%=user.getPhoneNumber()%>">
+                                            <div class="input-group-append d-flex">
+                                                <button class="btn btn-outline-warning" type="button"
+                                                        onclick="editPhone()" id="edit_phone">Thay đổi
+                                                </button>
+                                                <button class="btn btn-outline-warning" type="button"
+                                                        onclick="cancelPhone()" style="display: none" id="cancel_phone">
+                                                    Hủy bỏ
+                                                </button>
+                                                <button class="btn btn-outline-success" type="button"
+                                                        onclick="changePhone()" style="display: none" id="save_phone">
+                                                    Lưu thay đổi
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="input_email">Email: </label>
+                                            <input type="text" class="form-control" disabled id="input_email"
+                                                   name="input_email" value="<%=user.getEmail()%>">
+                                        </div>
+                                        <div class="my-1 text-end">
+                                            <a class="text-decoration-none"
+                                               href="<%=request.getContextPath()%>/forgotpassword">Đặt lại mật khẩu?</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <%}%>
-                    </td>
-                    <td class="geeks " style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle"><%=o.getAddress()%>
-                    </td>
-                    <td class="geeks" style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle;"><%=o.getOrderDate()%>
-                    </td>
-                    <td class="geeks" style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle;"><%=numberFormat.format(o.getTotalPrice())%>
-                    </td>
-                    <td class="geeks"
-                            <%!
-                                String backgroundColor = "";
-                                String sttvalue = "";
-                            %>
-                            <%
-                                if (o.isPreparing()) {
-                                    backgroundColor = "#5F9EA0";
-                                    sttvalue = "Đang đóng gói";
-                                } else if (o.isDeliveringOrder()) {
-                                    backgroundColor = "#0171d3";
-                                    sttvalue = "Đang giao";
-                                } else if (o.isWaitConfirmOrder()) {
-                                    backgroundColor = "#ffcc00";
-                                    sttvalue = "Chờ xác nhận";
-                                } else if (o.isCanceledOrder()) {
-                                    backgroundColor = "#ff0000";
-                                    sttvalue = "Đã hủy";
-                                } else if (o.isSucccessfulOrder()) {
-                                    backgroundColor = "#4d8a54";
-                                    sttvalue = "Thành công";
-                                }%>
-                        style="background-color: <%=backgroundColor%>; color: #ffffff;vertical-align: middle;"
-                    ><%=sttvalue%>
-                    </td>
-                </tr>
-                <%
-                        }
-                    }
-                %>
-                </tbody>
-            </table>
-            <%if (showCouter < allOrderNumber) {%>
-            <div class="d-flex justify-content-center" id="morebox">
+
+                        <!-- Tab Thiết lập bảo mật -->
+                        <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                            <h3>Thiết lập bảo mật</h3>
+                            <hr class="hr-information">
+                            <div class="d-flex align-items-center expand_key_area">
+                                <span>Khoá mã hoá công khai</span>
+                                <button class="btn btn-outline-danger ms-2 position-relative" id="expand_pubKey">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Tab Lịch sử mua hàng -->
+                        <div class="tab-pane fade" id="order-history" role="tabpanel"
+                             aria-labelledby="order-history-tab">
+                            <h3>Lịch sử đơn hàng</h3>
+                            <hr class="hr-information">
+                            <!-- Đoạn mã lịch sử đơn hàng của bạn -->
+                            <div class="btn-group mr-2 mb-2" role="group" aria-label="First group">
+                                <button type="button" class="btn btn-info"
+                                        onclick="orderFilter(<%=user.getId()%>, <%=3%>)">
+                                    Tất cả
+                                    <span><%=all > 0 ? "(" + all + ")" : ""%></span>
+
+                                </button>
+                                <button type="button" class="btn btn-warning"
+                                        onclick="orderFilter(<%=user.getId()%>, <%=3%>,0)">Chờ xác nhận
+                                    <span><%=s0 > 0 ? "(" + s0 + ")" : ""%></span>
+                                </button>
+                                <button type="button" class="btn btn-secondary" style="background-color: cadetblue"
+                                        onclick="orderFilter(<%=user.getId()%>, <%=3%>,1)">Đang đóng gói
+                                    <span><%=s1 > 0 ? "(" + s1 + ")" : ""%></span>
+                                </button>
+                                <button type="button" class="btn btn-primary"
+                                        onclick="orderFilter(<%=user.getId()%>, <%=3%>,2)">Đang giao
+                                    <span><%=s2 > 0 ? "(" + s2 + ")" : ""%></span>
+
+                                </button>
+                                <button type="button" class="btn btn-success"
+                                        onclick="orderFilter(<%=user.getId()%>, <%=3%>,3)">Thành công
+                                    <span><%=s3 > 0 ? "(" + s3 + ")" : ""%></span>
+                                </button>
+                                <button type="button" class="btn btn-danger"
+                                        onclick="orderFilter(<%=user.getId()%>, <%=3%>,4)">Đã hủy
+                                    <span><%=s4 > 0 ? "(" + s4 + ")" : ""%></span>
+                                </button>
+                            </div>
+                            <!-- Table lịch sử đơn hàng -->
+                            <table id="data" class="table table-light gfg">
+                                <thead>
+                                <tr class="text-center sticky-top">
+                                    <th class="text-nowrap">Sản phẩm</th>
+                                    <th class="text-nowrap">Địa Chỉ Giao</th>
+                                    <th class="text-nowrap">Ngày Đặt Hàng</th>
+                                    <th class="text-nowrap">Tổng Tiền Hóa Đơn</th>
+                                    <th class="text-nowrap">Trạng thái</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%
+                                    for (int i = 0; i < showLimit; i++) {
+                                        Order o = orders.get(i);
+                                        if (o != null) {
+                                            showCouter += 1;
+                                            User customer = UserService.getInstance().getUserById(o.getUserId() + "");
+                                %>
+                                <tr class="text-center" style=" cursor: pointer"
+                                    onclick="showOrderDetails(event,this)"
+                                    id="<%=o.getId()%>"
+                                >
+                                    <td class="geeks" style="border: 1px solid #c9c9c9;">
+                                        <%!Product p;%>
+                                        <%
+                                            for (OrderDetail orderDetail : OrderService.getInstance().getOrderDetailsByOrderId(o.getId()
+                                                    + "")) {
+                                                p = ProductService.getInstance().getProductById(orderDetail.getProductId() + "");
+                                        %>
+                                        <div class="d-flex mb-2">
+                                            <div>
+                                                <img src="<%=request.getContextPath()+"/"+ ImageService.pathImageOnly(p.getId())%>"
+                                                     alt="" width="100px">
+                                            </div>
+                                            <div style="width: 150px; display:flex; align-items: center">
+                                                <%=p.getName()%>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                    </td>
+                                    <td class="geeks "
+                                        style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle"><%=o.getAddress()%>
+                                    </td>
+                                    <td class="geeks"
+                                        style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle;"><%=o.getOrderDate()%>
+                                    </td>
+                                    <td class="geeks"
+                                        style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle;"><%=numberFormat.format(o.getTotalPrice())%>
+                                    </td>
+                                    <td class="geeks"
+                                            <%!
+                                                String backgroundColor = "";
+                                                String sttvalue = "";
+                                            %>
+                                            <%
+                                                if (o.isPreparing()) {
+                                                    backgroundColor = "#5F9EA0";
+                                                    sttvalue = "Đang đóng gói";
+                                                } else if (o.isDeliveringOrder()) {
+                                                    backgroundColor = "#0171d3";
+                                                    sttvalue = "Đang giao";
+                                                } else if (o.isWaitConfirmOrder()) {
+                                                    backgroundColor = "#ffcc00";
+                                                    sttvalue = "Chờ xác nhận";
+                                                } else if (o.isCanceledOrder()) {
+                                                    backgroundColor = "#ff0000";
+                                                    sttvalue = "Đã hủy";
+                                                } else if (o.isSucccessfulOrder()) {
+                                                    backgroundColor = "#4d8a54";
+                                                    sttvalue = "Thành công";
+                                                }%>
+                                        style="background-color: <%=backgroundColor%>; color: #ffffff;vertical-align: middle;"
+                                    ><%=sttvalue%>
+                                    </td>
+                                </tr>
+                                <%
+                                        }
+                                    }
+                                %>
+                                </tbody>
+                            </table>
+                            <%if (showCouter < allOrderNumber) {%>
+                            <div class="d-flex justify-content-center" id="morebox">
                 <span id="more" class="fst-italic fw-bold" style="cursor: pointer"
                       onclick="more(<%=user.getId()%>, <%=3%>)"
                 >Xem thêm...
                 </span>
+                            </div>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <%}%>
         </div>
     </div>
     <div id="detailOrder" style="display:none;">
@@ -317,6 +372,28 @@
 <input type="hidden" id="showCouter" value="<%=showCouter%>">
 <input type="hidden" id="statusNumber" value="-1">
 <script>
+
+    <%--    Thiết lập ẩn hiện các tab:--%>
+    document.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('click', function () {
+            // Xóa lớp 'active' của tất cả các tab
+            document.querySelectorAll('.nav-link').forEach(tabItem => tabItem.classList.remove('active'));
+
+            // Thêm lớp 'active' vào tab đang được chọn
+            this.classList.add('active');
+
+            // Ẩn tất cả nội dung tab
+            document.querySelectorAll('.tab-pane').forEach(tabContent => {
+                tabContent.classList.remove('show', 'active');
+            });
+
+            // Hiển thị nội dung của tab được chọn
+            const targetTab = document.querySelector(this.getAttribute('href'));
+            targetTab.classList.add('show', 'active');
+        });
+    });
+
+
     function changeName() {
         const newName = document.getElementById("input_name").value;
         $.ajax({
@@ -401,14 +478,14 @@
     }
 
 
-    function toggleInfor() {
-        const toggleInforBox = document.getElementById("toggleInforBox");
-        if (toggleInforBox.style.display === "none" || toggleInforBox.style.display === "") {
-            toggleInforBox.style.display = "block";
-        } else {
-            toggleInforBox.style.display = "none";
-        }
-    }
+    // function toggleInfor() {
+    //     const toggleInforBox = document.getElementById("toggleInforBox");
+    //     if (toggleInforBox.style.display === "none" || toggleInforBox.style.display === "") {
+    //         toggleInforBox.style.display = "block";
+    //     } else {
+    //         toggleInforBox.style.display = "none";
+    //     }
+    // }
 
     function showOrderDetails(event, clickedElement) {
         let rowIndex = 0;

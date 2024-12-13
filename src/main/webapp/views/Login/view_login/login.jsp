@@ -47,7 +47,7 @@
             <span><a href="<%=request.getContextPath()%>/forgotpassword">Quên Mật Khẩu?</a></span>
         </div>
 <%--        reCaptcha--%>
-        <div class="g-recaptcha" id="reCaptcha" data-sitekey="6LcgQwQqAAAAAG3k-oxuw7EnMRr-GUOizIgmrAKf"></div>
+<%--        <div class="g-recaptcha" id="reCaptcha" data-sitekey="6LcgQwQqAAAAAG3k-oxuw7EnMRr-GUOizIgmrAKf"></div>--%>
         <div class="submit dn">
             <button type="submit">Đăng Nhập</button>
         </div>
@@ -87,13 +87,14 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
     window.onload = function (){
-        let isValid = false;
+        let isValid = true;
         const form = document.getElementById("form");
         const error = document.getElementById("errEmail");
 
         form.addEventListener("submit",function (event){
             event.preventDefault();
-            const response = grecaptcha.getResponse();
+            // const response = grecaptcha.getResponse();
+            const response = true;
             if(response){
                 form.submit();
             }else{
