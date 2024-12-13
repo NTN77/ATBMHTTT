@@ -63,7 +63,6 @@
     String phonePay = request.getParameter("phonePay") == null ? "" : request.getParameter("phonePay");
     String address = request.getParameter("address") == null ? "" : request.getParameter("address");
     String notePay = request.getParameter("notePay") == null ? "" : request.getParameter("notePay");
-//    double totalMoney = Double.parseDouble(request.getParameter("pricePay") == null ? "" : request.getParameter("pricePay"));
 %>
 
 <form id="formPayment" action="<%=request.getContextPath()%>/payment" method="post">
@@ -172,14 +171,6 @@
                                 <input type="hidden" id="formattedAddress" name="formattedAddress">
 
                                 <div class="form-floating mb-3">
-                                    <select id="serviceDropdown" class="form-select"
-                                            aria-label="Chọn dịch vụ vận chuyển">
-                                        <option value="">Chọn dịch vụ</option>
-                                    </select>
-                                    <label for="serviceDropdown">Dịch vụ vận chuyên</label>
-                                </div>
-
-                                <div class="form-floating mb-3">
                                     <textarea id="note" name="notePay" class="form-control"
                                               style="height: 150%"></textarea>
                                     <label for="address" class="floatingInput">Ghi Chú(Tùy Chọn)</label>
@@ -193,6 +184,9 @@
                 <div class="col-lg-5 col-sm-6">
                     <div class="h6 text-black fw-bold">
                         Thanh toán
+
+
+
                     </div>
                     <div class="mt-4">
 
@@ -255,67 +249,71 @@
             align-items: center;
             text-align: center;">
 
-                    <div style="width: 90%;">
-                        <table class="table table-striped table-borderless table-hover text-start">
-                             <%double totalMoney = 0;%>
-                         <%for(Item i : cart.getItems().values()) {%>
-                           <tr>
-                                <td>
-                                    <div>
-                                        <%String pathImage = ImageService.getInstance().pathImageOnly(i.getProduct().getId());%>
-                                        <img class="product-img" src="<%=request.getContextPath()%>/<%=pathImage%>" alt="sanpham">
-                                        <span class="product-quantity"><%=i.getQuantity()%></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        <h6><%=i.getProduct().getName()%></h6>
+                <div style="width: 90%;">
+                    <table class="table table-striped table-borderless table-hover text-start">
+                        <%double totalMoney = 0;%>
+                        <%for (Item i : cart.getItems().values()) {%>
+                        <tr>
+                            <td>
+                                <div>
+                                    <%String pathImage = ImageService.getInstance().pathImageOnly(i.getProduct().getId());%>
+                                    <img class="product-img" src="<%=request.getContextPath()%>/<%=pathImage%>"
+                                         alt="sanpham">
+                                    <span class="product-quantity"><%=i.getQuantity()%></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h6><%=i.getProduct().getName()%>
+                                    </h6>
 
-                                    </div>
-                                </td>
-                               <%totalMoney += (i.getPrice() * i.getQuantity());%>
-                                <td><%=numberFormat.format(i.getPrice() * i.getQuantity())%></td>
+                                </div>
+                            </td>
+                            <%totalMoney += (i.getPrice() * i.getQuantity());%>
+                            <td><%=numberFormat.format(i.getPrice() * i.getQuantity())%>
+                            </td>
+                        </tr>
+                        <%}%>
+
+                    </table>
+                    <div class="row border-top py-3">
+                        <div class="input-group-prepend col-9  d-flex align-items-center">
+                            <div class="form-floating w-100">
+                                <input id="discount_code" type="text" class="form-control"
+                                       placeholder="Nhập mã giảm giá">
+                                <label for="discount_code" class="floatingInput">Nhập mã giảm giá</label>
+                            </div>
+                        </div>
+                        <div class="col-3 d-flex align-items-center">
+                            <button type="button" class="btn btn-primary h-100 w-100 color-for-bg">Áp dụng</button>
+                        </div>
+                    </div>
+                    <div class="row border-top py-3">
+                        <table class="table-borderless">
+                            <thead>
+                            <tr>
+                                <td><span class="visually-hidden">Mô tả</span></td>
+                                <td><span class="visually-hidden">Giá tiền</span></td>
                             </tr>
-                            <%}%>
-
-                        </table>
-<%--                        <div class="row border-top py-3">--%>
-<%--                            <div class="input-group-prepend col-9  d-flex align-items-center">--%>
-<%--                                <div class="form-floating w-100">--%>
-<%--                                    <input id="discount_code" type="text" class="form-control"--%>
-<%--                                           placeholder="Nhập mã giảm giá">--%>
-<%--                                    <label for="discount_code" class="floatingInput">Nhập mã giảm giá</label>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="col-3 d-flex align-items-center">--%>
-<%--                                <button type="button" class="btn btn-primary h-100 w-100 color-for-bg">Áp dụng</button>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-                        <div class="row border-top py-3">
-                            <table class="table-borderless">
-                                <thead>
-                                <tr>
-                                    <td><span class="visually-hidden">Mô tả</span></td>
-                                    <td><span class="visually-hidden">Giá tiền</span></td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th class="text-start fw-medium">
-                                        Tạm tính
-                                    </th>
-                                    <td class="text-end pe-3"><%=numberFormat.format(totalMoney)%></td>
-                                </tr>
-                                <tr>
-                                    <th  class="text-start fw-medium">
-                                        Phí vận chuyển
-                                    </th>
-                                    <td id="shippingFeeResult" class="text-end pe-3"></td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th class="text-start fs-5 fw-medium">
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th class="text-start fw-medium">
+                                    Tạm tính
+                                </th>
+                                <td class="text-end pe-3"><%=numberFormat.format(totalMoney)%>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-start fw-medium">
+                                    Phí vận chuyển
+                                </th>
+                                <td id="shippingFeeResult" class="text-end pe-3">30000</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th class="text-start fs-5 fw-medium">
                                 <span>
                                     Tổng cộng
                                 </span>
@@ -433,9 +431,6 @@
     });
 
     function updateFormattedAddress() {
-        // var provinceAddress = $("#provinceDropdown option:selected").text();
-        // var district = $("#districtDropdown option:selected").text();
-        // var ward = $("#wardDropdown option:selected").text();
         var address = $("#address").val();
         var formatted = "";
 
@@ -452,69 +447,6 @@
     //      LẤY TỈNH THÀNH.
     $(document).ready(function () {
         // tinh phi van chuyen
-
-        function calculateFeeShip(wardCode, districtId) {
-            $.ajax({
-                type: "GET",
-                url: "/HandMadeStore/shippingFee",
-                data: {
-                    tempPrice: <%=totalMoney%>,
-                    wardCode: wardCode,
-                    districtId: districtId,
-                    totalWeight: 1000
-                },
-                dataType: "json",
-                success: function (response) {
-                    var shippingFee = response.data.total + 25000;
-                    var totalMoney = <%=totalMoney%>;
-                    var totalAmount = totalMoney + shippingFee;
-                    // Lưu giá trị vào 2 trường input :
-                    $('#shippingFeeInput').val(shippingFee);
-                    $('#totalAmountInput').val(totalAmount);
-
-
-                    // Định dạng thành tiền Việt Nam đồng
-                    var formattedShippingFee = formatCurrency(shippingFee);
-                    var formattedTotalAmount = formatCurrency(totalAmount);
-
-
-                    //hien thi shipping fee
-                    $('#shippingFeeResult').text(formattedShippingFee);
-                    $('#totalAmount').text(formattedTotalAmount);
-                }, error: function (xhr, status, error) {
-                    console.log("Failed fetch ship: ", error);
-                    alert("Không tính được phí ship.");
-                }
-            })
-        }
-
-        // dich vu van chuyen
-
-        function fetchService(districtId) {
-            $.ajax({
-                type: "GET",
-                url: "/HandMadeStore/service-api",
-                data: {
-                    districtId: districtId
-                },
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    $("#serviceDropdown").empty();
-
-                    var serviceDropdown = $("#serviceDropdown");
-                    response.forEach(function (service) {
-                            var option = $("<option>").val(service.serviceId).text(service.serviceName);
-                            serviceDropdown.append(option);
-                        }
-                    );
-
-                }, error: function (xhr, status, error) {
-                    alert("Không lấy đươợc dịch vụ vận chuyển.");
-                }
-            })
-
-        }
 
 
         //lấy xã, thị trấn.
@@ -541,7 +473,6 @@
                     wardDropdown.off('change').on('change', function () {
                         var wardCode = $(this).val();
                         wardAddress = ", " + $("#wardDropdown option:selected").text();
-                        calculateFeeShip(wardCode, districtId);
                         updateFormattedAddress();
                     })
 
@@ -605,17 +536,6 @@
             updateFormattedAddress();
         })
 
-        // Sự kiện select district cho service
-        $("#districtDropdown").change(function () {
-            var selectedDistrictId = $(this).val(); // lay id district duoc chon
-            if (selectedDistrictId) {
-                fetchService(selectedDistrictId);
-            } else {
-                $("#serviceDropdown").empty();
-            }
-        })
-
-
         $.ajax({
             type: "GET",
             url: "/HandMadeStore/province-api",
@@ -636,7 +556,7 @@
             var namePay = document.getElementById("name").value;
             var phonePay = document.getElementById("phone_number").value;
             var formattedAddress = document.getElementById("formattedAddress").value;
-            var shippingFee = document.getElementById("shippingFeeInput").value;
+            var shippingFee = 30000;
             var totalAmount = document.getElementById("totalAmountInput").value;
 
             console.log(totalAmount)
@@ -649,7 +569,7 @@
                     phonePay: phonePay,
                     formattedAddress: formattedAddress,
                     shippingFee: shippingFee,
-                    totalAmount: totalAmount
+                    totalAmount: <%=totalMoney%> + shippingFee
                 },
                 dataType: "json",
                 success: function (response) {
@@ -701,6 +621,70 @@
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(amount);
     }
+
+
+    //       function sendDataToServlet() {
+    //           var namePay = document.getElementById("namePay").value;
+    //           var phonePay = document.getElementById("phonePay").value;
+    //           var formattedAddress = document.getElementById("formattedAddress").value;
+    //           var shippingFee = document.getElementById("shippingFeeInput").value;
+    //           var totalAmount = document.getElementById("totalAmountInput").value;
+    //
+    //           console.log("click button");
+    //
+    //           $.ajax({
+    //               type: "POST",
+    //               url: "HandMadeStore/payment", // Đường dẫn đến servlet của bạn
+    //               data: {
+    //                   namePay: namePay,
+    //                   phonePay: phonePay,
+    //                   formattedAddress: formattedAddress,
+    //                   shippingFee: shippingFee,
+    //                   totalAmount: totalAmount
+    //               },
+    //               dataType: "json",
+    //               success: function(response) {
+    //                   if(response.success){
+    //                       alert("Thanh cong");
+    // //                   Swal.fire({
+    //                       //                       title: "Cảm ơn bạn, đơn hàng đã được tạo!",
+    //                       //                       width: 600,
+    //                       //                       padding: "3em",
+    //                       //                       color: "rgba(123,255,2,0.45)",
+    //                       //                       background: "#fff url(/images/trees.png)",
+    //                       //                       backdrop: `
+    //                       //                                rgba(0,0,123,0.4)
+    //                       //                               url("/images/nyan-cat.gif")
+    //                       //                                   left top
+    //                       //                                no-repeat
+    //                       // `                     ,
+    //                       //                       showConfirmButton: false,
+    //                       //                       timer: 2000
+    //                       //                   }).then(function () {
+    //                       //                       window.location.href = "/views/MainPage/view_mainpage/mainpage.jsp"; // Chuyển hướng về trang chủ
+    //                       //                   });
+    //                                         }
+    //                   else {
+    //                       console.log("Error:", response.message)
+    //                       Swal.fire({
+    //                           icon: 'error',
+    //                           title: 'Vui lòng kiểm tra các trường dữ liệu!',
+    //                           text: response.message,
+    //                           showConfirmButton: true
+    //                       });
+    //                   }
+    //               },
+    //               error: function(xhr, status, error) {
+    //                   // Xử lý lỗi nếu có
+    //                   Swal.fire({
+    //                       icon: 'error',
+    //                       title: 'Đặt hàng không thành công!',
+    //                       text: 'Vui lòng thử lại sau.',
+    //                       showConfirmButton: true
+    //                   });
+    //               }
+    //           });
+    //       }
 
 
 </script>

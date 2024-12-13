@@ -191,8 +191,7 @@ public class ProductService {
 
     public double roundNumber(double averageRateStars) {
         // Làm tròn kết quả về 1 chữ số thập phân
-        DecimalFormat df = new DecimalFormat("#.#");
-        return Double.parseDouble(df.format(averageRateStars));
+        return averageRateStars;
     }
 
     public List<Rate> getRatesByStarNumber(int productId, int starRatings, Integer userId) {
