@@ -10,15 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/database/handmadestore.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/signature.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/MenuBar/menuMainPage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/MenuBar/menuMainPage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/database/handmadestore.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/database/handmadestore.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,7 +59,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/DELL/Desktop/Handmadestore-ATBM/ATBMHTTT/src/main/webapp",
+    "last_opened_file_path": "C:/Users/DELL/Desktop/Handmadestore-ATBM/ATBMHTTT/src/main/webapp/WEB-INF",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -66,6 +73,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp\WEB-INF" />
+      <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\resources\database" />
+      <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -78,12 +90,12 @@
       <deployment>
         <artifact name="HandMadeStore:war">
           <settings>
-            <option name="CONTEXT_PATH" value="/HandMadeStore_" />
+            <option name="CONTEXT_PATH" value="/HandMadeStore" />
           </settings>
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="ee1de29f-f436-46d4-bfb4-4622a87e512e" />
+        <option name="BASE_DIRECTORY_NAME" value="37bf3605-91b7-426e-8f3a-50d600aa4ad0" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -91,7 +103,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="65235" />
+        <option name="DEBUG_PORT" value="57467" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -209,7 +221,7 @@
       <workItem from="1733655322289" duration="21000" />
       <workItem from="1734063276670" duration="393000" />
       <workItem from="1734063686924" duration="1109000" />
-      <workItem from="1734186377941" duration="2689000" />
+      <workItem from="1734186377941" duration="6773000" />
     </task>
     <servers />
   </component>

@@ -17,10 +17,9 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-CREATE
-DATABASE handmadestore;
-USE
-handmadestore;
+DROP DATABASE IF EXISTS handmadestore;
+CREATE DATABASE handmadestore;
+USE handmadestore;
 
 --
 
@@ -945,8 +944,35 @@ CREATE TABLE `log` (
                        `action` varchar(255) NOT NULL,
                        `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `publicKey`
+--
+
+CREATE TABLE `publicKey` (
+                             `id` int(11) NOT NULL,
+                             `publicKey` TEXT NOT NULL,
+                             `status` varchar(50) NOT NULL,
+                             `createdTime` timestamp NOT NULL DEFAULT current_timestamp(),
+                             `expiredTime` timestamp ,
+                             `userId` int(11) NOT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
+INSERT INTO `publicKey` (`id`, `publicKey`, `status`, `userId`)
+VALUES
+    (1, 'MIIBtzCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYQAAoGAPy8MkgXos/xMA6MMFMf4WvQknzsBZknr6W+VjdhNkVstzKoWaebC2ZQemMxGQQcsDeE6s3UcSU7Ygd6+TFSKLtJRQjHLgP/5v85MFzpQBSMJpHRj+SiwqELps+d+uuNegwzCDltXf0r7dTCWyeOIgdMLSHChOw6y4wFvV3OWlMk=', 'active', 1),
+    (2, 'MIIBtzCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYQAAoGAIcWWcl+hhxv+Is+/kLuC1yPfY71Ej+LusNvy8HSVeW3GWaQ1KNQ8aIzFoRPzBoaiPXtRawPVEJkv3izQa6fMHj2PnxRIlaQK1Y89CA6ioBj5zFFFJcBsD/gA9pCfWqSZgYzM5zZJcp4YXtndjTh8OVi++2k8iTHee9RUEY7TrdM=', 'active', 2),
+    (3, 'MIIBuDCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYUAAoGBAOtMeZcKbwCf6O+3wVTiPmKq3hpm4MzSq68eCWNP7p/6X7/KrTP7fJf5snz2Zb2B9xkA9Cf/+03v8nkcHTpa/hAnEy7g6DmbxMqnW4MV4jNDBqfvqaNUlavIgbxYeBgjo+zD0t1jiHY1s3FayevFbtJF2rhrC/bEXcGhyN4WxNdH', 'active', 3),
+    (4, 'MIIBtzCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYQAAoGAEDiJyKMWWfMv/DH3PHX2PcJDaYvr0Gp3lxcQXfJliAM9EZwmAggcSoGnrvEFvLG3uY25QfzNSa1B87tISSvpFs35ujzLPsxQ+FY2qvodCnNBZM87KHr+vV6GPssyXibLS0M8dk4eRQg1RUGNCNg9JGa4my+PW6wNuEBGBrLf6ao=', 'inactive', 4),
+    (5, 'MIIBuDCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYUAAoGBAORAA8gt6KKG1Y+4kmZswmElS3HSw3jQLILpJMMAtTwR+ad8a4M1GEiONPMTvhCi3s5+o/5stQ+DwE0uvOiUSvdfxYXKFB9vodWb3Tls/2Mc0zrbM8jratBjc0LLOUMbFEXtVwjlHVdZmyoEqzJsUfPDIBHh7FY6gfuyQwi4knMx', 'active', 5),
+    (6, 'MIIBuDCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYUAAoGBAMt5rxusl5CH3253aoYxzQY9oHWT5481Wh8r55E6JNspdg4vgU+V9AnempArmdM+gDd44MWzvTZlmBoR8rs1xt77V1+Bxgg5e3OlPy9agiT4LjJoaSgFTSm0J62vD5n5Ux/VIdgtsDac5nhzsUbybhF/4ptxbzPApaCvZ2I5X6dq', 'inactive', 6),
+    (7, 'MIIBuDCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYUAAoGBAIRlCyJVAZDnc0ZOjTbkCJfc+2W9NxDlQmpj5szkTxGB3wETUs9iEGZobV0mNZwdqB2WS79+HnsF+xQAtWJ9YQ4zBk3i4cqKvHwCPMwtj5aJwtfFoGqkmAQP8Hh5Vk+S/kNJqkqiB3fuVKhwou7H7L2iCTE8WraFoSnEZf8uEyCD', 'active', 7),
+    (8, 'MIIBtzCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYQAAoGAe6GDTgN+GVZ/N1ipOAeGP8LKtfyuThxTOge9v22OB3A3ZNv6EKde8/CLSFJqS/PiZZiUZSLJi/nm4ohLpu3m7SJjI6q0UK/uXFZbXJ+5c8oTx4Ne1tLU02/NR3wWY4uK5kPFsUvzBu+qeYQ7ldElHtKjIeJAfzh4qjGF6KcYs7M=', 'active', 8),
+    (9, 'MIIBtzCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYQAAoGAP1jkyLC0huNK5sMhWlMPC5jVAJp0i5ymE6Ez392ZfYBZny7LDAx+B+NXQmxdU0nqSO09HUwZ6zWHxq8Os11n00eKO4DSc51TyHpHvQ00KCbWCcTDw3zv41YrhvwOWK1if8mDLfTEKizXgGJ0lY4A3ANmEfqkph9Vupv0jjztgqo=', 'inactive', 9),
+    (10, 'MIIBuDCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYUAAoGBAIsCphYexJBnZCnTTqHD58gNRbRtmhgXI5mLRQoPnKP2mK3dWxqKXTq69mY9JP8zPvCCEUDh1emQeWver4+DYClNKsNmwzBfyGkGGjO64t1AO+hehoVqlbUb4AmFGFZ3MYA3EC2MviiZrtfyguke8IMsfBAsqPdmdiCTuntzZdfJ', 'active', 10);
 
 --
 -- Table structure for table `order`
@@ -962,30 +988,27 @@ CREATE TABLE `order` (
                          `address` varchar(200) NOT NULL,
                          `shippingFee` decimal(10,2) NOT NULL DEFAULT 0.00,
                          `userId` int(11) NOT NULL,
-                         `note` varchar(255) DEFAULT NULL
+                         `note` varchar(255) DEFAULT NULL,
+                         `publicKeyId` int(11) DEFAULT NULL,
+                         `signature` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`id`, `totalPrice`, `orderDate`, `status`, `consigneeName`, `consigneePhoneNumber`, `address`, `shippingFee`, `userId`, `note`) VALUES
-                                                                                                                                                         (1, 270000.00, '2023-11-29 00:00:00', 3, 'Pblues', '0336677141', '29 Tô Vĩnh Diện , Đông Hòa ,Dĩ An , Bình Dương', 30000.00, 1, NULL),
-                                                                                                                                                         (2, 138000.00, '2023-11-29 00:00:00', 1, 'Nguyễn Thị Nghia', '0341231234', '416 Phạm Văn Đồng, Phường 11, Bình Thạnh, Thành phố Hồ Chí Minh', 30000.00, 3, NULL),
-                                                                                                                                                         (3, 219000.00, '2023-11-30 00:00:00', 2, 'Pblues', '0336677141', '312 Trường Chinh, Nhơn Hưng, An Nhơn, Bình Định', 40000.00, 2, NULL),
-                                                                                                                                                         (4, 209000.00, '2023-11-30 00:00:00', 3, 'Lê Bá Kiên Nghĩa', '0875488549', '32 Đ, Mạc Đĩnh Chi, Đa Kao, Quận 1, Thành phố Hồ Chí Minh', 30000.00, 4, NULL),
-                                                                                                                                                         (5, 219000.00, '2023-11-30 00:00:00', 2, 'Nguyễn Trung Kiên', '0875488763', '312 Đường Võ Nguyên Giáp, Thiện Nghiệp, Thành phố Phan Thiết, Bình Thuận', 40000.00, 5, NULL),
-                                                                                                                                                         (6, 229000.00, '2023-11-30 00:00:00', 3, 'Nguyễn Trung Kiên', '0875488763', '31 Trần Phú, P, Mộ Lao, Hà Đông, Hà Nội', 50000.00, 6, NULL),
-                                                                                                                                                         (7, 209000.00, '2023-12-01 00:00:00', 2, 'Nguyễn Ngọc Lan', '0875488766', '29 Tô Vĩnh Diện , Đông Hòa ,Dĩ An , Bình Dương', 30000.00, 1, NULL),
-                                                                                                                                                         (8, 209000.00, '2023-12-01 00:00:00', 3, 'Vương Thúy Kiều', '0112233445', '15 Trường Chinh, Phước Trung, Bà Rịa, Bà Rịa - Vũng Tàu', 30000.00, 8, NULL),
-                                                                                                                                                         (9, 209000.00, '2023-12-01 00:00:00', 3, 'Vương Thúy Vân', '0875488763', '21 Võ Trường Toản, An Phú, Quận 2, Thành phố Hồ Chí Minh', 30000.00, 7, NULL),
-                                                                                                                                                         (10, 209000.00, '2023-12-01 00:00:00', 1, 'Kim Trọng', '0875486865', '314 Âu Cơ, TT, Tân Châu, Tân Châu, An Giang', 30000.00, 9, NULL),
-                                                                                                                                                         (11, 229000.00, '2023-12-02 00:00:00', 3, 'Nguyễn Thị Đức Lưu (Thị Nở)', '0875489763', '31 Trần Phú, P, Mộ Lao, Hà Đông, Hà Nội', 50000.00, 6, NULL),
-                                                                                                                                                         (12, 219000.00, '2023-12-02 00:00:00', 0, 'Nguyễn Kiên Trung', '0875488762', '18 Phan Văn Trị, Khuê Trung, Cẩm Lệ, Đà Nẵng', 40000.00, 10, NULL),
-                                                                                                                                                         (13, 219000.00, '2023-12-02 00:00:00', 0, 'Nguyễn Nghĩa Trọng Kiên', '0878288763', '312 Trường Chinh, Nhơn Hưng, An Nhơn, Bình Định', 40000.00, 2, NULL),
-                                                                                                                                                         (14, 165000.00, '2023-12-02 00:00:00', 0, 'Nguyễn Kiên Trọng Nghĩa', '0875488549', '416 Phạm Văn Đồng, Phường 11, Bình Thạnh, Thành phố Hồ Chí Minh', 30000.00, 3, NULL);
+INSERT INTO `order` (`id`, `totalPrice`, `orderDate`, `status`, `consigneeName`, `consigneePhoneNumber`, `address`, `shippingFee`, `userId`, `note`, `publicKeyId`, `signature`) VALUES
+                                                                                                                                                                                     (1, 270000.00, '2023-11-29 00:00:00', 3, 'Pblues', '0336677141', '29 Tô Vĩnh Diện , Đông Hòa ,Dĩ An , Bình Dương', 30000.00, 1, NULL, 1, NULL),
+                                                                                                                                                                                     (2, 138000.00, '2023-11-29 00:00:00', 1, 'Nguyễn Thị Nghia', '0341231234', '416 Phạm Văn Đồng, Phường 11, Bình Thạnh, Thành phố Hồ Chí Minh', 30000.00, 3, NULL, 2, NULL),
+                                                                                                                                                                                     (3, 219000.00, '2023-11-30 00:00:00', 2, 'Pblues', '0336677141', '312 Trường Chinh, Nhơn Hưng, An Nhơn, Bình Định', 40000.00, 2, NULL, 3, NULL),
+                                                                                                                                                                                     (4, 209000.00, '2023-11-30 00:00:00', 3, 'Lê Bá Kiên Nghĩa', '0875488549', '32 Đ, Mạc Đĩnh Chi, Đa Kao, Quận 1, Thành phố Hồ Chí Minh', 30000.00, 4, NULL, 4, NULL),
+                                                                                                                                                                                     (5, 219000.00, '2023-11-30 00:00:00', 2, 'Nguyễn Trung Kiên', '0875488763', '312 Đường Võ Nguyên Giáp, Thiện Nghiệp, Thành phố Phan Thiết, Bình Thuận', 40000.00, 5, NULL, 5, NULL),
+                                                                                                                                                                                     (6, 229000.00, '2023-11-30 00:00:00', 3, 'Nguyễn Trung Kiên', '0875488763', '31 Trần Phú, P, Mộ Lao, Hà Đông, Hà Nội', 50000.00, 6, NULL, 6, NULL),
+                                                                                                                                                                                     (7, 209000.00, '2023-12-01 00:00:00', 2, 'Nguyễn Ngọc Lan', '0875488766', '29 Tô Vĩnh Diện , Đông Hòa ,Dĩ An , Bình Dương', 30000.00, 1, NULL, 7, NULL),
+                                                                                                                                                                                     (8, 209000.00, '2023-12-01 00:00:00', 3, 'Vương Thúy Kiều', '0112233445', '15 Trường Chinh, Phước Trung, Bà Rịa, Bà Rịa - Vũng Tàu', 30000.00, 8, NULL, 8, NULL),
+                                                                                                                                                                                     (9, 209000.00, '2023-12-01 00:00:00', 3, 'Vương Thúy Vân', '0875488763', '21 Võ Trường Toản, An Phú, Quận 2, Thành phố Hồ Chí Minh', 30000.00, 7, NULL, 9, NULL),
+                                                                                                                                                                                     (10, 209000.00, '2023-12-01 00:00:00', 1, 'Kim Trọng', '0875486865', '314 Âu Cơ, TT, Tân Châu, Tân Châu, An Giang', 30000.00, 9, NULL, 10, NULL);
 
--- --------------------------------------------------------
 
 --
 -- Table structure for table `order_details`
@@ -1003,7 +1026,6 @@ CREATE TABLE `order_details` (
 --
 -- Dumping data for table `order_details`
 --
-
 INSERT INTO `order_details` (`orderId`, `productId`, `quantity`, `sellingPrice`, `finalSellingPrice`, `explainPriceDifference`) VALUES
                                                                                                                                     (1, 1, 2, 70000.00, 70000.00, NULL),
                                                                                                                                     (1, 7, 2, 50000.00, 50000.00, NULL),
@@ -1024,17 +1046,7 @@ INSERT INTO `order_details` (`orderId`, `productId`, `quantity`, `sellingPrice`,
                                                                                                                                     (8, 118, 1, 39000.00, 39000.00, NULL),
                                                                                                                                     (9, 1, 2, 70000.00, 70000.00, NULL),
                                                                                                                                     (9, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (10, 1, 2, 70000.00, 70000.00, NULL),
-                                                                                                                                    (10, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (11, 1, 2, 70000.00, 70000.00, NULL),
-                                                                                                                                    (11, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (12, 1, 2, 70000.00, 70000.00, NULL),
-                                                                                                                                    (12, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (13, 1, 2, 70000.00, 70000.00, NULL),
-                                                                                                                                    (13, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (14, 122, 1, 135000.00, 135000.00, NULL);
-
--- --------------------------------------------------------
+                                                                                                                                    (10, 1, 2, 70000.00, 70000.00, NULL);
 
 --
 -- Table structure for table `product`
@@ -1511,6 +1523,11 @@ ALTER TABLE `tips`
     ADD PRIMARY KEY (`title`) USING BTREE;
 
 --
+-- Indexes for table `publicKey`
+--
+ALTER TABLE `publicKey`
+    ADD PRIMARY KEY (`id`) USING BTREE;
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -1576,8 +1593,10 @@ ALTER TABLE `user`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for table `publicKey`
 --
+ALTER TABLE `publicKey`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for table `image`
@@ -1590,6 +1609,20 @@ ALTER TABLE `image`
 --
 ALTER TABLE `order`
     ADD CONSTRAINT `fk_order` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
+
+
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+    ADD CONSTRAINT `fk_publicKey` FOREIGN KEY (`publicKeyId`) REFERENCES `publicKey` (`id`);
+
+--
+
+--
+-- Constraints for table `publicKey`
+--
+ALTER TABLE `publicKey`
+    ADD CONSTRAINT `fk_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `order_details`
