@@ -8,6 +8,7 @@
 <%@ page import="java.util.Currency" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="org.eclipse.tags.shaded.org.apache.xpath.operations.Or" %>
+<%@ page import="utils.HashPassword" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Locale locale = new Locale("vi", "VN");
@@ -113,6 +114,126 @@
             border: 0;
             border-top: 2px dashed #000000;
         }
+
+
+
+        /**
+        Hiện thực khoá.
+         */
+        .auth-key {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-key-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .auth-key-header .img-key {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .auth-key-details {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .auth-key-details span {
+            display: block;
+            font-weight: normal;
+        }
+
+        .auth-key-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .auth-key-actions .status {
+            color: green;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        .auth-key-actions button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .auth-key-actions button:hover {
+            background-color: #c0392b;
+        }
+
+    /*    Màn hình thêm khoá mới*/
+
+        .overlay {
+            display: none; /* Ẩn mặc định */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Màu đen với độ mờ */
+            z-index: 10; /* Hiển thị trên mọi thành phần khác */
+        }
+
+
+        #add-new-key  {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Căn giữa */
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 11; /* Trên overlay */
+            width: 50%; /* Chiều rộng của box */
+            display: none; /* Ẩn mặc định */
+        }
+
+        #add-new-key h2 {
+            text-align: center;
+
+        }
+        #add-new-key textarea {
+            background-color: #e9ecef;
+            resize: none;
+        }
+        #add-new-key .download-icon {
+            cursor: pointer;
+            color: red;
+            font-size: 18px;
+            margin-left: 5px;
+        }
+        #add-new-key .link {
+            font-size: 14px;
+            font-style: italic;
+            text-decoration: underline;
+            cursor: pointer;
+            color: blue;
+        }
+
+        #add-new-key .close-screen-key {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #333;
+        }
+
 
 
     </style>
@@ -223,18 +344,56 @@
 
                         <!-- Tab Thiết lập bảo mật -->
                         <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
-                            <h3>Thiết lập bảo mật</h3>
+                            <div class="header-security d-flex justify-content-between">
+                                <h3>Thiết lập bảo mật</h3>
+                                <button class="btn btn-warning">Báo mất khoá</button>
+                            </div>
                             <hr class="hr-information">
                             <div class="d-flex align-items-center expand_key_area">
                                 <span>Khoá mã hoá công khai</span>
-                                <button class="btn btn-outline-danger ms-2 position-relative" id="expand_pubKey">
+                                <button onclick="verifyPwd()" class="btn btn-outline-danger ms-2 position-relative"
+                                        id="expand_pubKey">
                                     <i class="fa-solid fa-eye"></i>
                                 </button>
                             </div>
-                        </div>
 
+                            <div class="auth-key mt-2">
+                                <div class="auth-key-header">
+                                    <i class="fa-solid fa-key img-key"></i>
+                                    <strong>lenovo-thinkbook-g7</strong>
+                                </div>
+                                <div class="auth-key-details">
+                                    <span>SHA256: fVoTv61qlwUodrkrMuWbIFouXjjbSYE7z0vf6sRXDAg</span>
+                                    <span>Đã được thêm vào 1-12-2024</span>
+                                </div>
+                                <div class="auth-key-actions">
+                                    <span class="status">Lần cuối được sử dụng là 5 ngày trước </span>
+                                    <button>Xoá</button>
+                                </div>
+                            </div>
+                            <div class="auth-key mt-2">
+                                <div class="auth-key-header">
+                                    <i class="fa-solid fa-key img-key"></i>
+                                    <strong>lenovo-thinkbook-g7</strong>
+                                </div>
+                                <div class="auth-key-details">
+                                    <span>SHA256: fVoTv61qlwUodrkrMuWbIFouXjjbSYE7z0vf6sRXDAg</span>
+                                    <span>Đã được thêm vào 1-12-2024</span>
+                                </div>
+                                <div class="auth-key-actions">
+                                    <span class="status">Lần cuối được sử dụng là 5 ngày trước </span>
+                                    <button>Xoá</button>
+                                </div>
+                            </div>
+
+                            <div class="button-security d-flex justify-content-center">
+                                <button class="btn btn-info" onclick="showAddKeyScreen()">Thêm khoá mới</button>
+                                <button class="btn btn-info ms-2">Tải khoá có sẵn</button>
+                            </div>
+
+                        </div>
                         <!-- Tab Lịch sử mua hàng -->
-                        <div class="tab-pane fade" id="order-history" role="tabpanel"
+                            <div class="tab-pane fade" id="order-history" role="tabpanel"
                              aria-labelledby="order-history-tab">
                             <h3>Lịch sử đơn hàng</h3>
                             <hr class="hr-information">
@@ -366,11 +525,49 @@
     </div>
     <div id="detailOrder" style="display:none;">
     </div>
+    <div class="mt-4 " id="add-new-key">
+        <h2 class="mb-4">Tạo khoá mới</h2>
+
+        <button onclick="exitAddKey()" class="btn-close close-screen-key">
+
+        </button>
+
+        <!-- Nhập tên khoá -->
+        <div class="mb-3">
+            <label for="keyName" class="form-label fw-bold">Tên khoá</label>
+            <input type="text" id="keyName" class="form-control" placeholder="Vui lòng sử dụng - thay cho khoảng trắng. Ví dụ: lenovo-thinkbook-g7">
+        </div>
+        <button onclick="generateKey()" class="btn btn-warning add-btn mb-2">Tạo khoá</button>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Public Key</label>
+                <textarea id="publicKey" class="form-control" rows="4" readonly></textarea>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">
+                    Private Key
+                    <span class="download-icon" title="Tải xuống">&#x1F4E5;</span>
+                </label>
+                <textarea id="privateKey" class="form-control" rows="4" readonly></textarea>
+            </div>
+        </div>
+
+
+        <!-- Link và Xác nhận -->
+        <div class="d-flex justify-content-between align-items-center">
+            <span class="link" onclick="goBack()">Bạn đã có khoá?</span>
+            <button class="btn btn-success">Xác nhận</button>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
 </div>
 
 <input type="hidden" id="allOrderNumber" value="<%=allOrderNumber%>">
 <input type="hidden" id="showCouter" value="<%=showCouter%>">
 <input type="hidden" id="statusNumber" value="-1">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/sha1.min.js"></script>
 <script>
 
     <%--    Thiết lập ẩn hiện các tab:--%>
@@ -393,132 +590,213 @@
         });
     });
 
+    /**
+     * Xuwr lys them khoa moi
+     */
+    function showAddKeyScreen() {
+        document.getElementById('add-new-key').style.display = 'block';
+        document.querySelector('.overlay').style.display = 'block';
+    }
 
-    function changeName() {
-        const newName = document.getElementById("input_name").value;
+    function exitAddKey() {
+        document.querySelector('.overlay').style.display = 'none';
+        document.getElementById('add-new-key').style.display = 'none';
+    }
+
+    /**
+     * Genkey
+     */
+    function generateKey() {
         $.ajax({
-            method: "POST",
-            url: "/HandMadeStore/changeUserInfo",
-            data: {
-                action: "changeName",
-                newName: newName
+            method: "GET",
+            url: "/HandMadeStore/generate-key",
+            success: function (resp) {
+                //HIển thị pub & pri
+                document.getElementById("publicKey").value = resp.publicKey;
+                document.getElementById("privateKey").value = resp.privateKey;
+
+                // Sau 2 phút, privatekey biến mất giá trị.
+                setTimeout(function() {
+                    document.getElementById("privateKey").value = "";
+                    alert("Private key đã hết hạn và bị xoá.");
+
+
+                }, 2 * 60 *1000);
             },
-            success: function (response) {
-                document.getElementById("notifyChanged").innerHTML = response;
-                cancelName();
-            },
-            error: function () {
-                console.log("Thay đổi thất bại!");
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error: " + textStatus + " - " + errorThrown);
+                alert("Không tạo được khoá, vui lòng thử lại sau");
             }
-        })
+
+
+
+        });
     }
 
-    function changePhone() {
-        const newPhone = document.getElementById("input_phone").value;
-        $.ajax({
-            method: "POST",
-            url: "/HandMadeStore/changeUserInfo",
-            data: {
-                action: "changePhone",
-                newPhone: newPhone
+
+
+
+    /** Xử lý nút xem khoá */
+    function verifyPwd() {
+        swal.fire({
+            title: "Nhập mật khẩu để tiếp tục",
+            input: "password",
+            inputAttributes: {
+                autocapitalize: "off"
             },
-            success: function (response) {
-                document.getElementById("notifyChanged").innerHTML = response;
-                cancelPhone();
-            },
-            error: function () {
-                console.log("Thay đổi thất bại!");
-            }
-        })
-    }
-
-    function editName() {
-        document.getElementById("input_name").disabled = false;
-        document.getElementById('save_name').style.display = 'inline';
-        document.getElementById('cancel_name').style.display = 'inline';
-        document.getElementById('edit_name').style.display = 'none';
-    }
-
-    function cancelName() {
-        document.getElementById("input_name").disabled = true;
-        document.getElementById('save_name').style.display = 'none';
-        document.getElementById('cancel_name').style.display = 'none';
-        document.getElementById('edit_name').style.display = 'inline';
-    }
-
-    function editPhone() {
-        document.getElementById("input_phone").disabled = false;
-        document.getElementById('save_phone').style.display = 'inline';
-        document.getElementById('cancel_phone').style.display = 'inline';
-        document.getElementById('edit_phone').style.display = 'none';
-    }
-
-    function cancelPhone() {
-        document.getElementById("input_phone").disabled = true;
-        document.getElementById('save_phone').style.display = 'none';
-        document.getElementById('cancel_phone').style.display = 'none';
-        document.getElementById('edit_phone').style.display = 'inline';
-    }
-
-    <%--document.getElementById('productSelect').addEventListener('change', function () {--%>
-    <%--    const productId = this.value;--%>
-    <%--    if (productId) {--%>
-    <%--        const url = '<%=request.getContextPath()%>/product-detail?id=' + productId;--%>
-    <%--        window.open(url, '_blank');--%>
-    <%--    }--%>
-    <%--});--%>
-
-    function goBack() {
-        const previousPage = document.referrer;
-        if (previousPage) {
-            window.location.href = previousPage;
-        } else {
-            window.history.href = "/";
-        }
-    }
-
-
-    // function toggleInfor() {
-    //     const toggleInforBox = document.getElementById("toggleInforBox");
-    //     if (toggleInforBox.style.display === "none" || toggleInforBox.style.display === "") {
-    //         toggleInforBox.style.display = "block";
-    //     } else {
-    //         toggleInforBox.style.display = "none";
-    //     }
-    // }
-
-    function showOrderDetails(event, clickedElement) {
-        let rowIndex = 0;
-        let row = clickedElement;
-        while ((row = row.previousElementSibling) != null) {
-            rowIndex++;
-        }
-        event.preventDefault();
-        const orderId = clickedElement.id;
-        $.ajax({
-            method: "POST",
-            url: "/HandMadeStore/order-ajax-handle",
-            data: {
-                action: "showOrder",
-                orderId: orderId
-            },
-            success: function (response) {
-                let orderDetailsResponse;
-
-                // Kiểm tra nếu response đã là đối tượng JSON
-                if (typeof response === "string") {
-                    try {
-                        orderDetailsResponse = JSON.parse(response);
-                    } catch (e) {
-                        console.error("Response không phải là JSON hợp lệ:", response);
-                        return;
+            showCancelButton: true,
+            confirmButtonText: "Gửi",
+            cancelButtonText: "Huỷ",
+            showLoaderOnConfirm: true,
+            preConfirm: (enteredPassword) => {
+                return $.ajax({
+                    method: "POST",
+                    url: "/HandMadeStore/changeUserInfo",
+                    data: {
+                        action: "verifyPwd",
+                        password: enteredPassword
                     }
-                } else {
-                    orderDetailsResponse = response;
+                }).then((response) => {
+                    // Nếu server trả về chuỗi
+                    if (response === "Mật khẩu chính xác!") {
+                        return true; // Xác nhận thành công
+                    } else {
+                        Swal.showValidationMessage(response); // Hiển thị thông báo lỗi từ server
+                        return false; // Không xác nhận
+                    }
+                }).catch((error) => {
+                    Swal.showValidationMessage("Lỗi khi kết nối tới server!"); // Lỗi kết nối hoặc server
+                    console.error(error);
+                });
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire('Mật khẩu chính xác!', '', 'success');
+            }
+        });
+    }
+
+        // XỬ LÝ DÀNH CHO THAY ĐỔI THÔNG TIN CÁ NHÂN.
+
+        function changeName() {
+            const newName = document.getElementById("input_name").value;
+            $.ajax({
+                method: "POST",
+                url: "/HandMadeStore/changeUserInfo",
+                data: {
+                    action: "changeName",
+                    newName: newName
+                },
+                success: function (response) {
+                    document.getElementById("notifyChanged").innerHTML = response;
+                    cancelName();
+                },
+                error: function () {
+                    console.log("Thay đổi thất bại!");
                 }
-                let showCancelBox;
-                if (orderDetailsResponse.order.status == 0 || orderDetailsResponse.order.status == 1) {
-                    showCancelBox = `
+            })
+        }
+
+        function changePhone() {
+            const newPhone = document.getElementById("input_phone").value;
+            $.ajax({
+                method: "POST",
+                url: "/HandMadeStore/changeUserInfo",
+                data: {
+                    action: "changePhone",
+                    newPhone: newPhone
+                },
+                success: function (response) {
+                    document.getElementById("notifyChanged").innerHTML = response;
+                    cancelPhone();
+                },
+                error: function () {
+                    console.log("Thay đổi thất bại!");
+                }
+            })
+        }
+
+        function editName() {
+            document.getElementById("input_name").disabled = false;
+            document.getElementById('save_name').style.display = 'inline';
+            document.getElementById('cancel_name').style.display = 'inline';
+            document.getElementById('edit_name').style.display = 'none';
+        }
+
+        function cancelName() {
+            document.getElementById("input_name").disabled = true;
+            document.getElementById('save_name').style.display = 'none';
+            document.getElementById('cancel_name').style.display = 'none';
+            document.getElementById('edit_name').style.display = 'inline';
+        }
+
+        function editPhone() {
+            document.getElementById("input_phone").disabled = false;
+            document.getElementById('save_phone').style.display = 'inline';
+            document.getElementById('cancel_phone').style.display = 'inline';
+            document.getElementById('edit_phone').style.display = 'none';
+        }
+
+        function cancelPhone() {
+            document.getElementById("input_phone").disabled = true;
+            document.getElementById('save_phone').style.display = 'none';
+            document.getElementById('cancel_phone').style.display = 'none';
+            document.getElementById('edit_phone').style.display = 'inline';
+        }
+
+        <%--document.getElementById('productSelect').addEventListener('change', function () {--%>
+        <%--    const productId = this.value;--%>
+        <%--    if (productId) {--%>
+        <%--        const url = '<%=request.getContextPath()%>/product-detail?id=' + productId;--%>
+        <%--        window.open(url, '_blank');--%>
+        <%--    }--%>
+        <%--});--%>
+
+        function goBack() {
+            const previousPage = document.referrer;
+            if (previousPage) {
+                window.location.href = previousPage;
+            } else {
+                window.history.href = "/";
+            }
+        }
+
+
+        // XỬ LÝ DÀNH CHO THÔNG TIN LỊCH SỬ ĐƠN HÀNG
+
+        function showOrderDetails(event, clickedElement) {
+            let rowIndex = 0;
+            let row = clickedElement;
+            while ((row = row.previousElementSibling) != null) {
+                rowIndex++;
+            }
+            event.preventDefault();
+            const orderId = clickedElement.id;
+            $.ajax({
+                method: "POST",
+                url: "/HandMadeStore/order-ajax-handle",
+                data: {
+                    action: "showOrder",
+                    orderId: orderId
+                },
+                success: function (response) {
+                    let orderDetailsResponse;
+
+                    // Kiểm tra nếu response đã là đối tượng JSON
+                    if (typeof response === "string") {
+                        try {
+                            orderDetailsResponse = JSON.parse(response);
+                        } catch (e) {
+                            console.error("Response không phải là JSON hợp lệ:", response);
+                            return;
+                        }
+                    } else {
+                        orderDetailsResponse = response;
+                    }
+                    let showCancelBox;
+                    if (orderDetailsResponse.order.status == 0 || orderDetailsResponse.order.status == 1) {
+                        showCancelBox = `
                         <div>
                             <span class="text-decoration-underline text-danger" style="cursor: pointer"
                              id = "btnShowCancelOrder"
@@ -526,8 +804,8 @@
                         </div>
                         <div id="cancelOrderBox"></div>
                     `
-                }
-                let htmlContent = `
+                    }
+                    let htmlContent = `
                     <div class="row">
                         <button type="button" class="btn btn-success" onclick="hideDetailOrder()">Thoát</button>
                     </div>
@@ -556,10 +834,10 @@
                     </div>
                 `;
 
-                // Tạo HTML cho danh sách sản phẩm
-                let productDetailsHtml = '';
-                orderDetailsResponse.orderDetailMappings.forEach(function (orderDetailMapping) {
-                    productDetailsHtml += `
+                    // Tạo HTML cho danh sách sản phẩm
+                    let productDetailsHtml = '';
+                    orderDetailsResponse.orderDetailMappings.forEach(function (orderDetailMapping) {
+                        productDetailsHtml += `
                         <div class="col-md-12 mb-4">
                             <div class="card">
                                 <div class="row">
@@ -575,115 +853,115 @@
                             </div>
                         </div>
                     `;
-                });
+                    });
 
-                // Hiển thị thông tin chi tiết đơn hàng
-                $('#detailOrder').addClass('row w-75 h-75 p-3 rounded');
-                $('#detailOrder').css('display', 'block');
-                $('#detailOrder').html(htmlContent);
-                // Hiển thị danh sách sản phẩm
-                $('#product-details').html(productDetailsHtml);
+                    // Hiển thị thông tin chi tiết đơn hàng
+                    $('#detailOrder').addClass('row w-75 h-75 p-3 rounded');
+                    $('#detailOrder').css('display', 'block');
+                    $('#detailOrder').html(htmlContent);
+                    // Hiển thị danh sách sản phẩm
+                    $('#product-details').html(productDetailsHtml);
 
-            },
-            error: function () {
-                alert("error")
-            }
-        })
-    }
+                },
+                error: function () {
+                    alert("error")
+                }
+            })
+        }
 
-    function more(userId, limit) {
-        const statusNumber = document.getElementById("statusNumber").value;
-        const currentOffset = document.getElementById("showCouter").value;
-        $.ajax({
-            method: "POST",
-            url: "/HandMadeStore/order-ajax-handle",
-            data: {
-                action: "moreOrder",
-                userId: userId,
-                limit: limit,
-                offset: currentOffset,
-                statusNumber: statusNumber
-            },
-            success: function (response) {
-                const allOrderNumber = document.getElementById("allOrderNumber");
-                const showCouter = document.getElementById("showCouter");
-                showCouter.value = parseInt(showCouter.value, 10) + response.length;
-                renderOrders(response);
-                if (parseInt(showCouter.value, 10) < allOrderNumber.value) {
-                    const more = $('#more');
-                    if (!more.length) {
-                        $('#morebox').html(`
+        function more(userId, limit) {
+            const statusNumber = document.getElementById("statusNumber").value;
+            const currentOffset = document.getElementById("showCouter").value;
+            $.ajax({
+                method: "POST",
+                url: "/HandMadeStore/order-ajax-handle",
+                data: {
+                    action: "moreOrder",
+                    userId: userId,
+                    limit: limit,
+                    offset: currentOffset,
+                    statusNumber: statusNumber
+                },
+                success: function (response) {
+                    const allOrderNumber = document.getElementById("allOrderNumber");
+                    const showCouter = document.getElementById("showCouter");
+                    showCouter.value = parseInt(showCouter.value, 10) + response.length;
+                    renderOrders(response);
+                    if (parseInt(showCouter.value, 10) < allOrderNumber.value) {
+                        const more = $('#more');
+                        if (!more.length) {
+                            $('#morebox').html(`
                         <span id="more" class="fst-italic fw-bold" style="cursor: pointer"
                           onclick="more(${userId}, ${limit})"
                         >Xem thêm...
                         </span>
                     `);
+                        }
+                    } else {
+                        const more = $('#more');
+                        if (more.length) {
+                            more.remove();
+                        }
                     }
-                } else {
-                    const more = $('#more');
-                    if (more.length) {
-                        more.remove();
-                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error details:", jqXHR, textStatus, errorThrown);
+                    alert("Load more failed!");
                 }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log("Error details:", jqXHR, textStatus, errorThrown);
-                alert("Load more failed!");
-            }
-        })
-    }
+            })
+        }
 
-    function orderFilter(userId, limit, statusNumber) {
-        $('#data tbody').empty();
-        document.getElementById("statusNumber").value = statusNumber;
-        const allOrderNumber = document.getElementById("allOrderNumber");
-        const showCouter = document.getElementById("showCouter");
-        // thay đổi allOrderNumber và showCouter
-        $.ajax({
-            method: "POST",
-            url: "/HandMadeStore/order-ajax-handle",
-            data: {
-                action: "getNumberFilter",
-                userId: userId,
-                statusNumber: statusNumber
-            },
-            success: function (response) {
-                allOrderNumber.value = response;
-                showCouter.value = 0;
-                if (parseInt(showCouter.value, 10) < allOrderNumber.value) {
-                    const more = $('#more');
-                    if (!more.length) {
-                        $('#morebox').html(`
+        function orderFilter(userId, limit, statusNumber) {
+            $('#data tbody').empty();
+            document.getElementById("statusNumber").value = statusNumber;
+            const allOrderNumber = document.getElementById("allOrderNumber");
+            const showCouter = document.getElementById("showCouter");
+            // thay đổi allOrderNumber và showCouter
+            $.ajax({
+                method: "POST",
+                url: "/HandMadeStore/order-ajax-handle",
+                data: {
+                    action: "getNumberFilter",
+                    userId: userId,
+                    statusNumber: statusNumber
+                },
+                success: function (response) {
+                    allOrderNumber.value = response;
+                    showCouter.value = 0;
+                    if (parseInt(showCouter.value, 10) < allOrderNumber.value) {
+                        const more = $('#more');
+                        if (!more.length) {
+                            $('#morebox').html(`
                         <span id="more" class="fst-italic fw-bold" style="cursor: pointer"
                           onclick="more(${userId}, ${limit})"
                         >Xem thêm...
                         </span>
                     `);
+                        }
+                    } else {
+                        const more = $('#more');
+                        if (more.length) {
+                            more.remove();
+                        }
                     }
-                } else {
-                    const more = $('#more');
-                    if (more.length) {
-                        more.remove();
-                    }
+                    more(userId, limit, statusNumber)
+                },
+                error: function () {
+                    console.log("Load more failed!");
+                    more(userId, limit, statusNumber)
                 }
-                more(userId, limit, statusNumber)
-            },
-            error: function () {
-                console.log("Load more failed!");
-                more(userId, limit, statusNumber)
-            }
-        })
-    }
+            })
+        }
 
-    function renderOrders(ordersResponse) {
-        ordersResponse.forEach(function (orderResponse) {
-            const order = orderResponse.order;
-            const imagePaths = orderResponse.image_name;
+        function renderOrders(ordersResponse) {
+            ordersResponse.forEach(function (orderResponse) {
+                const order = orderResponse.order;
+                const imagePaths = orderResponse.image_name;
 
-            let firstCol = '';
-            for (let key in imagePaths) {
-                if (imagePaths.hasOwnProperty(key)) {
-                    firstCol += `
+                let firstCol = '';
+                for (let key in imagePaths) {
+                    if (imagePaths.hasOwnProperty(key)) {
+                        firstCol += `
                     <div class="d-flex mb-2">
                             <div>
                             <img src="<%=request.getContextPath()+"/"%>${imagePaths[key]}"
@@ -693,37 +971,37 @@
                                  ${key}
                             </div>
                     </div>`;
+                    }
                 }
-            }
-            let backgroundColor = '';
-            let statusText = '';
-            switch (order.status) {
-                case 0://isWaitConfirmOrder
-                    backgroundColor = '#ffcc00';
-                    statusText = 'Chờ xác nhận';
-                    break;
-                case 1://isPreparing
-                    backgroundColor = '#5F9EA0';
-                    statusText = 'Đang đóng gói';
-                    break;
-                case 2://isDeliveringOrder
-                    backgroundColor = '#0171d3';
-                    statusText = 'Đang giao';
-                    break;
-                case 3://isSucccessfulOrder
-                    backgroundColor = '#4d8a54';
-                    statusText = 'Thành công';
-                    break;
-                case 4://isCanceledOrder
-                    backgroundColor = '#ff0000';
-                    statusText = 'Đã hủy';
-                    break;
-                default:
-                    backgroundColor = '#ffffff';
-                    statusText = 'Không xác định';
-                    break;
-            }
-            const orderHtml = `
+                let backgroundColor = '';
+                let statusText = '';
+                switch (order.status) {
+                    case 0://isWaitConfirmOrder
+                        backgroundColor = '#ffcc00';
+                        statusText = 'Chờ xác nhận';
+                        break;
+                    case 1://isPreparing
+                        backgroundColor = '#5F9EA0';
+                        statusText = 'Đang đóng gói';
+                        break;
+                    case 2://isDeliveringOrder
+                        backgroundColor = '#0171d3';
+                        statusText = 'Đang giao';
+                        break;
+                    case 3://isSucccessfulOrder
+                        backgroundColor = '#4d8a54';
+                        statusText = 'Thành công';
+                        break;
+                    case 4://isCanceledOrder
+                        backgroundColor = '#ff0000';
+                        statusText = 'Đã hủy';
+                        break;
+                    default:
+                        backgroundColor = '#ffffff';
+                        statusText = 'Không xác định';
+                        break;
+                }
+                const orderHtml = `
         <tr class="text-center" style="cursor: pointer;" onclick="showOrderDetails(event, this)" id="${order.id}">
             <td class="geeks" style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle">${firstCol}</td>
             <td class="geeks " style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle" >${order.address}</td>
@@ -733,89 +1011,89 @@
         </tr>
         `;
 
-            $('#data tbody').append(orderHtml);
-        });
-    }
-
-    function hideDetailOrder() {
-        $('#detailOrder').css('display', 'none');
-    }
-
-    function formattedDate(value) {
-        // Định dạng ngày giờ theo yyyy-MM-dd HH:mm:ss.S
-        const orderDate = new Date(value);
-        const year = orderDate.getFullYear();
-        const month = String(orderDate.getMonth() + 1).padStart(2, '0');
-        const day = String(orderDate.getDate()).padStart(2, '0');
-        const hours = String(orderDate.getHours()).padStart(2, '0');
-        const minutes = String(orderDate.getMinutes()).padStart(2, '0');
-        const seconds = String(orderDate.getSeconds()).padStart(2, '0');
-        const milliseconds = String(orderDate.getMilliseconds()).padStart(3, '0');
-        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
-        return formattedDate;
-    }
-
-    function formattedPrice(value) {
-        const formattedPrice = new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-        }).format(value);
-        return formattedPrice;
-    }
-
-    function asNameStatus(statusNumber) {
-        const numericStatus = parseInt(statusNumber, 10); // Hoặc Number(status)
-        let statusText = '';
-        switch (numericStatus) {
-            case 0://isWaitConfirmOrder
-                statusText = 'Chờ xác nhận';
-                break;
-            case 1://isPreparing
-                statusText = 'Đang đóng gói';
-                break;
-            case 2://isDeliveringOrder
-                statusText = 'Đang giao';
-                break;
-            case 3://isSucccessfulOrder
-                statusText = 'Thành công';
-                break;
-            case 4://isCanceledOrder
-                statusText = 'Đã hủy';
-                break;
-            default:
-                statusText = 'Không xác định';
-                break;
+                $('#data tbody').append(orderHtml);
+            });
         }
-        return statusText;
-    }
 
-    function asColorStatus(statusNumber) {
-        let backgroundColor = '';
-        switch (statusNumber) {
-            case 0://isWaitConfirmOrder
-                backgroundColor = '#ffcc00';
-                break;
-            case 1://isPreparing
-                backgroundColor = '#5F9EA0';
-                break;
-            case 2://isDeliveringOrder
-                backgroundColor = '#0171d3';
-                break;
-            case 3://isSucccessfulOrder
-                backgroundColor = '#4d8a54';
-                break;
-            case 4://isCanceledOrder
-                backgroundColor = '#ff0000';
-                break;
-            default:
-                backgroundColor = '#ffffff';
-                break;
+        function hideDetailOrder() {
+            $('#detailOrder').css('display', 'none');
         }
-        return backgroundColor;
-    }
 
-    function showCancelOrder(orderId, rowIndex) {
-        let cancelOrderBox = `
+        function formattedDate(value) {
+            // Định dạng ngày giờ theo yyyy-MM-dd HH:mm:ss.S
+            const orderDate = new Date(value);
+            const year = orderDate.getFullYear();
+            const month = String(orderDate.getMonth() + 1).padStart(2, '0');
+            const day = String(orderDate.getDate()).padStart(2, '0');
+            const hours = String(orderDate.getHours()).padStart(2, '0');
+            const minutes = String(orderDate.getMinutes()).padStart(2, '0');
+            const seconds = String(orderDate.getSeconds()).padStart(2, '0');
+            const milliseconds = String(orderDate.getMilliseconds()).padStart(3, '0');
+            const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+            return formattedDate;
+        }
+
+        function formattedPrice(value) {
+            const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(value);
+            return formattedPrice;
+        }
+
+        function asNameStatus(statusNumber) {
+            const numericStatus = parseInt(statusNumber, 10); // Hoặc Number(status)
+            let statusText = '';
+            switch (numericStatus) {
+                case 0://isWaitConfirmOrder
+                    statusText = 'Chờ xác nhận';
+                    break;
+                case 1://isPreparing
+                    statusText = 'Đang đóng gói';
+                    break;
+                case 2://isDeliveringOrder
+                    statusText = 'Đang giao';
+                    break;
+                case 3://isSucccessfulOrder
+                    statusText = 'Thành công';
+                    break;
+                case 4://isCanceledOrder
+                    statusText = 'Đã hủy';
+                    break;
+                default:
+                    statusText = 'Không xác định';
+                    break;
+            }
+            return statusText;
+        }
+
+        function asColorStatus(statusNumber) {
+            let backgroundColor = '';
+            switch (statusNumber) {
+                case 0://isWaitConfirmOrder
+                    backgroundColor = '#ffcc00';
+                    break;
+                case 1://isPreparing
+                    backgroundColor = '#5F9EA0';
+                    break;
+                case 2://isDeliveringOrder
+                    backgroundColor = '#0171d3';
+                    break;
+                case 3://isSucccessfulOrder
+                    backgroundColor = '#4d8a54';
+                    break;
+                case 4://isCanceledOrder
+                    backgroundColor = '#ff0000';
+                    break;
+                default:
+                    backgroundColor = '#ffffff';
+                    break;
+            }
+            return backgroundColor;
+        }
+
+        function showCancelOrder(orderId, rowIndex) {
+            let cancelOrderBox = `
                         <p class="fst-italic text-body text-decoration-none fw-normal">Quý khách KHOAN hãy hủy đơn hàng.Nếu quý khách hàng có bất cứ vấn đề với đơn hàng của mình xin vui lòng liên hệ tổng đài HandMadeStore qua đường dây nóng 0336677141.Cám ơn quý khách!</p>
                         <div class="mb-3">
                           <label for="cancelReason" class="form-label">Lý do hủy đơn hàng</label>
@@ -828,51 +1106,51 @@
                             Đang hủy bỏ đơn hàng
                         </div>
                     `;
-        if ($('#cancelOrderBox')) {
-            $('#cancelOrderBox').html(cancelOrderBox)
+            if ($('#cancelOrderBox')) {
+                $('#cancelOrderBox').html(cancelOrderBox)
 
-            if ($('#cancelOrderBox').css('display') === 'none') {
-                $('#cancelOrderBox').css('display', 'block');
-            } else {
-                $('#cancelOrderBox').css('display', 'none');
+                if ($('#cancelOrderBox').css('display') === 'none') {
+                    $('#cancelOrderBox').css('display', 'block');
+                } else {
+                    $('#cancelOrderBox').css('display', 'none');
+                }
             }
         }
-    }
 
-    function cancelOrder(orderId, rowIndex) {
-        let cancelReason;
-        if ($('#cancelReason')) {
-        }
-        if ($('#loadingCancelBox')) {
-            $('#loadingCancelBox').css('display', 'block');
-        }
-        $.ajax({
-            method: "POST",
-            url: "/HandMadeStore/order-ajax-handle",
-            data: {
-                action: "customerCancelOrder",
-                orderId: orderId,
-                cancelReason: cancelReason
-            },
-            success: function (response) {
-                if ($('#status')) {
-                    console.log(response)
-                    $('#status').html(asNameStatus(response));
-                }
-                if ($('#cancelOrderBox')) {
-                    $('#cancelOrderBox').remove()
-                }
-                if ($('#btnShowCancelOrder')) {
-                    $('#btnShowCancelOrder').remove()
-                }
-                console.log("rowIndex " + rowIndex)
-                $('#data tbody tr').eq(rowIndex).remove();
-            },
-            error: function () {
-                alert("Hủy đơn hàng thất bại!");
+        function cancelOrder(orderId, rowIndex) {
+            let cancelReason;
+            if ($('#cancelReason')) {
             }
-        })
-    }
+            if ($('#loadingCancelBox')) {
+                $('#loadingCancelBox').css('display', 'block');
+            }
+            $.ajax({
+                method: "POST",
+                url: "/HandMadeStore/order-ajax-handle",
+                data: {
+                    action: "customerCancelOrder",
+                    orderId: orderId,
+                    cancelReason: cancelReason
+                },
+                success: function (response) {
+                    if ($('#status')) {
+                        console.log(response)
+                        $('#status').html(asNameStatus(response));
+                    }
+                    if ($('#cancelOrderBox')) {
+                        $('#cancelOrderBox').remove()
+                    }
+                    if ($('#btnShowCancelOrder')) {
+                        $('#btnShowCancelOrder').remove()
+                    }
+                    console.log("rowIndex " + rowIndex)
+                    $('#data tbody tr').eq(rowIndex).remove();
+                },
+                error: function () {
+                    alert("Hủy đơn hàng thất bại!");
+                }
+            })
+        }
 </script>
 </body>
 <%

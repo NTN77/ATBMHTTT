@@ -3,6 +3,7 @@ package model.service;
 import model.bean.User;
 import model.dao.OrderDAO;
 import model.dao.UserDAO;
+import utils.HashPassword;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,4 +126,13 @@ public class UserService {
     public boolean checkUserAllowedToRate(int productId, int userId) {
         return UserDAO.checkUserAllowedToRate(productId, userId);
     }
+
+    //* verify password
+    public boolean verifyPwd(String userId, String pwd) {
+        User user = UserDAO.getUserById(userId);
+        if (user == null) return false;
+        return HashPassword.toSHA1(pwd).equals(user.getPassword());
+    }
+
+
 }
