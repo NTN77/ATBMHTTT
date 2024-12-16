@@ -10,9 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/signature/KeyUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/database/handmadestore.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/database/handmadestore.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/KeyUtil.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +52,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.KeyUtil.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Tomcat Server.Tomcat 9.0.81.executor": "Run",
@@ -84,7 +85,20 @@
       <recent name="controller" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.KeyUtil">
+    <configuration name="KeyUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="signature.KeyUtil" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="signature.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 9.0.81" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.81" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
@@ -172,6 +186,11 @@
         </option>
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.KeyUtil" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -221,7 +240,10 @@
       <workItem from="1733655322289" duration="21000" />
       <workItem from="1734063276670" duration="393000" />
       <workItem from="1734063686924" duration="1109000" />
-      <workItem from="1734186377941" duration="6773000" />
+      <workItem from="1734186377941" duration="6891000" />
+      <workItem from="1734270558323" duration="1020000" />
+      <workItem from="1734311917310" duration="1601000" />
+      <workItem from="1734317873504" duration="410000" />
     </task>
     <servers />
   </component>
