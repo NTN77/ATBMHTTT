@@ -40,17 +40,6 @@ public class KeyGenerate  extends HttpServlet {
         }
     }
     private String convertToPEM(Key key, String type) {
-//        String encodedKey = Base64.getEncoder().encodeToString(key.getEncoded());
-//        StringBuilder pemFormat = new StringBuilder();
-//        pemFormat.append("-----BEGIN ").append(type).append("-----\n");
-//        //Chia base 64.
-//        for (int i = 0; i < encodedKey.length(); i += 64) {
-//            int end = Math.min(i + 64, encodedKey.length());
-//            pemFormat.append(encodedKey, i, end).append("\n");
-//        }
-//        pemFormat.append("-----END ").append(type).append("-----");
-//        System.out.println(pemFormat);
-//        return pemFormat.toString();
         String encodedKey = Base64.getEncoder().encodeToString(key.getEncoded());
         StringBuilder pemFormat = new StringBuilder();
         pemFormat.append("-----BEGIN ").append(type).append("-----\n");

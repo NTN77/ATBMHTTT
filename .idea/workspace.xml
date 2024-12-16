@@ -10,12 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ajax_handle/UserAjaxHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ajax_handle/UserAjaxHandle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/changeUserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/changeUserInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/DB.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/DB.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/KeyGenerate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/KeyGenerate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/Admin/changeUserInfo.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/Admin/changeUserInfo.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,6 +51,8 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.KeyDAO.executor&quot;: &quot;Run&quot;,
+    &quot;Application.KeyService.executor&quot;: &quot;Run&quot;,
     &quot;Application.UserService.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -86,6 +84,32 @@
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.87">
+    <configuration name="KeyDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.dao.KeyDAO" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KeyService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.service.KeyService" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UserService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.service.UserService" />
       <module name="HandMadeStore" />
@@ -188,6 +212,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.KeyService" />
+        <item itemvalue="Application.KeyDAO" />
         <item itemvalue="Application.UserService" />
       </list>
     </recent_temporary>
@@ -245,7 +271,8 @@
       <workItem from="1734090301420" duration="1510000" />
       <workItem from="1734144583214" duration="2824000" />
       <workItem from="1734177818503" duration="7516000" />
-      <workItem from="1734231419523" duration="13370000" />
+      <workItem from="1734231419523" duration="27270000" />
+      <workItem from="1734311273487" duration="1875000" />
     </task>
     <servers />
   </component>
@@ -266,15 +293,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java</url>
-          <line>815</line>
-          <properties class="model.dao.ProductDAO">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java</url>
           <line>954</line>

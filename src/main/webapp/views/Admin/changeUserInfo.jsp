@@ -234,6 +234,38 @@
             color: #333;
         }
 
+        #up-new-key  {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Căn giữa */
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 11; /* Trên overlay */
+            width: 50%; /* Chiều rộng của box */
+            display: none; /* Ẩn mặc định */
+        }
+
+        #up-new-key h2 {
+            text-align: center;
+
+        }
+        #up-new-key textarea {
+            background-color: #e9ecef;
+            resize: none;
+        }
+
+        #up-new-key .close-screen-key {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            background-color: #f27474;
+        }
+
 
 
     </style>
@@ -388,7 +420,7 @@
 
                             <div class="button-security d-flex justify-content-center">
                                 <button class="btn btn-info" onclick="showAddKeyScreen()">Thêm khoá mới</button>
-                                <button class="btn btn-info ms-2">Tải khoá có sẵn</button>
+                                <button class="btn btn-info ms-2" onclick="showUpKeyScreen()">Tải khoá có sẵn</button>
                             </div>
 
                         </div>
@@ -538,6 +570,8 @@
             <input type="text" id="keyName" class="form-control" placeholder="Vui lòng sử dụng - thay cho khoảng trắng. Ví dụ: lenovo-thinkbook-g7">
         </div>
         <button onclick="generateKey()" class="btn btn-warning add-btn mb-2">Tạo khoá</button>
+        <br>
+        <p id="generateCountdownText" style="display: none; font-style: italic; font-size: 12px"></p>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Public Key</label>
@@ -546,17 +580,47 @@
             <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">
                     Private Key
-                    <span class="download-icon" title="Tải xuống">&#x1F4E5;</span>
+                    <span onclick="downloadPriKey()" class="download-icon" style="display: none" title="Tải xuống">
+                        <i class="fa-solid fa-download"></i>
+                    </span>
                 </label>
                 <textarea id="privateKey" class="form-control" rows="4" readonly></textarea>
             </div>
         </div>
+        <!-- Hiển thị thời gian đếm ngược cho private key -->
+        <p id="privateKeyCountdownText" style="display: none; font-style: italic; font-size: 12px"></p>
 
 
         <!-- Link và Xác nhận -->
         <div class="d-flex justify-content-between align-items-center">
             <span class="link" onclick="goBack()">Bạn đã có khoá?</span>
-            <button class="btn btn-success">Xác nhận</button>
+            <button class="btn btn-success" onclick="addKeyIntoDB()">Xác nhận</button>
+        </div>
+    </div>
+
+    <div class="mt-4 " id="up-new-key">
+        <h2 class="mb-4">Tải khoá lên</h2>
+
+        <button onclick="exitUpKey()" class="btn-close close-screen-key">
+        </button>
+
+        <!-- Nhập tên khoá -->
+        <div class="mb-3">
+            <label for="ukeyName" class="form-label fw-bold">Tên khoá</label>
+            <input type="text" id="ukeyName" class="form-control" placeholder="Vui lòng sử dụng - thay cho khoảng trắng. Ví dụ: lenovo-thinkbook-g7">
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mb-16">
+                <label class="form-label fw-bold">Public Key</label>
+                <button onclick="uploadKey()" class="btn btn-warning add-btn mb-2">
+                <i class="fa-solid fa-upload"></i> Tải lên</button>
+                <textarea id="upublicKey" class="form-control" rows="4" readonly></textarea>
+            </div>
+        </div>
+        <!-- Link và Xác nhận -->
+        <div class="d-flex justify-content-center align-items-center mt-2">
+            <button class="btn btn-success" onclick="upKeyIntoDB()">Xác nhận</button>
         </div>
     </div>
 
@@ -601,12 +665,38 @@
     function exitAddKey() {
         document.querySelector('.overlay').style.display = 'none';
         document.getElementById('add-new-key').style.display = 'none';
+        document.getElementById("publicKey").value = "";
     }
 
+    function showUpKeyScreen() {
+        document.getElementById('up-new-key').style.display = 'block';
+        document.querySelector('.overlay').style.display = 'block';
+    }
+
+    function exitUpKey() {
+        document.querySelector('.overlay').style.display = 'none';
+        document.getElementById('up-new-key').style.display = 'none';
+        document.getElementById("upublicKey").value = "";
+    }
+
+
+    let cooldownTime = 30; //30s de tao khoa moi.
+    let privateKeyTimeout = 60;
+    let countdownInterval, privateKeyInterval;
+
     /**
-     * Genkey
+     * Taoj khoa
      */
     function generateKey() {
+        const generateButton = document.querySelector(".add-btn");
+        const generateCountdownText = document.getElementById("generateCountdownText");
+
+        if (privateKeyInterval) {
+            clearInterval(privateKeyInterval);
+        }
+
+        privateKeyTimeout = 60;
+
         $.ajax({
             method: "GET",
             url: "/HandMadeStore/generate-key",
@@ -614,25 +704,180 @@
                 //HIển thị pub & pri
                 document.getElementById("publicKey").value = resp.publicKey;
                 document.getElementById("privateKey").value = resp.privateKey;
-
-                // Sau 2 phút, privatekey biến mất giá trị.
-                setTimeout(function() {
-                    document.getElementById("privateKey").value = "";
-                    alert("Private key đã hết hạn và bị xoá.");
+                document.querySelector(".download-icon").style.display = "inline";
 
 
-                }, 2 * 60 *1000);
+                // Bắt đầu đếm ngược cho private key (sau 60 giây sẽ bị ẩn và xóa)
+                privateKeyCountdown();
+
+                // Bắt đầu đếm ngược thời gian (30 giây) cho nút Tạo khoá
+                startGenerateKeyCountdown(generateButton, generateCountdownText);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error("AJAX Error: " + textStatus + " - " + errorThrown);
                 alert("Không tạo được khoá, vui lòng thử lại sau");
+                // Bật lại nút Tạo khoá nếu có lỗi
+                generateButton.disabled = false;
             }
-
-
-
         });
     }
 
+
+    // count down cho tao khoa.
+    function startGenerateKeyCountdown(generateButton, generateCountdownText) {
+
+        countdownInterval = setInterval(function() {
+            cooldownTime--;
+            generateCountdownText.style.display = "inline";
+            generateButton.disabled = true;
+            generateCountdownText.textContent = `Vui lòng chờ ${cooldownTime} giây để tạo lại khoá.`;
+
+            if (cooldownTime <= 0) {
+                clearInterval(countdownInterval);
+                generateCountdownText.style.display = "none";
+                generateButton.disabled = false;
+                cooldownTime = 30;
+            }
+        }, 1000);
+    }
+
+    function privateKeyCountdown() {
+        privateKeyInterval = setInterval(function() {
+            privateKeyTimeout--;
+
+            const privateKeyCountdownText = document.getElementById("privateKeyCountdownText");
+            privateKeyCountdownText.style.display = "inline";
+            privateKeyCountdownText.textContent = `Private key sẽ hết hạn trong ${privateKeyTimeout} giây.`;
+
+            if (privateKeyTimeout <= 0) {
+                clearInterval(privateKeyInterval);
+                document.getElementById("privateKey").value = "";
+                document.querySelector(".download-icon").style.display = "none";
+                privateKeyCountdownText.style.display = "none";
+                alert("Private key đã hết hạn và bị xoá.");
+            }
+        }, 1000);
+    }
+
+    // download private key về máy tính.
+    function downloadPriKey() {
+        const privateKey = document.getElementById("privateKey").value;
+        if(privateKey) {
+            const blob = new Blob([privateKey], {type: "application/x-pem-file"});
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "private_key.pem";
+            link.click();
+        } else {
+            alert("Lỗi không tải xuống!")
+        }
+    }
+
+    /**
+     * Đẩy khoá public lên database.
+     *
+     */
+    function addKeyIntoDB() {
+        const title = document.getElementById("keyName").value;
+        const publicKey = document.getElementById("publicKey").value;
+
+        $.ajax({
+            method: "POST",
+            url: "/HandMadeStore/add-public-key",
+            data : {
+                title : title,
+                publicKey : publicKey,
+                userId: <%=user.getId()%>
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error: " + textStatus + " - " + errorThrown);
+                alert("Không thể thêm khoá vào cơ sở dữ liệu, vui lòng thử lại sau");
+            }
+
+        });
+
+
+    }
+
+    // Upload public key lên giao diện.
+    function uploadKey() {
+        const inputFile = document.createElement('input');
+        inputFile.type = 'file';
+        inputFile.accept = '.pem';
+
+        inputFile.onchange = (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                // đọc ội dung file.
+                reader.onload = (e) => {
+                    const content = e.target.result;
+
+                    document.getElementById('upublicKey').value = content.trim();
+                };
+
+                reader.onerror = () => {
+                    alert('Loi khi doc tep . Vui long thu lai')
+                };
+
+                reader.readAsText(file);
+
+
+            }
+        };
+        inputFile.click();
+    }
+
+    //public key must be format pem.
+    function validatePublicKey(publicKey) {
+        const pemRex = /-----BEGIN PUBLIC KEY-----\n([A-Za-z0-9+/=\n]+)-----END PUBLIC KEY-----/;
+        if(!pemRex.test(publicKey.trim())) {
+            return false;
+        }
+        return true;
+    }
+
+    function upKeyIntoDB() {
+        const title = document.getElementById("ukeyName").value;
+        const publicKey = document.getElementById("upublicKey").value;
+
+        if (!validatePublicKey(publicKey)) {
+            alert("Public key không đúng định dạng PEM!");
+            return;
+        }
+
+
+        $.ajax({
+            method: "POST",
+            url: "/HandMadeStore/add-public-key",
+            data : {
+                title : title,
+                publicKey : publicKey,
+                userId: <%=user.getId()%>
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error: " + textStatus + " - " + errorThrown);
+                alert("Không thể thêm khoá vào cơ sở dữ liệu, vui lòng thử lại sau");
+            }
+
+        });
+
+
+    }
 
 
 
@@ -679,7 +924,7 @@
 
         // XỬ LÝ DÀNH CHO THAY ĐỔI THÔNG TIN CÁ NHÂN.
 
-        function changeName() {
+            function changeName() {
             const newName = document.getElementById("input_name").value;
             $.ajax({
                 method: "POST",
