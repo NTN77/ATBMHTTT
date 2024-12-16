@@ -24,8 +24,7 @@ USE `handmadestore`;
 CREATE TABLE IF NOT EXISTS `banner_items` (
                                               `title` varchar(50) NOT NULL,
     `description` text DEFAULT NULL,
-    `img_path` text NOT NULL,
-    PRIMARY KEY (`title`) USING BTREE
+    `img_path` text NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table handmadestore.banner_items: ~3 rows (approximately)
@@ -1294,8 +1293,7 @@ CREATE TABLE IF NOT EXISTS `tips` (
                                       `title` varchar(50) NOT NULL,
     `description` text DEFAULT NULL,
     `img_path` text NOT NULL,
-    `video_link` varchar(255) NOT NULL,
-    PRIMARY KEY (`title`) USING BTREE
+    `video_link` varchar(255) NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table handmadestore.tips: ~3 rows (approximately)
