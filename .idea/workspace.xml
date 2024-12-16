@@ -10,8 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/KeyGenerate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/KeyGenerate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Key.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Key.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/Admin/changeUserInfo.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/Admin/changeUserInfo.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -124,6 +128,8 @@
       </method>
     </configuration>
     <configuration name="Tomcat 9.0.87" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.87" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="HOT_SWAP_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="HandMadeStore:war">
@@ -210,6 +216,12 @@
         </option>
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.KeyDAO" />
+      <item itemvalue="Application.KeyService" />
+      <item itemvalue="Application.UserService" />
+      <item itemvalue="Tomcat Server.Tomcat 9.0.87" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.KeyService" />
@@ -272,7 +284,7 @@
       <workItem from="1734144583214" duration="2824000" />
       <workItem from="1734177818503" duration="7516000" />
       <workItem from="1734231419523" duration="27270000" />
-      <workItem from="1734311273487" duration="1875000" />
+      <workItem from="1734311273487" duration="16248000" />
     </task>
     <servers />
   </component>

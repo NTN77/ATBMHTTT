@@ -19,7 +19,7 @@ public class KeyGenerate  extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             //Tạo cặp khoá RSA - 2048.
-            KeyPairGenerator  keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            KeyPairGenerator  keyPairGenerator = KeyPairGenerator.getInstance("DSA");
             keyPairGenerator.initialize(2048);
             KeyPair keyPair = keyPairGenerator.generateKeyPair();
 

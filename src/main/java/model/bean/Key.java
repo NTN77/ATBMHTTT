@@ -20,7 +20,4 @@ public class Key implements Serializable {
     private Timestamp createdTime;
     private Timestamp updatedTime;
     private int userId;
-
-
-
 }

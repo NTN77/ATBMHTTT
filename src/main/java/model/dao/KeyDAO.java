@@ -1,6 +1,9 @@
 package model.dao;
 
+import model.bean.Key;
 import model.db.JDBIConnector;
+
+import java.util.List;
 
 public class KeyDAO {
 
@@ -18,9 +21,29 @@ public class KeyDAO {
         });
     }
 
+    /**
+     * Có 3 status của public key gồm:
+     * 1 = active : key đang được sử dụng.
+     * Thông tin hiển thị:
+     *
+     * 2 = revoked : key đã bị thu hồi vĩnh viễn do bị lộ.
+     * 3 = archived : key do người dùng xoá do không còn sử dụng nữa.
+     *
+     */
+        public static List<Key> getPublicKeyActiveByUserId(int userId) {
+            String sql = "select id, title, publicKey, status, createdTime, updatedTime, userId from key_user WHERE userId = :userId AND status = 1";
+            List<Key> keys = JDBIConnector.me().withHandle(handle ->  handle.createQuery(sql)
+                    .bind("userId", userId)
+                    .mapToBean(Key.class)
+                    .list()
+            );
+            return keys;
+        }
+
     public static void main(String[] args) {
-        insertPublicKey("lenovo-thinkbook-g7",
-                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2mlIGzpi9oZm8cKcnHMI", 15);
+        System.out.println("key nè");
+        System.out.println(  getPublicKeyActiveByUserId(15));
+
     }
 
 

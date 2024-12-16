@@ -388,37 +388,39 @@
                                     <i class="fa-solid fa-eye"></i>
                                 </button>
                             </div>
-
-                            <div class="auth-key mt-2">
-                                <div class="auth-key-header">
-                                    <i class="fa-solid fa-key img-key"></i>
-                                    <strong>lenovo-thinkbook-g7</strong>
-                                </div>
-                                <div class="auth-key-details">
-                                    <span>SHA256: fVoTv61qlwUodrkrMuWbIFouXjjbSYE7z0vf6sRXDAg</span>
-                                    <span>Đã được thêm vào 1-12-2024</span>
-                                </div>
-                                <div class="auth-key-actions">
-                                    <span class="status">Lần cuối được sử dụng là 5 ngày trước </span>
-                                    <button>Xoá</button>
-                                </div>
-                            </div>
-                            <div class="auth-key mt-2">
-                                <div class="auth-key-header">
-                                    <i class="fa-solid fa-key img-key"></i>
-                                    <strong>lenovo-thinkbook-g7</strong>
-                                </div>
-                                <div class="auth-key-details">
-                                    <span>SHA256: fVoTv61qlwUodrkrMuWbIFouXjjbSYE7z0vf6sRXDAg</span>
-                                    <span>Đã được thêm vào 1-12-2024</span>
-                                </div>
-                                <div class="auth-key-actions">
-                                    <span class="status">Lần cuối được sử dụng là 5 ngày trước </span>
-                                    <button>Xoá</button>
-                                </div>
+                            <div id="authKeysContainer">
                             </div>
 
-                            <div class="button-security d-flex justify-content-center">
+<%--                            <div class="auth-key mt-2">--%>
+<%--                                <div class="auth-key-header">--%>
+<%--                                    <i class="fa-solid fa-key img-key"></i>--%>
+<%--                                    <strong>lenovo-thinkbook-g7</strong>--%>
+<%--                                </div>--%>
+<%--                                <div class="auth-key-details">--%>
+<%--                                    <span>SHA256: fVoTv61qlwUodrkrMuWbIFouXjjbSYE7z0vf6sRXDAg</span>--%>
+<%--                                    <span>Đã được thêm vào 1-12-2024</span>--%>
+<%--                                </div>--%>
+<%--                                <div class="auth-key-actions">--%>
+<%--                                    <span class="status">Lần cuối được sử dụng là 5 ngày trước </span>--%>
+<%--                                    <button>Xoá</button>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <div class="auth-key mt-2">--%>
+<%--                                <div class="auth-key-header">--%>
+<%--                                    <i class="fa-solid fa-key img-key"></i>--%>
+<%--                                    <strong>lenovo-thinkbook-g7</strong>--%>
+<%--                                </div>--%>
+<%--                                <div class="auth-key-details">--%>
+<%--                                    <span>SHA256: fVoTv61qlwUodrkrMuWbIFouXjjbSYE7z0vf6sRXDAg</span>--%>
+<%--                                    <span>Đã được thêm vào 1-12-2024</span>--%>
+<%--                                </div>--%>
+<%--                                <div class="auth-key-actions">--%>
+<%--                                    <span class="status">Lần cuối được sử dụng là 5 ngày trước </span>--%>
+<%--                                    <button>Xoá</button>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+
+                            <div class="button-security d-flex justify-content-center mt-2">
                                 <button class="btn btn-info" onclick="showAddKeyScreen()">Thêm khoá mới</button>
                                 <button class="btn btn-info ms-2" onclick="showUpKeyScreen()">Tải khoá có sẵn</button>
                             </div>
@@ -631,8 +633,11 @@
 <input type="hidden" id="showCouter" value="<%=showCouter%>">
 <input type="hidden" id="statusNumber" value="-1">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/sha1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/vi.js"></script>
 <script>
+
+    moment.locale('vi');
 
     <%--    Thiết lập ẩn hiện các tab:--%>
     document.querySelectorAll('.nav-link').forEach(tab => {
@@ -918,13 +923,78 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire('Mật khẩu chính xác!', '', 'success');
+                fetchPublicKeys();
+            }
+        });
+    }
+    // Sau khi verify password thành công, thì sẽ hiển thị public key lấy từ database.
+    function fetchPublicKeys() {
+        const userId = <%=user.getId()%>;
+
+        $.ajax({
+            url: '/HandMadeStore/get-public-keys?userId=' + userId,
+            method: 'GET',
+            success: function (response) {
+                if (response.success !== false) {
+                    // Xử lý hiển thị các khoá công khai
+                    displayKeys(response);
+                } else {
+                    Swal.fire("Lỗi", response.message, "error");
+                }
+            },
+            error: function (xhr, status, error) {
+                Swal.fire("Lỗi", "Không thể tải thông tin khoá!", "error");
             }
         });
     }
 
+    function displayKeys(keys) {
+        const keysContainer = document.getElementById("authKeysContainer");
+        keysContainer.innerHTML = '';
+
+        // Duyệt qua danh sách các khoá và hiển thị chúng
+        keys.forEach(key => {
+            const keyElement = document.createElement("div");
+            keyElement.classList.add("auth-key", "mt-2");
+
+
+            // Format thời gian với moment.js
+            const createdTime = moment(key.createdTime).locale('vi').format('DD/MM/YYYY [lúc] HH:mm:ss');
+
+            let updatedTime;
+
+            // Kiểm tra nếu updatedTime là null
+            if (key.updatedTime) {
+                updatedTime = moment(key.updatedTime).locale('vi').format('DD/MM/YYYY [lúc] HH:mm:ss');
+            } else {
+                updatedTime = "chưa sử dụng";
+            }
+
+            keyElement.innerHTML = `
+            <div class="auth-key-header">
+                <i class="fa-solid fa-key img-key"></i>
+                <strong>${key.title}</strong>
+            </div>
+            <div class="auth-key-details">
+                <span>Nội dung khoá : <br> ${key.publicKey.slice(0, 30)}...${key.publicKey.slice(-30)}</span>
+                <span>Đã được thêm vào ${createdTime}</span>
+            </div>
+            <div class="auth-key-actions">
+                <span class="status">Lần cuối được sử dụng là ${updatedTime}</span>
+                <button onclick="deleteKey(${key.userId})">Xoá</button>
+            </div>
+        `;
+
+            keysContainer.appendChild(keyElement);
+        });
+    }
+
+
+
+
         // XỬ LÝ DÀNH CHO THAY ĐỔI THÔNG TIN CÁ NHÂN.
 
-            function changeName() {
+             function changeName() {
             const newName = document.getElementById("input_name").value;
             $.ajax({
                 method: "POST",
