@@ -10,13 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/KeyGenerate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/KeyGenerate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Key.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Key.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/changeUserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/changeUserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Cart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/Admin/changeUserInfo.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/Admin/changeUserInfo.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/CartPage/view/cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/CartPage/view/cart.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/css/paymentpage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/css/paymentpage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +68,7 @@
     &quot;git-widget-placeholder&quot;: &quot;generate-key-pair&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/cuoi-ky/HandMadeStore&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/main-project/ATBMHTTT/Signature&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -128,8 +129,6 @@
       </method>
     </configuration>
     <configuration name="Tomcat 9.0.87" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.87" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
-      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
-      <option name="HOT_SWAP_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="HandMadeStore:war">
@@ -284,7 +283,10 @@
       <workItem from="1734144583214" duration="2824000" />
       <workItem from="1734177818503" duration="7516000" />
       <workItem from="1734231419523" duration="27270000" />
-      <workItem from="1734311273487" duration="16248000" />
+      <workItem from="1734311273487" duration="33513000" />
+      <workItem from="1734444039404" duration="1280000" />
+      <workItem from="1734507795582" duration="1614000" />
+      <workItem from="1734513352062" duration="1574000" />
     </task>
     <servers />
   </component>

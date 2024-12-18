@@ -329,6 +329,31 @@
                             </tfoot>
                         </table>
                     </div>
+                    <div class="row p-3 "  data-bs-toggle="tooltip" data-bs-placement="top" title="Hoàn thiện thông tin đơn hàng trước khi tải về!">
+                        <button class="btn-downOrder p-2" disabled type="button">
+
+                                <i class="fa-solid fa-download"></i>
+                            <span class="btn-downOrder-text">Tải đơn hàng về để ký</span>
+                        </button>
+
+                    </div>
+
+                    <div class="row p-3 d-flex justify-content-center">
+                        <div class="container-signature">
+                            <div class="header-signature">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+                                    <path d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg> <p>Tải chữ ký lên tại đây!</p>
+                            </div>
+                            <label for="file-signature" class="footer-signature">
+                                <svg fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path><path d="M18.153 6h-.009v5.342H23.5v-.002z"></path></g></svg>
+                                <p class="my-auto">Chưa có file nào được chọn.</p>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21 16.1479 21H7.85206C6.80699 21 5.93811 20.1954 5.85795 19.1534L5.16565 10.1534Z" stroke="#000000" stroke-width="2"></path> <path d="M19.5 5H4.5" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M10 3C10 2.44772 10.4477 2 11 2H13C13.5523 2 14 2.44772 14 3V5H10V3Z" stroke="#000000" stroke-width="2"></path> </g></svg>
+                            </label>
+                            <input id="file-signature" type="file">
+                        </div>
+                    </div>
+
+
                     <div class="row py-3 ">
                         <div class="col-5 d-flex align-items-center">
                             <span><a href="/HandMadeStore/payment?backToCart=true"
@@ -365,7 +390,7 @@
     $(document).ready(function () {
         const startMillis = parseInt($('#paymentStartTime').val());
         const countDownEl = document.getElementById('count-down');
-        const countdownTime = 1 * 60 * 1000; // 2 phút = 120000 ms
+        const countdownTime = 15 * 60 * 1000; // 2 phút = 120000 ms
         const endTime = startMillis + countdownTime;
         function updateCountdown() {
             const now = Date.now();
@@ -587,7 +612,7 @@
                                                        no-repeat
                         `,
                             showConfirmButton: false,
-                            timer: 4000
+                            timer: 20000
                         }).then(function () {
                             window.location.href = "../../views/MainPage/view_mainpage/mainpage.jsp"; // Chuyển hướng về trang chủ
                         });
@@ -621,70 +646,6 @@
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(amount);
     }
-
-
-    //       function sendDataToServlet() {
-    //           var namePay = document.getElementById("namePay").value;
-    //           var phonePay = document.getElementById("phonePay").value;
-    //           var formattedAddress = document.getElementById("formattedAddress").value;
-    //           var shippingFee = document.getElementById("shippingFeeInput").value;
-    //           var totalAmount = document.getElementById("totalAmountInput").value;
-    //
-    //           console.log("click button");
-    //
-    //           $.ajax({
-    //               type: "POST",
-    //               url: "HandMadeStore/payment", // Đường dẫn đến servlet của bạn
-    //               data: {
-    //                   namePay: namePay,
-    //                   phonePay: phonePay,
-    //                   formattedAddress: formattedAddress,
-    //                   shippingFee: shippingFee,
-    //                   totalAmount: totalAmount
-    //               },
-    //               dataType: "json",
-    //               success: function(response) {
-    //                   if(response.success){
-    //                       alert("Thanh cong");
-    // //                   Swal.fire({
-    //                       //                       title: "Cảm ơn bạn, đơn hàng đã được tạo!",
-    //                       //                       width: 600,
-    //                       //                       padding: "3em",
-    //                       //                       color: "rgba(123,255,2,0.45)",
-    //                       //                       background: "#fff url(/images/trees.png)",
-    //                       //                       backdrop: `
-    //                       //                                rgba(0,0,123,0.4)
-    //                       //                               url("/images/nyan-cat.gif")
-    //                       //                                   left top
-    //                       //                                no-repeat
-    //                       // `                     ,
-    //                       //                       showConfirmButton: false,
-    //                       //                       timer: 2000
-    //                       //                   }).then(function () {
-    //                       //                       window.location.href = "/views/MainPage/view_mainpage/mainpage.jsp"; // Chuyển hướng về trang chủ
-    //                       //                   });
-    //                                         }
-    //                   else {
-    //                       console.log("Error:", response.message)
-    //                       Swal.fire({
-    //                           icon: 'error',
-    //                           title: 'Vui lòng kiểm tra các trường dữ liệu!',
-    //                           text: response.message,
-    //                           showConfirmButton: true
-    //                       });
-    //                   }
-    //               },
-    //               error: function(xhr, status, error) {
-    //                   // Xử lý lỗi nếu có
-    //                   Swal.fire({
-    //                       icon: 'error',
-    //                       title: 'Đặt hàng không thành công!',
-    //                       text: 'Vui lòng thử lại sau.',
-    //                       showConfirmButton: true
-    //                   });
-    //               }
-    //           });
-    //       }
 
 
 </script>

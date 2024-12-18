@@ -390,36 +390,6 @@
                             </div>
                             <div id="authKeysContainer">
                             </div>
-
-<%--                            <div class="auth-key mt-2">--%>
-<%--                                <div class="auth-key-header">--%>
-<%--                                    <i class="fa-solid fa-key img-key"></i>--%>
-<%--                                    <strong>lenovo-thinkbook-g7</strong>--%>
-<%--                                </div>--%>
-<%--                                <div class="auth-key-details">--%>
-<%--                                    <span>SHA256: fVoTv61qlwUodrkrMuWbIFouXjjbSYE7z0vf6sRXDAg</span>--%>
-<%--                                    <span>Đã được thêm vào 1-12-2024</span>--%>
-<%--                                </div>--%>
-<%--                                <div class="auth-key-actions">--%>
-<%--                                    <span class="status">Lần cuối được sử dụng là 5 ngày trước </span>--%>
-<%--                                    <button>Xoá</button>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="auth-key mt-2">--%>
-<%--                                <div class="auth-key-header">--%>
-<%--                                    <i class="fa-solid fa-key img-key"></i>--%>
-<%--                                    <strong>lenovo-thinkbook-g7</strong>--%>
-<%--                                </div>--%>
-<%--                                <div class="auth-key-details">--%>
-<%--                                    <span>SHA256: fVoTv61qlwUodrkrMuWbIFouXjjbSYE7z0vf6sRXDAg</span>--%>
-<%--                                    <span>Đã được thêm vào 1-12-2024</span>--%>
-<%--                                </div>--%>
-<%--                                <div class="auth-key-actions">--%>
-<%--                                    <span class="status">Lần cuối được sử dụng là 5 ngày trước </span>--%>
-<%--                                    <button>Xoá</button>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
                             <div class="button-security d-flex justify-content-center mt-2">
                                 <button class="btn btn-info" onclick="showAddKeyScreen()">Thêm khoá mới</button>
                                 <button class="btn btn-info ms-2" onclick="showUpKeyScreen()">Tải khoá có sẵn</button>

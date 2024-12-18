@@ -2,13 +2,6 @@
 <%@ page import="java.util.*" %>
 <%@ page import="model.service.ProductService" %>
 <%@ page import="model.bean.*" %><%--
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<%--
->>>>>> origin/main
->>>>>>> origin/main
 
   Created by IntelliJ IDEA.
   User: Kien Nguyen
@@ -97,41 +90,6 @@
 
 
     }
-
-
-
-//    for(Map.Entry<Integer, Item> itemEntry : cart.getItems().entrySet()){
-//        int stock = ProductService.getStockProduct(itemEntry.getKey());
-//        int isSale = ProductService.getIsSale(itemEntry.getKey());
-//        double price = ProductService.getInstance().productPriceIncludeDiscount(itemEntry.getValue().getProduct());
-//        System.out.println(price);
-//        itemEntry.getValue().getProduct().setStock(stock);
-//        if(itemEntry.getValue().getPrice() != price) {
-//            itemEntry.getValue().setPrice(price);
-//        }
-//
-//        if(isSale == 0) {
-//            messages.add("Sản phẩm " + itemEntry.getValue().getProduct().getName() + " đã ngừng kinh doanh.");
-//
-//        }
-//
-//
-//
-//        if(stock == 0 ) {
-//            itemEntry.getValue().setQuantity(stock);
-//            messages.add("Sản phẩm " + itemEntry.getValue().getProduct().getName() + " đã hết hàng.");
-//        }
-//
-//
-//        else if(itemEntry.getValue().getQuantity() > stock ) {
-//            itemEntry.getValue().setQuantity(stock);
-//            messages.add("Sản phẩm " + itemEntry.getValue().getProduct().getName() + " chỉ còn " + stock + " sản phẩm.");
-//        }
-//    }
-
-
-
-
 %>
 
 
