@@ -1,6 +1,7 @@
 package model.dao;
 
 import model.bean.Key;
+import model.bean.KeyOrderDTO;
 import model.db.JDBIConnector;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -46,7 +47,27 @@ public class KeyDAO {
             return keys;
         }
 
+    /**
+     * HIển thị thông tin khoá trong trang thanh toán.
+     */
+
+    public static List<KeyOrderDTO> getInformationPublicKeyForPayment(int userId) {
+        String sql = "Select id, title from key_user where userId = :userId and status =1";
+        List<KeyOrderDTO>keys = JDBIConnector.me().withHandle(
+                handle -> handle.createQuery(sql)
+                        .bind("userId", userId)
+                        .map((rs, ctx) -> new KeyOrderDTO(
+                                rs.getInt("id"),
+                                rs.getString("title")
+                        )).list()
+        );
+        return keys;
+    }
+
+
+  
 // Nghĩa làm
+
 
     public static List<Key> getPublicKey(int userId){
         return JDBIConnector.me().withHandle(handle ->

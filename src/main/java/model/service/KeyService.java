@@ -1,6 +1,7 @@
 package model.service;
 
 import model.bean.Key;
+import model.bean.KeyOrderDTO;
 import model.dao.KeyDAO;
 
 import java.util.List;
@@ -20,6 +21,10 @@ public class KeyService {
     public List<Key> getPublicKeyActiveByUserId(int userId) {
 
         return KeyDAO.getPublicKeyActiveByUserId(userId);
+    }
+
+    public List<KeyOrderDTO> getKeyOrderDTOByUserId(int userId) {
+        return  KeyDAO.getInformationPublicKeyForPayment(userId);
     }
 
     public static void main(String[] args) {

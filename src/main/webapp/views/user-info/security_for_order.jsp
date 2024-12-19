@@ -1,15 +1,8 @@
 <%@ page import="model.bean.User" %>
-<%@ page import="model.bean.Order" %>
-<%@ page import="java.util.List" %>
-<%@ page import="model.bean.OrderDetail" %>
-<%@ page import="model.bean.Product" %>
-<%@ page import="model.service.*" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.Currency" %>
 <%@ page import="java.text.NumberFormat" %>
 
-<%@ page import="org.eclipse.tags.shaded.org.apache.xpath.operations.Or" %>
-<%@ page import="utils.HashPassword" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Locale locale = new Locale("vi", "VN");

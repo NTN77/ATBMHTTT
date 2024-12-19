@@ -1,11 +1,12 @@
-<%@ page import="model.bean.User" %>
-<%@ page import="model.bean.Cart" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.Currency" %>
 <%@ page import="java.text.NumberFormat" %>
-<%@ page import="model.bean.Item" %>
 <%@ page import="model.service.ImageService" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="model.bean.*" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.adapter.InventoryProductMappers" %>
+<%@ page import="model.service.KeyService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Long paymentStartTime = 0L;
@@ -53,6 +54,10 @@
     Currency currency = Currency.getInstance(locale);
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
     numberFormat.setCurrency(currency);
+
+    // Lấy danh sách publicKeys từ request
+    List<KeyOrderDTO> publicKeys = KeyService.getInstance().getKeyOrderDTOByUserId(user.getId());
+    System.out.println("PUBLIC KEY ở giao diện: " + publicKeys);
 %>
 
 <%--Tạo cac parameter.--%>
@@ -200,6 +205,16 @@
                             </label>
                             <i class="fa-regular fa-money-bill-1 fa-xl ms-auto" style="color: #357ebd;"></i>
                         </div>
+
+                        <div class="form-floating mb-3">
+                            <select id="publicKeyDropdown" class="form-select"
+                                    aria-label="Khoá công khai">
+                                <option value="">Chọn khoá công khai muốn sử dụng</option>
+                            </select>
+                            <label for="publicKeyDropdown">Khoá công khai</label>
+                        </div>
+
+
                         <img src="" alt="">
                         <input type="hidden" id="shippingFeeInput" name="shippingFee" value="">
                         <input type="hidden" id="totalAmountInput" name="totalAmount" value="">
@@ -308,7 +323,7 @@
                                 <th class="text-start fw-medium">
                                     Phí vận chuyển
                                 </th>
-                                <td id="shippingFeeResult" class="text-end pe-3">30000</td>
+                                <td id="shippingFeeResult" class="text-end pe-3"></td>
                             </tr>
                             </tbody>
                             <tfoot>
@@ -321,7 +336,7 @@
                                 <td id="totalAmount" class="text-end pe-3 fs-4">
 
                                 <span>
-                                   <%=numberFormat.format(totalMoney)%>
+
                                 </span>
 
                                 </td>
@@ -329,6 +344,31 @@
                             </tfoot>
                         </table>
                     </div>
+                    <div class="row p-3 "  data-bs-toggle="tooltip" data-bs-placement="top" title="Hoàn thiện thông tin đơn hàng trước khi tải về!">
+                        <button id="btn-download-order" class="btn-downOrder p-2"  type="button">
+
+                                <i class="fa-solid fa-download"></i>
+                            <span class="btn-downOrder-text">Tải đơn hàng về để ký</span>
+                        </button>
+
+                    </div>
+
+                    <div class="row p-3 d-flex justify-content-center">
+                        <div class="container-signature">
+                            <div class="header-signature">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+                                    <path d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg> <p>Tải chữ ký lên tại đây!</p>
+                            </div>
+                            <label for="file-signature" class="footer-signature">
+                                <svg fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path><path d="M18.153 6h-.009v5.342H23.5v-.002z"></path></g></svg>
+                                <p class="my-auto">Chưa có file nào được chọn.</p>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21 16.1479 21H7.85206C6.80699 21 5.93811 20.1954 5.85795 19.1534L5.16565 10.1534Z" stroke="#000000" stroke-width="2"></path> <path d="M19.5 5H4.5" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M10 3C10 2.44772 10.4477 2 11 2H13C13.5523 2 14 2.44772 14 3V5H10V3Z" stroke="#000000" stroke-width="2"></path> </g></svg>
+                            </label>
+                            <input id="file-signature" type="file">
+                        </div>
+                    </div>
+
+
                     <div class="row py-3 ">
                         <div class="col-5 d-flex align-items-center">
                             <span><a href="/HandMadeStore/payment?backToCart=true"
@@ -365,7 +405,7 @@
     $(document).ready(function () {
         const startMillis = parseInt($('#paymentStartTime').val());
         const countDownEl = document.getElementById('count-down');
-        const countdownTime = 1 * 60 * 1000; // 2 phút = 120000 ms
+        const countdownTime = 15 * 60 * 1000; // 2 phút = 120000 ms
         const endTime = startMillis + countdownTime;
         function updateCountdown() {
             const now = Date.now();
@@ -447,6 +487,24 @@
     //      LẤY TỈNH THÀNH.
     $(document).ready(function () {
         // tinh phi van chuyen
+        var shippingFee = 30000;
+        var totalMoney  = <%=totalMoney%>
+        var totalAmount = totalMoney  + shippingFee;
+            // Lưu vào trường input
+        // Lưu giá trị vào 2 trường input :
+        $('#shippingFeeInput').val(shippingFee);
+        $('#totalAmountInput').val(totalAmount);
+
+
+        // Định dạng thành tiền Việt Nam đồng
+        var formattedShippingFee = formatCurrency(shippingFee);
+        var formattedTotalAmount = formatCurrency(totalAmount);
+        //hien thi shipping fee
+        $('#shippingFeeResult').text(formattedShippingFee);
+        $('#totalAmount').text(formattedTotalAmount);
+
+        // Lấy khoá công khai.
+
 
 
         //lấy xã, thị trấn.
@@ -552,14 +610,41 @@
         })
 
 
+        $.ajax({
+            url: "/HandMadeStore/get-public-order",
+            method: "GET",
+            data: {
+                userId: <%=user.getId()%>
+            },
+            success: function (response) {
+                var publicKeyDropDown = $("#publicKeyDropdown");
+                response.forEach(function (publicKey) {
+                    var option = $("<option>").val(publicKey.id).text(publicKey.title);
+                    publicKeyDropDown.append(option);
+                });
+            },
+            error: function (xhr, status, error) {
+                alert("Không tìm thấy khoá công khai" + error)
+            }
+                    })
+
+        $("#publicKeyDropdown").on("change", function () {
+                var selectedPublicKeyId = $(this).val();
+                window.selectedPublicKeyId = selectedPublicKeyId;
+             console.log("Khóa công khai đã chọn:", selectedPublicKeyId);
+        });
+
+
         $("#placeOrderBtn").on("click", function () {
             var namePay = document.getElementById("name").value;
             var phonePay = document.getElementById("phone_number").value;
             var formattedAddress = document.getElementById("formattedAddress").value;
-            var shippingFee = 30000;
+            var shippingFee = document.getElementById("shippingFeeInput").value;
             var totalAmount = document.getElementById("totalAmountInput").value;
+            var publicKeyId = window.selectedPublicKeyId;
 
             console.log(totalAmount)
+            console.log("Public Key ID: " + publicKeyId);
 
             $.ajax({
                 type: "POST",
@@ -569,7 +654,7 @@
                     phonePay: phonePay,
                     formattedAddress: formattedAddress,
                     shippingFee: shippingFee,
-                    totalAmount: <%=totalMoney%> + shippingFee
+                    totalAmount: totalAmount
                 },
                 dataType: "json",
                 success: function (response) {
@@ -587,7 +672,7 @@
                                                        no-repeat
                         `,
                             showConfirmButton: false,
-                            timer: 4000
+                            timer: 20000
                         }).then(function () {
                             window.location.href = "../../views/MainPage/view_mainpage/mainpage.jsp"; // Chuyển hướng về trang chủ
                         });
@@ -602,6 +687,7 @@
                     }
                 },
                 error: function (xhr, status, error) {
+
                     // Xử lý lỗi nếu có
                     Swal.fire({
                         icon: 'error',
@@ -618,73 +704,58 @@
 
     })
 
+    $("#btn-download-order").on("click", function () {
+        var shippingFee = document.getElementById("shippingFeeInput").value;
+        var totalAmount = document.getElementById("totalAmountInput").value;
+
+        $.ajax({
+            type: "POST",
+            url: "/HandMadeStore/create-hash-order",
+            data: {
+                shippingFee: shippingFee,
+                totalAmount: totalAmount,
+            },
+            success: function (response, status, xhr) {
+                var disposition = xhr.getResponseHeader('Content-Disposition');
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var blob = new Blob([response], { type: 'application/octet-stream' });
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'order_hash.txt'; // Tên file tải về
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Không thể tải file!',
+                        showConfirmButton: true
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("XHR:", xhr);
+                console.error("Status:", status);
+                console.error("Error:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi kết nối',
+                    text: 'Có lỗi xảy ra trong quá trình gửi yêu cầu',
+                    showConfirmButton: true
+                });
+            },
+            xhrFields: {
+                responseType: 'blob' // Nhận file dưới dạng blob
+            }
+        });
+    });
+
+
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(amount);
     }
-
-
-    //       function sendDataToServlet() {
-    //           var namePay = document.getElementById("namePay").value;
-    //           var phonePay = document.getElementById("phonePay").value;
-    //           var formattedAddress = document.getElementById("formattedAddress").value;
-    //           var shippingFee = document.getElementById("shippingFeeInput").value;
-    //           var totalAmount = document.getElementById("totalAmountInput").value;
-    //
-    //           console.log("click button");
-    //
-    //           $.ajax({
-    //               type: "POST",
-    //               url: "HandMadeStore/payment", // Đường dẫn đến servlet của bạn
-    //               data: {
-    //                   namePay: namePay,
-    //                   phonePay: phonePay,
-    //                   formattedAddress: formattedAddress,
-    //                   shippingFee: shippingFee,
-    //                   totalAmount: totalAmount
-    //               },
-    //               dataType: "json",
-    //               success: function(response) {
-    //                   if(response.success){
-    //                       alert("Thanh cong");
-    // //                   Swal.fire({
-    //                       //                       title: "Cảm ơn bạn, đơn hàng đã được tạo!",
-    //                       //                       width: 600,
-    //                       //                       padding: "3em",
-    //                       //                       color: "rgba(123,255,2,0.45)",
-    //                       //                       background: "#fff url(/images/trees.png)",
-    //                       //                       backdrop: `
-    //                       //                                rgba(0,0,123,0.4)
-    //                       //                               url("/images/nyan-cat.gif")
-    //                       //                                   left top
-    //                       //                                no-repeat
-    //                       // `                     ,
-    //                       //                       showConfirmButton: false,
-    //                       //                       timer: 2000
-    //                       //                   }).then(function () {
-    //                       //                       window.location.href = "/views/MainPage/view_mainpage/mainpage.jsp"; // Chuyển hướng về trang chủ
-    //                       //                   });
-    //                                         }
-    //                   else {
-    //                       console.log("Error:", response.message)
-    //                       Swal.fire({
-    //                           icon: 'error',
-    //                           title: 'Vui lòng kiểm tra các trường dữ liệu!',
-    //                           text: response.message,
-    //                           showConfirmButton: true
-    //                       });
-    //                   }
-    //               },
-    //               error: function(xhr, status, error) {
-    //                   // Xử lý lỗi nếu có
-    //                   Swal.fire({
-    //                       icon: 'error',
-    //                       title: 'Đặt hàng không thành công!',
-    //                       text: 'Vui lòng thử lại sau.',
-    //                       showConfirmButton: true
-    //                   });
-    //               }
-    //           });
-    //       }
 
 
 </script>

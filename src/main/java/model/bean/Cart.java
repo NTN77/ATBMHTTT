@@ -1,16 +1,12 @@
 package model.bean;
 
-import com.google.protobuf.MapEntry;
 import model.service.ProductService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Cart {
     //Giỏ hàng chứa danh sách các item
-//    private List<Item> items;
 
     Map<Integer, Item> items = new HashMap<>();
 

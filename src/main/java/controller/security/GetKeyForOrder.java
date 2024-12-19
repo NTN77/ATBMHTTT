@@ -14,21 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
-
-@WebServlet("/get-public-keys")
-public class GetKeyController extends HttpServlet {
+@WebServlet("/get-public-order")
+public class GetKeyForOrder extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int userId = Integer.parseInt(req.getParameter("userId"));
         try {
             // Lấy danh sách public keys của người dùng từ service
-            List<Key> keys = KeyService.getInstance().getPublicKeyActiveByUserId(userId);
+            List<KeyOrderDTO> keys = KeyService.getInstance().getKeyOrderDTOByUserId(userId);
 
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") //ISO 8601
-            .create();
+            Gson gson = new Gson();
 
             // Convert danh sách keys thành JSON để trả về
             resp.setContentType("application/json");
@@ -42,7 +39,4 @@ public class GetKeyController extends HttpServlet {
             resp.getWriter().write("{\"success\": false, \"message\": \"Lỗi khi lấy khoá!\"}");
         }
     }
-
-
-
 }
