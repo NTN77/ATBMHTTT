@@ -9,11 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" afterDir="false" />
-    </list>
+    <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -282,7 +278,7 @@
       <workItem from="1734444039404" duration="1280000" />
       <workItem from="1734507795582" duration="1614000" />
       <workItem from="1734513352062" duration="2852000" />
-      <workItem from="1734573375057" duration="25851000" />
+      <workItem from="1734573375057" duration="26124000" />
     </task>
     <servers />
   </component>
