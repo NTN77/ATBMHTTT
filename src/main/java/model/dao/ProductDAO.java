@@ -4,6 +4,9 @@ import model.adapter.InventoryProduct;
 import model.adapter.InventoryProductMappers;
 import model.bean.*;
 import model.db.JDBIConnector;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import model.service.ImageService;
@@ -949,13 +952,46 @@ public class ProductDAO {
 
 
 
+//Lấy tất cả order (chỉ lấy order trong trạng thái chờ xác nhận và đóng gói)
+    public static List<Order> AllOrderBeweenDate(Timestamp start , Timestamp finish,int userId,int publicKeyId){
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("select * from `Order` Where orderDate >= :timeStart AND orderDate <= :timeFinish AND userId =:id AND publicKeyId =:idPublicKey AND status IN (0,1)")
+                        .bind("timeFinish", finish)
+                        .bind("timeStart", start)
+                        .bind("id",userId)
+                        .bind("idPublicKey",publicKeyId)
+                        .mapToBean(Order.class)
+                        .list());
 
+    }
 
+    //Lấy order_detail theo order
+    public static List<OrderDetail> ListOrderDetain(int OrderId){
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT productId,quantity FROM `order_details` WHERE order_details.orderId = :idOrder")
+                        .bind("idOrder",OrderId)
+                        .mapToBean(OrderDetail.class)
+                        .list());
+    }
+    //Lấy tên
+    public static String NameProduct(int productId){
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT name FROM product WHERE id=:id")
+                        .bind("id",productId)
+                        .mapTo(String.class)
+                        .one());
+    }
 
     public static void main(String[] args) {
 //        List<Product> products = getProductBySearchFilter("Thiệp", SortOption.SORT_PRICE_ASC, null, 1620000.0, 15, 0);
 //        products.forEach((p) -> System.out.println(p.getName()));
-        System.out.println(StockProduct(1));
+        // Khởi tạo thời gian bằng LocalDateTime
+        Timestamp s = Timestamp.valueOf("2023-10-20 00:00:00");
+        Timestamp f = Timestamp.valueOf("2023-11-30 00:00:00");
+////        // Gọi phương thức AllOrderBeweenDate
+        System.out.println(AllOrderBeweenDate(s,f,1,1));
+//        System.out.println(ListOrderDetain(2));
+//        System.out.println(NameProduct(2));
     }
 }
 

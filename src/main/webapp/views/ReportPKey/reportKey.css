@@ -1,0 +1,37 @@
+#formReport form{
+    background: #c4e2fd;
+}
+.elementForm{
+    background: #ecbfbf;
+    width: 15%;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 20px;
+}
+.elementInput{
+    width: 80%;
+}
+.buttonCheck:hover{
+    background: red;
+    color: white;
+    font-weight: bold;
+}
+.buttonCheck{
+    border-radius:20px;
+}
+#submitContinue:hover{
+    background: red;
+    color: white ;
+}
+#submitContinue{
+    background: #539478;
+    color: white;
+}
+#reportKey{
+    background: #727575;
+    color: white;
+}
+#buttonOTP:hover{
+    background: red;
+    color: white ;
+}

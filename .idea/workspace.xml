@@ -10,14 +10,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/ReportKey.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/bean/Key.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/ReportPKey/ReportKey.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/ReportPKey/reportKey.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/Admin/admin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/Admin/admin.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/OrderDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/OrderDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/ImageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/JavaMail/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/JavaMail/MailService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jsp File" />
+        <option value="CSS File" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -50,7 +70,8 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/DELL/Desktop/Handmadestore-ATBM/ATBMHTTT/src/main/webapp&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS/Documents/TLH/ATBMHTTT&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -70,8 +91,74 @@
       <recent name="controller" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="Unnamed" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.81" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+  <component name="RunManager" selected="Smart Tomcat.Unnamed">
+    <configuration name="ImageDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.dao.ImageDAO" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KeyDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.dao.KeyDAO" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MailService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.service.JavaMail.MailService" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.service.JavaMail.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.dao.OrderDAO" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.dao.ProductDAO" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tomcat 9.0.80" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.80" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="https://localhost:8443/HandMadeStore/" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="HandMadeStore:war">
@@ -81,7 +168,8 @@
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="8378424b-532c-4488-a0d6-c9a16496f36e" />
+        <option name="BASE_DIRECTORY_NAME" value="7de20969-ea01-41f7-9eff-a436f4b7b791" />
+        <option name="HTTPS_PORT" value="8443" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -89,7 +177,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="54251" />
+        <option name="DEBUG_PORT" value="55706" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -158,6 +246,51 @@
         </option>
       </method>
     </configuration>
+    <configuration name="Unnamed" type="com.poratu.idea.plugins.tomcat" nameIsGenerated="true">
+      <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
+      <predefined_log_file enabled="true" id="Tomcat Access Log" />
+      <predefined_log_file id="Tomcat Catalina Log" />
+      <predefined_log_file id="Tomcat Manager Log" />
+      <predefined_log_file id="Tomcat Host Manager Log" />
+      <option name="catalinaBase" value="C:\Users\ASUS\.SmartTomcat\ATBMHTTT\HandMadeStore" />
+      <option name="contextPath" value="/HandMadeStore" />
+      <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
+      <option name="envOptions">
+        <map />
+      </option>
+      <option name="extraClassPath" value="" />
+      <option name="sslPort" value="8443" />
+      <option name="tomcatInfo">
+        <TomcatInfo>
+          <option name="name" value="Apache Tomcat/9.0.81" />
+          <option name="path" value="$PROJECT_DIR$/../LT WEB/apache-tomcat-9.0.81/apache-tomcat-9.0.81" />
+          <option name="version" value="9.0.81.0" />
+        </TomcatInfo>
+      </option>
+      <option name="vmOptions" value="" />
+      <module name="HandMadeStore" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.MailService" />
+      <item itemvalue="Application.OrderDAO" />
+      <item itemvalue="Application.KeyDAO" />
+      <item itemvalue="Application.ImageDAO" />
+      <item itemvalue="Application.ProductDAO" />
+      <item itemvalue="Smart Tomcat.Unnamed" />
+      <item itemvalue="Tomcat Server.Tomcat 9.0.80" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MailService" />
+        <item itemvalue="Application.KeyDAO" />
+        <item itemvalue="Application.OrderDAO" />
+        <item itemvalue="Application.ProductDAO" />
+        <item itemvalue="Application.ImageDAO" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -205,6 +338,20 @@
       <workItem from="1733653216179" duration="1222000" />
       <workItem from="1733654477820" duration="228000" />
       <workItem from="1733655322289" duration="21000" />
+      <workItem from="1734063369136" duration="1349000" />
+      <workItem from="1734096398652" duration="6477000" />
+      <workItem from="1734141706273" duration="5530000" />
+      <workItem from="1734180950058" duration="5984000" />
+      <workItem from="1734228444879" duration="13157000" />
+      <workItem from="1734267872518" duration="9039000" />
+      <workItem from="1734311183851" duration="10867000" />
+      <workItem from="1734336130562" duration="7583000" />
+      <workItem from="1734360793577" duration="3263000" />
+      <workItem from="1734400773971" duration="4424000" />
+      <workItem from="1734440812222" duration="4175000" />
+      <workItem from="1734491471893" duration="1784000" />
+      <workItem from="1734504431298" duration="3646000" />
+      <workItem from="1734572018325" duration="7247000" />
     </task>
     <servers />
   </component>
@@ -227,26 +374,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java</url>
-          <line>815</line>
+          <line>818</line>
           <properties class="model.dao.ProductDAO">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java</url>
-          <line>954</line>
-          <properties class="model.dao.ProductDAO">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/webapp/views/Admin/admin.jsp</url>
-          <line>199</line>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
