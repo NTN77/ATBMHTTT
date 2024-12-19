@@ -4,6 +4,7 @@ package controller.security;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.bean.Key;
+import model.bean.KeyOrderDTO;
 import model.service.KeyService;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @WebServlet("/get-public-keys")

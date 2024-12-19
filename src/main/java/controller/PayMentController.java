@@ -6,6 +6,7 @@ import logs.ELevel;
 import logs.LoggingService;
 import model.bean.*;
 import model.dao.OrderDAO;
+import model.service.KeyService;
 import model.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -53,6 +54,12 @@ public class PayMentController extends HttpServlet {
         numberFormat.setCurrency(currency);
 
 
+        // Lay cac khoa cong khai cua nguo dung.
+        List<KeyOrderDTO> publicKeys = KeyService.getInstance().getKeyOrderDTOByUserId(user.getId());
+        System.out.println("publicKeys TRONG CONTROLLER:  " + publicKeys);
+        req.setAttribute("publicKeys", publicKeys);
+
+
         String backToCart = req.getParameter("backToCart");
         if (backToCart != null && backToCart.equals("true")) {
             increaseStockCheckout(cart);
@@ -70,8 +77,6 @@ public class PayMentController extends HttpServlet {
             Product p = ProductService.getInstance().getProductById(productId);
 
             double price = ProductService.getInstance().productPriceIncludeDiscount(p);
-            System.out.println("Item: " + item.toString());
-            System.out.println("Product " + p.getName() + " isSale" + p.getIsSale() + "price : " + price);
 
             if (p.getIsSale() != 1) {
                 isValidCart = false;
@@ -143,9 +148,6 @@ public class PayMentController extends HttpServlet {
 
 
         if (!errors.isEmpty() || shippingFee == null || totalAmount == null) {
-//            req.setAttribute("errors", errors);
-//            req.getRequestDispatcher("views/PaymentPage/payment.jsp").forward(req, resp);
-//            return;
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST); // Trả về lỗi 400 nếu dữ liệu không hợp lệ
             resp.getWriter().print("{\"success\": false, \"message\": \"Validation errors occurred.\"}");
             return;

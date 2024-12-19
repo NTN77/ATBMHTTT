@@ -1,11 +1,12 @@
-<%@ page import="model.bean.User" %>
-<%@ page import="model.bean.Cart" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.Currency" %>
 <%@ page import="java.text.NumberFormat" %>
-<%@ page import="model.bean.Item" %>
 <%@ page import="model.service.ImageService" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="model.bean.*" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.adapter.InventoryProductMappers" %>
+<%@ page import="model.service.KeyService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Long paymentStartTime = 0L;
@@ -53,6 +54,10 @@
     Currency currency = Currency.getInstance(locale);
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
     numberFormat.setCurrency(currency);
+
+    // Lấy danh sách publicKeys từ request
+    List<KeyOrderDTO> publicKeys = KeyService.getInstance().getKeyOrderDTOByUserId(user.getId());
+    System.out.println("PUBLIC KEY ở giao diện: " + publicKeys);
 %>
 
 <%--Tạo cac parameter.--%>
@@ -200,6 +205,16 @@
                             </label>
                             <i class="fa-regular fa-money-bill-1 fa-xl ms-auto" style="color: #357ebd;"></i>
                         </div>
+
+                        <div class="form-floating mb-3">
+                            <select id="publicKeyDropdown" class="form-select"
+                                    aria-label="Khoá công khai">
+                                <option value="">Chọn khoá công khai muốn sử dụng</option>
+                            </select>
+                            <label for="publicKeyDropdown">Khoá công khai</label>
+                        </div>
+
+
                         <img src="" alt="">
                         <input type="hidden" id="shippingFeeInput" name="shippingFee" value="">
                         <input type="hidden" id="totalAmountInput" name="totalAmount" value="">
@@ -308,7 +323,7 @@
                                 <th class="text-start fw-medium">
                                     Phí vận chuyển
                                 </th>
-                                <td id="shippingFeeResult" class="text-end pe-3">30000</td>
+                                <td id="shippingFeeResult" class="text-end pe-3"></td>
                             </tr>
                             </tbody>
                             <tfoot>
@@ -321,7 +336,7 @@
                                 <td id="totalAmount" class="text-end pe-3 fs-4">
 
                                 <span>
-                                   <%=numberFormat.format(totalMoney)%>
+
                                 </span>
 
                                 </td>
@@ -330,7 +345,7 @@
                         </table>
                     </div>
                     <div class="row p-3 "  data-bs-toggle="tooltip" data-bs-placement="top" title="Hoàn thiện thông tin đơn hàng trước khi tải về!">
-                        <button class="btn-downOrder p-2" disabled type="button">
+                        <button id="btn-download-order" class="btn-downOrder p-2"  type="button">
 
                                 <i class="fa-solid fa-download"></i>
                             <span class="btn-downOrder-text">Tải đơn hàng về để ký</span>
@@ -472,6 +487,24 @@
     //      LẤY TỈNH THÀNH.
     $(document).ready(function () {
         // tinh phi van chuyen
+        var shippingFee = 30000;
+        var totalMoney  = <%=totalMoney%>
+        var totalAmount = totalMoney  + shippingFee;
+            // Lưu vào trường input
+        // Lưu giá trị vào 2 trường input :
+        $('#shippingFeeInput').val(shippingFee);
+        $('#totalAmountInput').val(totalAmount);
+
+
+        // Định dạng thành tiền Việt Nam đồng
+        var formattedShippingFee = formatCurrency(shippingFee);
+        var formattedTotalAmount = formatCurrency(totalAmount);
+        //hien thi shipping fee
+        $('#shippingFeeResult').text(formattedShippingFee);
+        $('#totalAmount').text(formattedTotalAmount);
+
+        // Lấy khoá công khai.
+
 
 
         //lấy xã, thị trấn.
@@ -577,14 +610,41 @@
         })
 
 
+        $.ajax({
+            url: "/HandMadeStore/get-public-order",
+            method: "GET",
+            data: {
+                userId: <%=user.getId()%>
+            },
+            success: function (response) {
+                var publicKeyDropDown = $("#publicKeyDropdown");
+                response.forEach(function (publicKey) {
+                    var option = $("<option>").val(publicKey.id).text(publicKey.title);
+                    publicKeyDropDown.append(option);
+                });
+            },
+            error: function (xhr, status, error) {
+                alert("Không tìm thấy khoá công khai" + error)
+            }
+                    })
+
+        $("#publicKeyDropdown").on("change", function () {
+                var selectedPublicKeyId = $(this).val();
+                window.selectedPublicKeyId = selectedPublicKeyId;
+             console.log("Khóa công khai đã chọn:", selectedPublicKeyId);
+        });
+
+
         $("#placeOrderBtn").on("click", function () {
             var namePay = document.getElementById("name").value;
             var phonePay = document.getElementById("phone_number").value;
             var formattedAddress = document.getElementById("formattedAddress").value;
-            var shippingFee = 30000;
+            var shippingFee = document.getElementById("shippingFeeInput").value;
             var totalAmount = document.getElementById("totalAmountInput").value;
+            var publicKeyId = window.selectedPublicKeyId;
 
             console.log(totalAmount)
+            console.log("Public Key ID: " + publicKeyId);
 
             $.ajax({
                 type: "POST",
@@ -594,7 +654,7 @@
                     phonePay: phonePay,
                     formattedAddress: formattedAddress,
                     shippingFee: shippingFee,
-                    totalAmount: <%=totalMoney%> + shippingFee
+                    totalAmount: totalAmount
                 },
                 dataType: "json",
                 success: function (response) {
@@ -627,6 +687,7 @@
                     }
                 },
                 error: function (xhr, status, error) {
+
                     // Xử lý lỗi nếu có
                     Swal.fire({
                         icon: 'error',
@@ -642,6 +703,55 @@
 
 
     })
+
+    $("#btn-download-order").on("click", function () {
+        var shippingFee = document.getElementById("shippingFeeInput").value;
+        var totalAmount = document.getElementById("totalAmountInput").value;
+
+        $.ajax({
+            type: "POST",
+            url: "/HandMadeStore/create-hash-order",
+            data: {
+                shippingFee: shippingFee,
+                totalAmount: totalAmount,
+            },
+            success: function (response, status, xhr) {
+                var disposition = xhr.getResponseHeader('Content-Disposition');
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var blob = new Blob([response], { type: 'application/octet-stream' });
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'order_hash.txt'; // Tên file tải về
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Không thể tải file!',
+                        showConfirmButton: true
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("XHR:", xhr);
+                console.error("Status:", status);
+                console.error("Error:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi kết nối',
+                    text: 'Có lỗi xảy ra trong quá trình gửi yêu cầu',
+                    showConfirmButton: true
+                });
+            },
+            xhrFields: {
+                responseType: 'blob' // Nhận file dưới dạng blob
+            }
+        });
+    });
+
 
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(amount);

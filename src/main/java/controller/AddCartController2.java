@@ -60,7 +60,6 @@ public class AddCartController2 extends HttpServlet {
                     }
                     cart.add(id, num);
                     sessions.setAttribute("cart", cart);
-                    System.out.println(cart.toString());
                     break;
                 default:
                     break;

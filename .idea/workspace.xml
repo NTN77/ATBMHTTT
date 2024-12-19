@@ -10,10 +10,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user-info/user_info.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/user-info/user_info.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AddCartController2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/AddCartController2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/GetKeyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/GetKeyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/AddCartController2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/AddCartController2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/PayMentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/PayMentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/security/GetKeyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/security/GetKeyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/security/OrderHashController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/security/OrderHashController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/dao/KeyDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/dao/KeyDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/service/KeyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/service/KeyService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/views/PaymentPage/payment.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/AddCartController2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/AddCartController2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/PayMentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/PayMentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/security/GetKeyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/security/GetKeyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/security/OrderHashController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/security/OrderHashController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/dao/KeyDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/dao/KeyDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/service/KeyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/service/KeyService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,8 +237,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.KeyService" />
         <item itemvalue="Application.KeyDAO" />
+        <item itemvalue="Application.KeyService" />
         <item itemvalue="Application.UserService" />
       </list>
     </recent_temporary>
@@ -283,7 +301,7 @@
       <workItem from="1734444039404" duration="1280000" />
       <workItem from="1734507795582" duration="1614000" />
       <workItem from="1734513352062" duration="2852000" />
-      <workItem from="1734573375057" duration="5322000" />
+      <workItem from="1734573375057" duration="23566000" />
     </task>
     <servers />
   </component>
