@@ -18,7 +18,6 @@ public class AddCartController2 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
-
     }
 
     @Override
@@ -26,7 +25,7 @@ public class AddCartController2 extends HttpServlet {
         User user = (User) (req.getSession().getAttribute("auth"));
         if(user == null){
             resp.getWriter().write("false");
-        }else {
+        }   else {
             HttpSession sessions = req.getSession();
             Cart cart = (Cart) sessions.getAttribute("cart");
             if(cart == null) {
@@ -38,20 +37,14 @@ public class AddCartController2 extends HttpServlet {
 
             switch (action) {
                 case "get":
-
-//                req.getRequestDispatcher(req.getContextPath()+"/views/CartPage/cart.jsp").forward(req, resp);
                     resp.sendRedirect(referer);
-//                resp.sendRedirect(req.getContextPath()+"/views/CartPage/cart.jsp" );
                     break;
 
                 case "delete":
                     DeleteP(req,resp);
-//                resp.sendRedirect(referer);
                     break;
                 case "put":
                     putP(req,resp);
-//                resp.sendRedirect(referer);
-//                req.getRequestDispatcher(req.getContextPath() +"/add-cart?actionCart=get").forward(req,resp);
                     break;
 
                 case "post":
@@ -67,12 +60,11 @@ public class AddCartController2 extends HttpServlet {
                     }
                     cart.add(id, num);
                     sessions.setAttribute("cart", cart);
+                    System.out.println(cart.toString());
                     break;
                 default:
-
                     break;
             }
-
         }
     }
 
@@ -89,19 +81,15 @@ public class AddCartController2 extends HttpServlet {
         }
         sessions.setAttribute("cart", cart);
         req.getRequestDispatcher("/add-cart?actionCart=get").forward(req,resp);
-//        resp.sendRedirect(req.getContextPath() + "/add-cart?actionCart=get");
-
     }
 
 
     protected void DeleteP(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         HttpSession sessions = req.getSession();
         Cart cart = (Cart) sessions.getAttribute("cart");
         int id = Integer.parseInt(req.getParameter("id"));
         cart.remove(id);
         sessions.setAttribute("cart", cart);
-//        req.getRequestDispatcher("/add-cart?actionCart=get").forward(req,resp);
     }
 
 }

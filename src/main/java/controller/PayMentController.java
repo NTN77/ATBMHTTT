@@ -217,6 +217,5 @@ public class PayMentController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         Gson gson = new Gson();
         response.getWriter().write(gson.toJson(errorMessage));
-//        response.getWriter().write("{ \"isValid\": false, \"errorMessage\": \"" + errorMessage + "\" }");
     }
 }
