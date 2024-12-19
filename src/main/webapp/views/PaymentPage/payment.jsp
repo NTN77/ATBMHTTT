@@ -209,7 +209,7 @@
                         <div class="form-floating mb-3">
                             <select id="publicKeyDropdown" class="form-select"
                                     aria-label="Khoá công khai">
-                                <option value="">Chọn khoá công khai muốn sử dụng</option>
+                                <option value="">Chọn khoá sử dụng để ký đơn hàng tương ứng</option>
                             </select>
                             <label for="publicKeyDropdown">Khoá công khai</label>
                         </div>
