@@ -1,6 +1,8 @@
 package controller.ajax_handle;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import controller.Validation;
 import logs.EAction;
 import logs.ELevel;
@@ -15,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 @WebServlet("/user-ajax-handle")
@@ -27,12 +30,33 @@ public class UserAjaxHandle extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User sessionUser = (User) req.getSession().getAttribute("auth");
-
+        System.out.println("CÓ ĐẾN ƯỢC ĐOẠN LÀY KHÔNG1?");
         String action = req.getParameter("action");
         if (sessionUser != null && (sessionUser.isOwn() || sessionUser.isAdmin())) {
             if (action != null) {
                 String userId = req.getParameter("userId");
-                if (userId != null && action.equals("lockOrUnLock")) {
+
+                //Xử lý xác thực mật khẩu người dùng.
+                if(action.equals("verifyPwd")) {
+
+                    if (action.equals("verifyPwd")) {
+                        String userIdMess = req.getParameter("userId");
+                        String inputPwd = req.getParameter("password");
+                        System.out.println("Giá trị: " + userIdMess + inputPwd);
+
+                        // Kiểm tra mật khẩu người dùng
+                        boolean isVerifyPwd = UserService.getInstance().verifyPwd(userIdMess, inputPwd);
+                        System.out.println("Mật khẩu người dùng có id " + userIdMess + " là " + isVerifyPwd);
+
+                        // Trả về kết quả true/false mà không cần JSON phức tạp
+                        resp.setContentType("application/json");
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().write(String.valueOf(isVerifyPwd)); // Gửi true hoặc false
+                    }
+//
+                }
+
+                else if (userId != null && action.equals("lockOrUnLock")) {
                     //lock or unlock
                     User u = UserService.getInstance().getUserById(userId);
                     if (u.getStatus().trim().startsWith("Bình Thường")) {
@@ -81,6 +105,7 @@ public class UserAjaxHandle extends HttpServlet {
                         validateResult = "Thiếu dữ liệu";
                     }
                     Gson gson = new Gson();
+                    System.out.println("CÓ ĐẾN ƯỢC ĐOẠN LÀY KHÔNG?");
                     String jsonRatesResponse = gson.toJson(validateResult);
                     resp.setContentType("application/json");
                     resp.setCharacterEncoding("UTF-8");

@@ -8,6 +8,7 @@
 <%@ page import="java.util.Currency" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="org.eclipse.tags.shaded.org.apache.xpath.operations.Or" %>
+<%@ page import="utils.HashPassword" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Locale locale = new Locale("vi", "VN");
@@ -83,6 +84,192 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional: Add a box shadow for a subtle effect */
         }
+
+        .title-information {
+            text-align: center;
+        }
+
+        .expand_key_area {
+            background-color: #e9ecef;
+            justify-content: space-between;
+            border-radius: 5px;
+            padding: 6px 12px;
+        }
+
+        /* CSS cho Tab */
+        .nav-pills .nav-link {
+            cursor: pointer;
+            font-weight: bold;
+            border: 1px solid #eeeeee;
+            border-radius: 0px;
+        }
+
+        /* Cách hiển thị tab nội dung */
+        .tab-content {
+            padding: 20px;
+            border: 1px solid #eeeeee;
+        }
+
+        .hr-information {
+            border: 0;
+            border-top: 2px dashed #000000;
+        }
+
+
+        /**
+        Hiện thực khoá.
+         */
+        .auth-key {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-key-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .auth-key-header .img-key {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .auth-key-details {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .auth-key-details span {
+            display: block;
+            font-weight: normal;
+        }
+
+        .auth-key-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .auth-key-actions .status {
+            color: green;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        .auth-key-actions button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .auth-key-actions button:hover {
+            background-color: #c0392b;
+        }
+
+        /*    Màn hình thêm khoá mới*/
+
+        .overlay {
+            display: none; /* Ẩn mặc định */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Màu đen với độ mờ */
+            z-index: 10; /* Hiển thị trên mọi thành phần khác */
+        }
+
+
+        #add-new-key {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Căn giữa */
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 11; /* Trên overlay */
+            width: 50%; /* Chiều rộng của box */
+            display: none; /* Ẩn mặc định */
+        }
+
+        #add-new-key h2 {
+            text-align: center;
+
+        }
+
+        #add-new-key textarea {
+            background-color: #e9ecef;
+            resize: none;
+        }
+
+        #add-new-key .download-icon {
+            cursor: pointer;
+            color: red;
+            font-size: 18px;
+            margin-left: 5px;
+        }
+
+        #add-new-key .link {
+            font-size: 14px;
+            font-style: italic;
+            text-decoration: underline;
+            cursor: pointer;
+            color: blue;
+        }
+
+        #add-new-key .close-screen-key {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #333;
+        }
+
+        #up-new-key {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Căn giữa */
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 11; /* Trên overlay */
+            width: 50%; /* Chiều rộng của box */
+            display: none; /* Ẩn mặc định */
+        }
+
+        #up-new-key h2 {
+            text-align: center;
+
+        }
+
+        #up-new-key textarea {
+            background-color: #e9ecef;
+            resize: none;
+        }
+
+        #up-new-key .close-screen-key {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            background-color: #f27474;
+        }
+
+
     </style>
 </head>
 <%
@@ -102,313 +289,165 @@
     int s4 = OrderService.getInstance().ordersNumber(user.getId() + "", 4);
 %>
 <body>
-<div class="container p-4 rounded">
-    <div class="fw-bold text-start" style="font-size: 30px; color: #0dcaf0">
-        <div>
-            <i onclick="goBack()"
-               class="fa-solid fa-arrow-left" style="color: #183153; cursor: pointer"></i>
-        </div>
+<!-- Tab Lịch sử mua hàng -->
+<div class="tab-pane fade show active" id="order-history" role="tabpanel"
+     aria-labelledby="order-history-tab">
+    <h3>Lịch sử đơn hàng</h3>
+    <hr class="hr-information">
+    <!-- Đoạn mã lịch sử đơn hàng của bạn -->
+    <div class="btn-group mr-2 mb-2" role="group" aria-label="First group">
+        <button type="button" class="btn btn-info"
+                onclick="orderFilter(<%=user.getId()%>, <%=3%>)">
+            Tất cả
+            <span><%=all > 0 ? "(" + all + ")" : ""%></span>
+
+        </button>
+        <button type="button" class="btn btn-warning"
+                onclick="orderFilter(<%=user.getId()%>, <%=3%>,0)">Chờ xác nhận
+            <span><%=s0 > 0 ? "(" + s0 + ")" : ""%></span>
+        </button>
+        <button type="button" class="btn btn-secondary" style="background-color: cadetblue"
+                onclick="orderFilter(<%=user.getId()%>, <%=3%>,1)">Đang đóng gói
+            <span><%=s1 > 0 ? "(" + s1 + ")" : ""%></span>
+        </button>
+        <button type="button" class="btn btn-primary"
+                onclick="orderFilter(<%=user.getId()%>, <%=3%>,2)">Đang giao
+            <span><%=s2 > 0 ? "(" + s2 + ")" : ""%></span>
+
+        </button>
+        <button type="button" class="btn btn-success"
+                onclick="orderFilter(<%=user.getId()%>, <%=3%>,3)">Thành công
+            <span><%=s3 > 0 ? "(" + s3 + ")" : ""%></span>
+        </button>
+        <button type="button" class="btn btn-danger"
+                onclick="orderFilter(<%=user.getId()%>, <%=3%>,4)">Đã hủy
+            <span><%=s4 > 0 ? "(" + s4 + ")" : ""%></span>
+        </button>
     </div>
-    <div>
-        <div class="mb-3">
-        <span style="font-size: 20px; font-weight: bold; cursor: pointer; text-decoration: underline"
-              onclick="toggleInfor()">Thông tin tài khoản
-        </span>
-            <div class="input-group d-flex justify-content-center">
-                <div class="w-50">
-                    <div class="text-warning fst-italic text-center" id="notifyChanged"></div>
-                    <div id="toggleInforBox" style="display: none">
-                        <label for="input_name">Tên tài khoản: </label>
-                        <input type="text" class="form-control"
-                               disabled
-                               id="input_name"
-                               name="input_name"
-                               value="<%=user.getName()%>">
-                        <div class="input-group-append d-flex">
-                            <button class="btn btn-outline-warning" type="button"
-                                    onclick="editName()"
-                                    id="edit_name"
-                            >Thay đổi
-                            </button>
-                            <button class="btn btn-outline-warning" type="button"
-                                    onclick="cancelName()"
-                                    style="display: none"
-                                    id="cancel_name"
-                            >Hủy bỏ
-                            </button>
-                            <%--                        edit--%>
-                            <button class="btn btn-outline-success" type="button"
-                                    onclick="changeName()"
-                                    style="display: none"
-                                    id="save_name"
-                            >Lưu thay đổi
-                            </button>
-                        </div>
-                        <%--                    --%>
-                        <div>
-                            <label for="input_name">Số điện thoại: </label>
-                            <input type="text" class="form-control"
-                                   disabled
-                                   id="input_phone"
-                                   name="input_phone"
-                                   value="<%=user.getPhoneNumber()%>">
-                            <div class="input-group-append d-flex">
-                                <button class="btn btn-outline-warning" type="button"
-                                        onclick="editPhone()"
-                                        id="edit_phone"
-                                >Thay đổi
-                                </button>
-                                <button class="btn btn-outline-warning" type="button"
-                                        onclick="cancelPhone()"
-                                        style="display: none"
-                                        id="cancel_phone"
-                                >Hủy bỏ
-                                </button>
-                                <%--                        edit--%>
-                                <button class="btn btn-outline-success" type="button"
-                                        onclick="changePhone()"
-                                        style="display: none"
-                                        id="save_phone"
-                                >Lưu thay đổi
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="input_email">Email: </label>
-                            <input type="text" class="form-control"
-                                   disabled
-                                   id="input_email"
-                                   name="input_phone"
-                                   value="<%=user.getEmail()%>">
-                        </div>
-                        <div class="my-1 text-end">
-                            <a class="text-decoration-none"
-                               href="<%=request.getContextPath()%>/forgotpassword">Đặt
-                                lại
-                                mật
-                                khẩu?</a>
-                        </div>
+    <!-- Table lịch sử đơn hàng -->
+    <table id="data" class="table table-light gfg">
+        <thead>
+        <tr class="text-center sticky-top">
+            <th class="text-nowrap">Sản phẩm</th>
+            <th class="text-nowrap">Địa Chỉ Giao</th>
+            <th class="text-nowrap">Ngày Đặt Hàng</th>
+            <th class="text-nowrap">Tổng Tiền Hóa Đơn</th>
+            <th class="text-nowrap">Trạng thái</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%
+            for (int i = 0; i < showLimit; i++) {
+                Order o = orders.get(i);
+                if (o != null) {
+                    showCouter += 1;
+                    User customer = UserService.getInstance().getUserById(o.getUserId() + "");
+        %>
+        <tr class="text-center" style=" cursor: pointer"
+            onclick="showOrderDetails(event,this)"
+            id="<%=o.getId()%>"
+        >
+            <td class="geeks" style="border: 1px solid #c9c9c9;">
+                <%!Product p;%>
+                <%
+                    for (OrderDetail orderDetail : OrderService.getInstance().getOrderDetailsByOrderId(o.getId()
+                            + "")) {
+                        p = ProductService.getInstance().getProductById(orderDetail.getProductId() + "");
+                %>
+                <div class="d-flex mb-2">
+                    <div>
+                        <img src="<%=request.getContextPath()+"/"+ ImageService.pathImageOnly(p.getId())%>"
+                             alt="" width="100px">
+                    </div>
+                    <div style="width: 150px; display:flex; align-items: center">
+                        <%=p.getName()%>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div style="font-size: 20px; font-weight: bold;">Lịch sử đơn hàng</div>
-        <div class="btn-group mr-2 mb-2" role="group" aria-label="First group">
-            <button type="button" class="btn btn-info" onclick="orderFilter(<%=user.getId()%>, <%=3%>)">
-                Tất cả
-                <span><%=all > 0 ? "(" + all + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-warning" onclick="orderFilter(<%=user.getId()%>, <%=3%>,0)">
-                Chờ xác nhận
-                <span><%=s0 > 0 ? "(" + s0 + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-secondary" style="background-color: cadetblue"
-                    onclick="orderFilter(<%=user.getId()%>, <%=3%>,1)">
-                Đang đóng gói
-                <span><%=s1 > 0 ? "(" + s1 + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-primary" onclick="orderFilter(<%=user.getId()%>, <%=3%>,2)">
-                Đang giao
-                <span><%=s2 > 0 ? "(" + s2 + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-success" onclick="orderFilter(<%=user.getId()%>, <%=3%>,3)">
-                Thành công
-                <span><%=s3 > 0 ? "(" + s3 + ")" : ""%></span>
-            </button>
-            <button type="button" class="btn btn-danger" onclick="orderFilter(<%=user.getId()%>, <%=3%>,4)">
-                Đã hủy
-                <span><%=s4 > 0 ? "(" + s4 + ")" : ""%></span>
-            </button>
-        </div>
-        <div>
-            <table id="data" class="table table-light gfg">
-                <thead>
-                <tr class="text-center sticky-top">
-                    <th class="text-nowrap">Sản phẩm</th>
-                    <th class="text-nowrap">Địa Chỉ Giao</th>
-                    <th class="text-nowrap">Ngày Đặt Hàng</th>
-                    <th class="text-nowrap">Tổng Tiền Hóa Đơn</th>
-                    <th class="text-nowrap">Trạng thái</th>
-                </tr>
-                </thead>
-                <tbody>
-                <%
-                    for (int i = 0; i < showLimit; i++) {
-                        Order o = orders.get(i);
-                        if (o != null) {
-                            showCouter += 1;
-                            User customer = UserService.getInstance().getUserById(o.getUserId() + "");
-                %>
-                <tr class="text-center" style=" cursor: pointer"
-                    onclick="showOrderDetails(event,this)"
-                    id="<%=o.getId()%>"
-                >
-                    <td class="geeks" style="border: 1px solid #c9c9c9;">
-                        <%!Product p;%>
-                        <%
-                            for (OrderDetail orderDetail : OrderService.getInstance().getOrderDetailsByOrderId(o.getId()
-                                    + "")) {
-                                p = ProductService.getInstance().getProductById(orderDetail.getProductId() + "");
-                        %>
-                        <div class="d-flex mb-2">
-                            <div>
-                                <img src="<%=request.getContextPath()+"/"+ ImageService.pathImageOnly(p.getId())%>"
-                                     alt="" width="100px">
-                            </div>
-                            <div style="width: 150px; display:flex; align-items: center">
-                                <%=p.getName()%>
-                            </div>
-                        </div>
-                        <%}%>
-                    </td>
-                    <td class="geeks " style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle"><%=o.getAddress()%>
-                    </td>
-                    <td class="geeks" style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle;"><%=o.getOrderDate()%>
-                    </td>
-                    <td class="geeks" style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle;"><%=numberFormat.format(o.getTotalPrice())%>
-                    </td>
-                    <td class="geeks"
-                            <%!
-                                String backgroundColor = "";
-                                String sttvalue = "";
-                            %>
-                            <%
-                                if (o.isPreparing()) {
-                                    backgroundColor = "#5F9EA0";
-                                    sttvalue = "Đang đóng gói";
-                                } else if (o.isDeliveringOrder()) {
-                                    backgroundColor = "#0171d3";
-                                    sttvalue = "Đang giao";
-                                } else if (o.isWaitConfirmOrder()) {
-                                    backgroundColor = "#ffcc00";
-                                    sttvalue = "Chờ xác nhận";
-                                } else if (o.isCanceledOrder()) {
-                                    backgroundColor = "#ff0000";
-                                    sttvalue = "Đã hủy";
-                                } else if (o.isSucccessfulOrder()) {
-                                    backgroundColor = "#4d8a54";
-                                    sttvalue = "Thành công";
-                                }%>
-                        style="background-color: <%=backgroundColor%>; color: #ffffff;vertical-align: middle;"
-                    ><%=sttvalue%>
-                    </td>
-                </tr>
-                <%
-                        }
-                    }
-                %>
-                </tbody>
-            </table>
-            <%if (showCouter < allOrderNumber) {%>
-            <div class="d-flex justify-content-center" id="morebox">
+                <%}%>
+            </td>
+            <td class="geeks "
+                style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle"><%=o.getAddress()%>
+            </td>
+            <td class="geeks"
+                style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle;"><%=o.getOrderDate()%>
+            </td>
+            <td class="geeks"
+                style="border-top: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9; vertical-align: middle;"><%=numberFormat.format(o.getTotalPrice())%>
+            </td>
+            <td class="geeks"
+                    <%!
+                        String backgroundColor = "";
+                        String sttvalue = "";
+                    %>
+                    <%
+                        if (o.isPreparing()) {
+                            backgroundColor = "#5F9EA0";
+                            sttvalue = "Đang đóng gói";
+                        } else if (o.isDeliveringOrder()) {
+                            backgroundColor = "#0171d3";
+                            sttvalue = "Đang giao";
+                        } else if (o.isWaitConfirmOrder()) {
+                            backgroundColor = "#ffcc00";
+                            sttvalue = "Chờ xác nhận";
+                        } else if (o.isCanceledOrder()) {
+                            backgroundColor = "#ff0000";
+                            sttvalue = "Đã hủy";
+                        } else if (o.isSucccessfulOrder()) {
+                            backgroundColor = "#4d8a54";
+                            sttvalue = "Thành công";
+                        }%>
+                style="background-color: <%=backgroundColor%>; color: #ffffff;vertical-align: middle;"
+            ><%=sttvalue%>
+            </td>
+        </tr>
+        <%
+                }
+            }
+        %>
+        </tbody>
+    </table>
+    <%if (showCouter < allOrderNumber) {%>
+    <div class="d-flex justify-content-center" id="morebox">
                 <span id="more" class="fst-italic fw-bold" style="cursor: pointer"
                       onclick="more(<%=user.getId()%>, <%=3%>)"
                 >Xem thêm...
                 </span>
-            </div>
-            <%}%>
-        </div>
     </div>
-    <div id="detailOrder" style="display:none;">
-    </div>
+    <%}%>
+</div>
+
+<div id="detailOrder" style="display:none;">
 </div>
 
 <input type="hidden" id="allOrderNumber" value="<%=allOrderNumber%>">
 <input type="hidden" id="showCouter" value="<%=showCouter%>">
 <input type="hidden" id="statusNumber" value="-1">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/vi.js"></script>
 <script>
-    function changeName() {
-        const newName = document.getElementById("input_name").value;
-        $.ajax({
-            method: "POST",
-            url: "/HandMadeStore/changeUserInfo",
-            data: {
-                action: "changeName",
-                newName: newName
-            },
-            success: function (response) {
-                document.getElementById("notifyChanged").innerHTML = response;
-                cancelName();
-            },
-            error: function () {
-                console.log("Thay đổi thất bại!");
-            }
-        })
-    }
+    moment.locale('vi');
+    <%--    Thiết lập ẩn hiện các tab:--%>
+    document.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('click', function () {
+            // Xóa lớp 'active' của tất cả các tab
+            document.querySelectorAll('.nav-link').forEach(tabItem => tabItem.classList.remove('active'));
 
-    function changePhone() {
-        const newPhone = document.getElementById("input_phone").value;
-        $.ajax({
-            method: "POST",
-            url: "/HandMadeStore/changeUserInfo",
-            data: {
-                action: "changePhone",
-                newPhone: newPhone
-            },
-            success: function (response) {
-                document.getElementById("notifyChanged").innerHTML = response;
-                cancelPhone();
-            },
-            error: function () {
-                console.log("Thay đổi thất bại!");
-            }
-        })
-    }
+            // Thêm lớp 'active' vào tab đang được chọn
+            this.classList.add('active');
 
-    function editName() {
-        document.getElementById("input_name").disabled = false;
-        document.getElementById('save_name').style.display = 'inline';
-        document.getElementById('cancel_name').style.display = 'inline';
-        document.getElementById('edit_name').style.display = 'none';
-    }
+            // Ẩn tất cả nội dung tab
+            document.querySelectorAll('.tab-pane').forEach(tabContent => {
+                tabContent.classList.remove('show', 'active');
+            });
 
-    function cancelName() {
-        document.getElementById("input_name").disabled = true;
-        document.getElementById('save_name').style.display = 'none';
-        document.getElementById('cancel_name').style.display = 'none';
-        document.getElementById('edit_name').style.display = 'inline';
-    }
+            // Hiển thị nội dung của tab được chọn
+            const targetTab = document.querySelector(this.getAttribute('href'));
+            targetTab.classList.add('show', 'active');
+        });
+    });
 
-    function editPhone() {
-        document.getElementById("input_phone").disabled = false;
-        document.getElementById('save_phone').style.display = 'inline';
-        document.getElementById('cancel_phone').style.display = 'inline';
-        document.getElementById('edit_phone').style.display = 'none';
-    }
-
-    function cancelPhone() {
-        document.getElementById("input_phone").disabled = true;
-        document.getElementById('save_phone').style.display = 'none';
-        document.getElementById('cancel_phone').style.display = 'none';
-        document.getElementById('edit_phone').style.display = 'inline';
-    }
-
-    <%--document.getElementById('productSelect').addEventListener('change', function () {--%>
-    <%--    const productId = this.value;--%>
-    <%--    if (productId) {--%>
-    <%--        const url = '<%=request.getContextPath()%>/product-detail?id=' + productId;--%>
-    <%--        window.open(url, '_blank');--%>
-    <%--    }--%>
-    <%--});--%>
-
-    function goBack() {
-        const previousPage = document.referrer;
-        if (previousPage) {
-            window.location.href = previousPage;
-        } else {
-            window.history.href = "/";
-        }
-    }
-
-
-    function toggleInfor() {
-        const toggleInforBox = document.getElementById("toggleInforBox");
-        if (toggleInforBox.style.display === "none" || toggleInforBox.style.display === "") {
-            toggleInforBox.style.display = "block";
-        } else {
-            toggleInforBox.style.display = "none";
-        }
-    }
+    // XỬ LÝ DÀNH CHO THÔNG TIN LỊCH SỬ ĐƠN HÀNG
 
     function showOrderDetails(event, clickedElement) {
         let rowIndex = 0;

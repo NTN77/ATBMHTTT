@@ -67,25 +67,28 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Application.KeyUtil.executor&quot;: &quot;Run&quot;,
+    &quot;Application.KeyDAO.executor&quot;: &quot;Run&quot;,
+    &quot;Application.KeyService.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UserService.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Tomcat Server.Tomcat 9.0.81.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Tomcat 9.0.87.executor&quot;: &quot;Run&quot;,
     &quot;Tomcat Server.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;generate-key-pair&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS/Documents/TLH/ATBMHTTT&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.7275862&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -129,12 +132,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MailService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="model.service.JavaMail.MailService" />
-      <module name="HandMadeStore" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.service.JavaMail.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -142,12 +139,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OrderDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="model.dao.OrderDAO" />
-      <module name="HandMadeStore" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.dao.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -155,21 +146,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="model.dao.ProductDAO" />
-      <module name="HandMadeStore" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.dao.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Tomcat 9.0.80" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.80" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
-      <option name="OPEN_IN_BROWSER_URL" value="https://localhost:8443/HandMadeStore/" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="HandMadeStore:war">
@@ -179,9 +155,6 @@
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="7de20969-ea01-41f7-9eff-a436f4b7b791" />
-        <option name="HTTPS_PORT" value="8443" />
-
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -189,8 +162,6 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="55706" />
-
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -259,58 +230,14 @@
         </option>
       </method>
     </configuration>
-    <configuration name="Unnamed" type="com.poratu.idea.plugins.tomcat" nameIsGenerated="true">
-      <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
-      <predefined_log_file enabled="true" id="Tomcat Access Log" />
-      <predefined_log_file id="Tomcat Catalina Log" />
-      <predefined_log_file id="Tomcat Manager Log" />
-      <predefined_log_file id="Tomcat Host Manager Log" />
-      <option name="catalinaBase" value="C:\Users\ASUS\.SmartTomcat\ATBMHTTT\HandMadeStore" />
-      <option name="contextPath" value="/HandMadeStore" />
-      <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
-      <option name="envOptions">
-        <map />
-      </option>
-      <option name="extraClassPath" value="" />
-      <option name="sslPort" value="8443" />
-      <option name="tomcatInfo">
-        <TomcatInfo>
-          <option name="name" value="Apache Tomcat/9.0.81" />
-          <option name="path" value="$PROJECT_DIR$/../LT WEB/apache-tomcat-9.0.81/apache-tomcat-9.0.81" />
-          <option name="version" value="9.0.81.0" />
-        </TomcatInfo>
-      </option>
-      <option name="vmOptions" value="" />
-      <module name="HandMadeStore" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.MailService" />
-      <item itemvalue="Application.OrderDAO" />
-      <item itemvalue="Application.KeyDAO" />
-      <item itemvalue="Application.ImageDAO" />
-      <item itemvalue="Application.ProductDAO" />
-      <item itemvalue="Smart Tomcat.Unnamed" />
-      <item itemvalue="Tomcat Server.Tomcat 9.0.80" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.MailService" />
-        <item itemvalue="Application.KeyDAO" />
-        <item itemvalue="Application.OrderDAO" />
-        <item itemvalue="Application.ProductDAO" />
-        <item itemvalue="Application.ImageDAO" />
-
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -352,21 +279,6 @@
       <workItem from="1733653216179" duration="1222000" />
       <workItem from="1733654477820" duration="228000" />
       <workItem from="1733655322289" duration="21000" />
-      <workItem from="1734063369136" duration="1349000" />
-      <workItem from="1734096398652" duration="6477000" />
-      <workItem from="1734141706273" duration="5530000" />
-      <workItem from="1734180950058" duration="5984000" />
-      <workItem from="1734228444879" duration="13157000" />
-      <workItem from="1734267872518" duration="9039000" />
-      <workItem from="1734311183851" duration="10867000" />
-      <workItem from="1734336130562" duration="7583000" />
-      <workItem from="1734360793577" duration="3263000" />
-      <workItem from="1734400773971" duration="4424000" />
-      <workItem from="1734440812222" duration="4175000" />
-      <workItem from="1734491471893" duration="1784000" />
-      <workItem from="1734504431298" duration="3646000" />
-      <workItem from="1734572018325" duration="7247000" />
-
     </task>
     <servers />
   </component>
@@ -387,16 +299,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java</url>
-          <line>818</line>
-          <properties class="model.dao.ProductDAO">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java</url>
           <line>954</line>

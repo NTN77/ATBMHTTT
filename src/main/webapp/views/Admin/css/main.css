@@ -366,6 +366,21 @@ iframe {
     overflow: hidden;
 }
 
+/** Xử lý cho khoá.
+
+ */
+#expand_pubKey {
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.expand_key_area {
+    background-color: #e9ecef;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
 
 
 

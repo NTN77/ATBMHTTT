@@ -234,7 +234,7 @@
                         <span class="d-none d-lg-inline-flex"><%= u.getName()%></span>
                     </div>
                     <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                        <a href="<%=request.getContextPath()%>/changeUserInfo" class="dropdown-item">Tài khoản cá
+                        <a href="<%=request.getContextPath()%>/user-info" class="dropdown-item">Tài khoản cá
                             nhân</a>
                         <a href="<%=request.getContextPath()%>/login" class="dropdown-item">Đăng xuất</a>
                     </div>
