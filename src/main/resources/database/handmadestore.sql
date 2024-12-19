@@ -1,65 +1,46 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Jul 05, 2024 at 07:43 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
-CREATE
-DATABASE handmadestore;
-USE
-handmadestore;
-
---
-
+-- --------------------------------------------------------
+-- Máy chủ:                      127.0.0.1
+-- Server version:               10.4.32-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Phiên bản:           12.7.0.6850
 -- --------------------------------------------------------
 
---
--- Table structure for table `banner_items`
---
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE `banner_items` (
-                                `title` varchar(50) NOT NULL,
-                                `description` text DEFAULT NULL,
-                                `img_path` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Dumping data for table `banner_items`
---
+-- Dumping database structure for handmadestore
+DROP DATABASE IF EXISTS `handmadestore`;
+CREATE DATABASE IF NOT EXISTS `handmadestore` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `handmadestore`;
 
+-- Dumping structure for table handmadestore.banner_items
+CREATE TABLE IF NOT EXISTS `banner_items` (
+                                              `title` varchar(50) NOT NULL,
+    `description` text DEFAULT NULL,
+    `img_path` text NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table handmadestore.banner_items: ~3 rows (approximately)
 INSERT INTO `banner_items` (`title`, `description`, `img_path`) VALUES
                                                                     ('CÙNG NHAU KHÁM PHÁ NÀO!', 'Những sản phẩm đang nóng lòng đợi bạn rinh về nè !', 'images/banner_tip/item_1.jpg'),
                                                                     ('Độc - Đẹp - Bền - Giá Phù Hợp', 'Chế tạo những sản phẩm độc đáo, với tình yêu và sự tận tụy', 'images/banner_tip/item_2.jpg'),
                                                                     ('KÍNH CHÀO QUÝ KHÁCH', 'Mỗi sản phẩm từ HandmadeStore là một phần trái tim của ai đó', 'images/banner_tip/item_3.jpg');
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.category
+CREATE TABLE IF NOT EXISTS `category` (
+                                          `id` smallint(6) NOT NULL AUTO_INCREMENT,
+    `name` varchar(30) DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+    ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Table structure for table `category`
---
-
-CREATE TABLE `category` (
-                            `id` smallint(6) NOT NULL,
-                            `name` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
---
--- Dumping data for table `category`
---
-
+-- Dumping data for table handmadestore.category: ~5 rows (approximately)
 INSERT INTO `category` (`id`, `name`) VALUES
                                           (1, 'Thiệp, Khung Ảnh'),
                                           (2, 'Scrapbook, Album Ảnh'),
@@ -67,24 +48,17 @@ INSERT INTO `category` (`id`, `name`) VALUES
                                           (4, 'Trang sức, phụ kiện thời trang'),
                                           (5, 'Đồ decor trang trí');
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.discount
+CREATE TABLE IF NOT EXISTS `discount` (
+                                          `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(30) NOT NULL,
+    `startDate` datetime DEFAULT current_timestamp(),
+    `endDate` datetime DEFAULT current_timestamp(),
+    `percentageOff` decimal(10,2) DEFAULT 0.00,
+    PRIMARY KEY (`id`) USING BTREE
+    ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Table structure for table `discount`
---
-
-CREATE TABLE `discount` (
-                            `id` int(11) NOT NULL,
-                            `name` varchar(30) NOT NULL,
-                            `startDate` datetime DEFAULT current_timestamp(),
-                            `endDate` datetime DEFAULT current_timestamp(),
-                            `percentageOff` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
---
--- Dumping data for table `discount`
---
-
+-- Dumping data for table handmadestore.discount: ~6 rows (approximately)
 INSERT INTO `discount` (`id`, `name`, `startDate`, `endDate`, `percentageOff`) VALUES
                                                                                    (1, 'Giáng Sinh', '2023-12-20 00:00:00', '2024-08-26 00:00:00', 0.15),
                                                                                    (2, 'Tết Nguyên Đán', '2024-02-01 00:00:00', '2023-02-16 00:00:00', 0.20),
@@ -93,23 +67,19 @@ INSERT INTO `discount` (`id`, `name`, `startDate`, `endDate`, `percentageOff`) V
                                                                                    (5, 'Ngày Nhà giáo Việt Nam', '2024-11-15 00:00:00', '2024-11-20 00:00:00', 0.20),
                                                                                    (6, 'Ngày hội khuyến mãi cực lớn', '2024-07-01 00:00:00', '2024-07-12 00:00:00', -0.10);
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.image
+CREATE TABLE IF NOT EXISTS `image` (
+                                       `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) DEFAULT NULL,
+    `path` text NOT NULL,
+    `productId` int(11) DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    KEY `fk_image` (`productId`) USING BTREE,
+    KEY `productId` (`productId`),
+    CONSTRAINT `fk_image` FOREIGN KEY (`productId`) REFERENCES `product` (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=539 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Table structure for table `image`
---
-
-CREATE TABLE `image` (
-                         `id` int(11) NOT NULL,
-                         `name` varchar(255) DEFAULT NULL,
-                         `path` text NOT NULL,
-                         `productId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
---
--- Dumping data for table `image`
---
-
+-- Dumping data for table handmadestore.image: ~538 rows (approximately)
 INSERT INTO `image` (`id`, `name`, `path`, `productId`) VALUES
                                                             (1, 'Thiệp handmade vintage Beauty & the White', 'images/products/p01.webp', 1),
                                                             (2, 'Thiệp handmade vintage Beauty & the White', 'images/products/p01_1.webp', 1),
@@ -650,25 +620,18 @@ INSERT INTO `image` (`id`, `name`, `path`, `productId`) VALUES
                                                             (537, 'Mặt hàng đông lạnh images/products/1_Mathangđonglanh.webp', 'images/products/1_Mathangđonglanh.webp', 237),
                                                             (538, 'Hai a', 'images/products/1_Haia', 232);
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.inventory
+CREATE TABLE IF NOT EXISTS `inventory` (
+                                           `productId` int(11) NOT NULL AUTO_INCREMENT,
+    `quantity` int(11) NOT NULL,
+    `costPrice` decimal(10,2) NOT NULL,
+    `soldOut` int(11) NOT NULL DEFAULT 0,
+    `createDate` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    `costPriceUpdate` decimal(10,2) DEFAULT NULL,
+    PRIMARY KEY (`productId`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Table structure for table `inventory`
---
-
-CREATE TABLE `inventory` (
-                             `productId` int(11) NOT NULL,
-                             `quantity` int(11) NOT NULL,
-                             `costPrice` decimal(10,2) NOT NULL,
-                             `soldOut` int(11) NOT NULL DEFAULT 0,
-                             `createDate` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-                             `costPriceUpdate` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `inventory`
---
-
+-- Dumping data for table handmadestore.inventory: ~235 rows (approximately)
 INSERT INTO `inventory` (`productId`, `quantity`, `costPrice`, `soldOut`, `createDate`, `costPriceUpdate`) VALUES
                                                                                                                (1, 35, 50000.00, 24, '2024-06-29 07:16:10', 50000.00),
                                                                                                                (2, 21, 55000.00, 0, '2024-07-03 09:27:17', 60000.00),
@@ -906,53 +869,58 @@ INSERT INTO `inventory` (`productId`, `quantity`, `costPrice`, `soldOut`, `creat
                                                                                                                (240, 23, 24000.00, 0, '2024-07-03 14:14:07', 24000.00),
                                                                                                                (300, 12, 20000.00, 0, '2024-07-03 14:18:52', 20000.00);
 
---
--- Triggers `inventory`
---
-DELIMITER $$
-CREATE TRIGGER `set_default_costPriceUpdate` BEFORE INSERT ON `inventory` FOR EACH ROW BEGIN
-    IF NEW.costPriceUpdate IS NULL THEN
-        SET NEW.costPriceUpdate = NEW.costPrice;
-END IF;
-END
-$$
-DELIMITER ;
+-- Dumping structure for table handmadestore.inventory_receipts
+CREATE TABLE IF NOT EXISTS `inventory_receipts` (
+                                                    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `createDate` timestamp NOT NULL DEFAULT current_timestamp(),
+    `totalAmount` decimal(10,2) NOT NULL,
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
+-- Dumping data for table handmadestore.inventory_receipts: ~0 rows (approximately)
 
---
--- Table structure for table `inventory_receipts`
---
+-- Dumping structure for table handmadestore.key_user
+CREATE TABLE IF NOT EXISTS `key_user` (
+                                          `id` int(11) NOT NULL AUTO_INCREMENT,
+    `title` varchar(50) NOT NULL,
+    `publicKey` text NOT NULL,
+    `status` tinyint(4) DEFAULT 1,
+    `createdTime` timestamp NULL DEFAULT current_timestamp(),
+    `updatedTime` timestamp NULL DEFAULT NULL,
+    `userId` int(11) NOT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    KEY `fk_userId` (`userId`),
+    CONSTRAINT `fk_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `inventory_receipts` (
-                                      `id` int(11) NOT NULL,
-                                      `createDate` timestamp NOT NULL DEFAULT current_timestamp(),
-                                      `totalAmount` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- Dumping data for table handmadestore.key_user: ~5 rows (approximately)
+INSERT INTO `key_user` (`id`, `title`, `publicKey`, `status`, `createdTime`, `updatedTime`, `userId`) VALUES
+                                                                                                          (1, 'lenovo-thinkbook-g7', 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2mlIGzpi9oZm8cKcnHMI', 1, '2024-12-15 13:14:40', NULL, 1),
+                                                                                                          (2, 'iphone6-KEQIC', '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2mlIGzpi9oZm8cKcnHMI\n7scdgPdlfyCFlwhfU7VHfTgICSU6ryEG8jIzOKWaBI1op7n+kRIQzzCpB4tOH/5u\nH2m3Xfcpe2UCfnbBYuiEEGT/UL5i8HKl1CedMfWdfuwltHH/bmaKU7GRDjdCF2xq\nnJ3eFKin8G0Lu+5r20yVs+ZlttDTO2O9xK0qCsfmIOzyGiRq6hzXM2R/Y2Ozf/z8\nzYlzT7iN9G5LmPvNcns0D5LME08repm62RGtQAGblAKlF1nkH2TcokMlPKt+jdDT\nH6e9x7NUh3WfGMnbbRShEsxdjKZjvKV3mFnyQ+6Ec4gdmMwocj0MABjxolh9DvYG\nWwIDAQAB\n-----END PUBLIC KEY-----', 1, '2024-12-15 13:15:38', NULL, 2),
+                                                                                                          (3, 'bluetooth-g7', '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyzHNUNebRwwTUeh5qJBd\ngPdqFTyWB0P1ILQHUM22uM4VEvXMepe9T4FHAF57MdpIX/9TGTv7MQmftLdMElqZ\nuIYU3WIpc9cABuKopA8e3cGVKS4eCzDPRhQtzR0O2SWOstVWqy+c53zpvUhWO0as\nYdC/D3Q+hVZWBiIt2I9gIk4DZ6y6MUNAwFIvbT9LSqXyDWsYfjoJDEDULNU81PV+\n05X6NkhhBIAV/wKoMLwaOP8HQGa9VypcXthY3JwplHUT2gA7ow1UpxEr016tOPbl\nuxjhq2F5lvgFXbErqB6a1k6ZzJ+m1BDY46S8BlBAOZDp8UbSqWAVc1YO+RYt+dme\nkQIDAQAB\n-----END PUBLIC KEY-----', 1, '2024-12-15 13:45:02', NULL, 3),
+                                                                                                          (4, 'abc_dine', '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA41hnQLBfptr3ZbwYfa0u\nCNxIVkAGocMtQAtfzUbYiwDSXOC0FN2JvSyEGdoC+gzK/IqKSNn5931/AiRUO7Ub\nt2YOIo7KdGdK73DC+YVcsekp3eAr7YvLPGYz1ky4XKIJ/j5xqE7qK1KXTn63mHHu\nX4koFj81naECNYJJ2AUhd17sgVWwO5Zhd5Mn4KNclS5oBgYa9QbZ5R0/vrLedLfz\nzSPJmu1UfMnsGRQDMu+snxXvjwtdaK1u16pTxuZrnVd9m8cT2+wKiD7V96Amw21p\nU9/RmT+IrvP9xoh9OjQqKhMhlV/USdBX0Vzcy7JwGSmiOUCFAYWKl5gz+akby7O+\n+QIDAQAB\n-----END PUBLIC KEY-----', 1, '2024-12-15 13:59:01', NULL, 4),
+                                                                                                          (5, 'ze_ze', '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwatML4c9hhi3Yd+/wclp\np3b/wVcs58rF8I+J8bhKRw3xp5+rl6lmZnXmQ/0KuZ86XhdS3K7uvLu6DiSIZBbb\nWShaJQ4p7+LESXNRkRtoeJNzNv3BJa+O/ScGzuTTomui9/YkeWlDDhTpFf+POW6J\nSuvtxa47tGKPCDH1nK+CjrnejYKYURsGaQDMmc1zNXBcagAFnfMh+cNqEiPLW6M3\nOOcpRxWc18HEKxQEn0IMJZfyI+BFtBM9PHGyKSe86Mg8zOpCDvxxrlNcAy2Fe5/F\nX4dkkej/4QPNkHuPgqqS4uxSLxRuaFPqZ4WiqgIzK4KSFXjP91BTZaLNOONZi+Mn\nqwIDAQAB\n-----END PUBLIC KEY-----', 1, '2024-12-15 15:13:55', NULL, 5),
+                                                                                                            (6, 'pblues_key', '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwatML4c9hhi3Yd+/wclp\np3b/wVcs58rF8I+J8bhKRw3xp5+rl6lmZnXmQ/0KuZ86XhdS3K7uvLu6DiSIZBbb\nWShaJQ4p7+LESXNRkRtoeJNzNv3BJa+O/ScGzuTTomui9/YkeWlDDhTpFf+POW6J\nSuvtxa47tGKPCDH1nK+CjrnejYKYURsGaQDMmc1zNXBcagAFnfMh+cNqEiPLW6M3\nOOcpRxWc18HEKxQEn0IMJZfyI+BFtBM9PHGyKSe86Mg8zOpCDvxxrlNcAy2Fe5/F\nX4dkkej/4QPNkHuPgqqS4uxSLxRuaFPqZ4WiqgIzK4KSFXjP91BTZaLNOONZi+Mn\nqwIDAQAB\n-----END PUBLIC KEY-----', 1, '2024-12-15 15:13:55', NULL, 6),
+                                                                                                            (7, 'mykey', '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwatML4c9hhi3Yd+/wclp\np3b/wVcs58rF8I+J8bhKRw3xp5+rl6lmZnXmQ/0KuZ86XhdS3K7uvLu6DiSIZBbb\nWShaJQ4p7+LESXNRkRtoeJNzNv3BJa+O/ScGzuTTomui9/YkeWlDDhTpFf+POW6J\nSuvtxa47tGKPCDH1nK+CjrnejYKYURsGaQDMmc1zNXBcagAFnfMh+cNqEiPLW6M3\nOOcpRxWc18HEKxQEn0IMJZfyI+BFtBM9PHGyKSe86Mg8zOpCDvxxrlNcAy2Fe5/F\nX4dkkej/4QPNkHuPgqqS4uxSLxRuaFPqZ4WiqgIzK4KSFXjP91BTZaLNOONZi+Mn\nqwIDAQAB\n-----END PUBLIC KEY-----', 1, '2024-12-15 15:13:55', NULL, 7),
+                                                                                                            (8, 'crkey', '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwatML4c9hhi3Yd+/wclp\np3b/wVcs58rF8I+J8bhKRw3xp5+rl6lmZnXmQ/0KuZ86XhdS3K7uvLu6DiSIZBbb\nWShaJQ4p7+LESXNRkRtoeJNzNv3BJa+O/ScGzuTTomui9/YkeWlDDhTpFf+POW6J\nSuvtxa47tGKPCDH1nK+CjrnejYKYURsGaQDMmc1zNXBcagAFnfMh+cNqEiPLW6M3\nOOcpRxWc18HEKxQEn0IMJZfyI+BFtBM9PHGyKSe86Mg8zOpCDvxxrlNcAy2Fe5/F\nX4dkkej/4QPNkHuPgqqS4uxSLxRuaFPqZ4WiqgIzK4KSFXjP91BTZaLNOONZi+Mn\nqwIDAQAB\n-----END PUBLIC KEY-----', 1, '2024-12-15 15:13:55', NULL, 8),
+                                                                                                            (9, 'key16', '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwatML4c9hhi3Yd+/wclp\np3b/wVcs58rF8I+J8bhKRw3xp5+rl6lmZnXmQ/0KuZ86XhdS3K7uvLu6DiSIZBbb\nWShaJQ4p7+LESXNRkRtoeJNzNv3BJa+O/ScGzuTTomui9/YkeWlDDhTpFf+POW6J\nSuvtxa47tGKPCDH1nK+CjrnejYKYURsGaQDMmc1zNXBcagAFnfMh+cNqEiPLW6M3\nOOcpRxWc18HEKxQEn0IMJZfyI+BFtBM9PHGyKSe86Mg8zOpCDvxxrlNcAy2Fe5/F\nX4dkkej/4QPNkHuPgqqS4uxSLxRuaFPqZ4WiqgIzK4KSFXjP91BTZaLNOONZi+Mn\nqwIDAQAB\n-----END PUBLIC KEY-----', 1, '2024-12-15 15:13:55', NULL, 9),
+                                                                                                            (10, 'k12', '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwatML4c9hhi3Yd+/wclp\np3b/wVcs58rF8I+J8bhKRw3xp5+rl6lmZnXmQ/0KuZ86XhdS3K7uvLu6DiSIZBbb\nWShaJQ4p7+LESXNRkRtoeJNzNv3BJa+O/ScGzuTTomui9/YkeWlDDhTpFf+POW6J\nSuvtxa47tGKPCDH1nK+CjrnejYKYURsGaQDMmc1zNXBcagAFnfMh+cNqEiPLW6M3\nOOcpRxWc18HEKxQEn0IMJZfyI+BFtBM9PHGyKSe86Mg8zOpCDvxxrlNcAy2Fe5/F\nX4dkkej/4QPNkHuPgqqS4uxSLxRuaFPqZ4WiqgIzK4KSFXjP91BTZaLNOONZi+Mn\nqwIDAQAB\n-----END PUBLIC KEY-----', 1, '2024-12-15 15:13:55', NULL, 10);
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.log
+CREATE TABLE IF NOT EXISTS `log` (
+                                     `id` int(11) NOT NULL AUTO_INCREMENT,
+    `ipAddress` varchar(255) NOT NULL,
+    `location` varchar(255) NOT NULL,
+    `createdTime` timestamp NOT NULL DEFAULT current_timestamp(),
+    `level` varchar(50) NOT NULL,
+    `action` varchar(255) NOT NULL,
+    `message` text NOT NULL,
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Table structure for table `log`
---
+-- Dumping data for table handmadestore.log: ~0 rows (approximately)
 
-CREATE TABLE `log` (
-                       `id` int(11) NOT NULL,
-                       `ipAddress` varchar(255) NOT NULL,
-                       `location` varchar(255) NOT NULL,
-                       `createdTime` timestamp NOT NULL DEFAULT current_timestamp(),
-                       `level` varchar(50) NOT NULL,
-                       `action` varchar(255) NOT NULL,
-                       `message` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order`
---
-
-CREATE TABLE `order` (
+CREATE TABLE IF NOT EXISTS `order` (
                          `id` int(11) NOT NULL,
                          `totalPrice` decimal(10,2) NOT NULL,
                          `orderDate` datetime NOT NULL DEFAULT current_timestamp(),
@@ -962,48 +930,45 @@ CREATE TABLE `order` (
                          `address` varchar(200) NOT NULL,
                          `shippingFee` decimal(10,2) NOT NULL DEFAULT 0.00,
                          `userId` int(11) NOT NULL,
-                         `note` varchar(255) DEFAULT NULL
+                         `note` varchar(255) DEFAULT NULL,
+                         `publicKeyId` int(11) DEFAULT NULL,
+                         `signature` text DEFAULT NULL,
+                        PRIMARY KEY (`id`) USING BTREE,
+                        KEY `fk_key_id` (`userId`),
+                        CONSTRAINT `fk_key_id` FOREIGN KEY (`id`) REFERENCES `key_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`id`, `totalPrice`, `orderDate`, `status`, `consigneeName`, `consigneePhoneNumber`, `address`, `shippingFee`, `userId`, `note`) VALUES
-                                                                                                                                                         (1, 270000.00, '2023-11-29 00:00:00', 3, 'Pblues', '0336677141', '29 Tô Vĩnh Diện , Đông Hòa ,Dĩ An , Bình Dương', 30000.00, 1, NULL),
-                                                                                                                                                         (2, 138000.00, '2023-11-29 00:00:00', 1, 'Nguyễn Thị Nghia', '0341231234', '416 Phạm Văn Đồng, Phường 11, Bình Thạnh, Thành phố Hồ Chí Minh', 30000.00, 3, NULL),
-                                                                                                                                                         (3, 219000.00, '2023-11-30 00:00:00', 2, 'Pblues', '0336677141', '312 Trường Chinh, Nhơn Hưng, An Nhơn, Bình Định', 40000.00, 2, NULL),
-                                                                                                                                                         (4, 209000.00, '2023-11-30 00:00:00', 3, 'Lê Bá Kiên Nghĩa', '0875488549', '32 Đ, Mạc Đĩnh Chi, Đa Kao, Quận 1, Thành phố Hồ Chí Minh', 30000.00, 4, NULL),
-                                                                                                                                                         (5, 219000.00, '2023-11-30 00:00:00', 2, 'Nguyễn Trung Kiên', '0875488763', '312 Đường Võ Nguyên Giáp, Thiện Nghiệp, Thành phố Phan Thiết, Bình Thuận', 40000.00, 5, NULL),
-                                                                                                                                                         (6, 229000.00, '2023-11-30 00:00:00', 3, 'Nguyễn Trung Kiên', '0875488763', '31 Trần Phú, P, Mộ Lao, Hà Đông, Hà Nội', 50000.00, 6, NULL),
-                                                                                                                                                         (7, 209000.00, '2023-12-01 00:00:00', 2, 'Nguyễn Ngọc Lan', '0875488766', '29 Tô Vĩnh Diện , Đông Hòa ,Dĩ An , Bình Dương', 30000.00, 1, NULL),
-                                                                                                                                                         (8, 209000.00, '2023-12-01 00:00:00', 3, 'Vương Thúy Kiều', '0112233445', '15 Trường Chinh, Phước Trung, Bà Rịa, Bà Rịa - Vũng Tàu', 30000.00, 8, NULL),
-                                                                                                                                                         (9, 209000.00, '2023-12-01 00:00:00', 3, 'Vương Thúy Vân', '0875488763', '21 Võ Trường Toản, An Phú, Quận 2, Thành phố Hồ Chí Minh', 30000.00, 7, NULL),
-                                                                                                                                                         (10, 209000.00, '2023-12-01 00:00:00', 1, 'Kim Trọng', '0875486865', '314 Âu Cơ, TT, Tân Châu, Tân Châu, An Giang', 30000.00, 9, NULL),
-                                                                                                                                                         (11, 229000.00, '2023-12-02 00:00:00', 3, 'Nguyễn Thị Đức Lưu (Thị Nở)', '0875489763', '31 Trần Phú, P, Mộ Lao, Hà Đông, Hà Nội', 50000.00, 6, NULL),
-                                                                                                                                                         (12, 219000.00, '2023-12-02 00:00:00', 0, 'Nguyễn Kiên Trung', '0875488762', '18 Phan Văn Trị, Khuê Trung, Cẩm Lệ, Đà Nẵng', 40000.00, 10, NULL),
-                                                                                                                                                         (13, 219000.00, '2023-12-02 00:00:00', 0, 'Nguyễn Nghĩa Trọng Kiên', '0878288763', '312 Trường Chinh, Nhơn Hưng, An Nhơn, Bình Định', 40000.00, 2, NULL),
-                                                                                                                                                         (14, 165000.00, '2023-12-02 00:00:00', 0, 'Nguyễn Kiên Trọng Nghĩa', '0875488549', '416 Phạm Văn Đồng, Phường 11, Bình Thạnh, Thành phố Hồ Chí Minh', 30000.00, 3, NULL);
+INSERT INTO `order` (`id`, `totalPrice`, `orderDate`, `status`, `consigneeName`, `consigneePhoneNumber`, `address`, `shippingFee`, `userId`, `note`, `publicKeyId`, `signature`) VALUES
+                                                                                                                                                                                     (1, 270000.00, '2023-11-29 00:00:00', 3, 'Pblues', '0336677141', '29 Tô Vĩnh Diện , Đông Hòa ,Dĩ An , Bình Dương', 30000.00, 1, NULL, 1, 'MCwCFFMSMpsJNG1Dm0GBWHzS8MlU7WG8AhQC2WL5qms8JQs2J8ymN7olmzX81A=='),
+                                                                                                                                                                                     (2, 138000.00, '2023-11-29 00:00:00', 1, 'Nguyễn Thị Nghia', '0341231234', '416 Phạm Văn Đồng, Phường 11, Bình Thạnh, Thành phố Hồ Chí Minh', 30000.00, 3, NULL, 2, 'MC0CFQCEX1/3YaOxTC5PR2OKMsyWV8/GbwIUJmtnBFqAWuV6jkMxtlESkLrerNA='),
+                                                                                                                                                                                     (3, 219000.00, '2023-11-30 00:00:00', 2, 'Pblues', '0336677141', '312 Trường Chinh, Nhơn Hưng, An Nhơn, Bình Định', 40000.00, 2, NULL, 3, 'MC0CFCeyXCzU80nSYqpDnXfVXzdtNYGSAhUAjTsyAJO5c2QRC4Fkn/9DhvYw9I0='),
+                                                                                                                                                                                     (4, 209000.00, '2023-11-30 00:00:00', 3, 'Lê Bá Kiên Nghĩa', '0875488549', '32 Đ, Mạc Đĩnh Chi, Đa Kao, Quận 1, Thành phố Hồ Chí Minh', 30000.00, 4, NULL, 4, 'MCwCFEOhFsReE8z92bjnK4kRvYGQUg6oAhRbntYqcZL5HOkRj4kAgGuIZBbQBw=='),
+                                                                                                                                                                                     (5, 219000.00, '2023-11-30 00:00:00', 2, 'Nguyễn Trung Kiên', '0875488763', '312 Đường Võ Nguyên Giáp, Thiện Nghiệp, Thành phố Phan Thiết, Bình Thuận', 40000.00, 5, NULL, 5, 'MC0CFAaD/x5BmNT1cQnyv3nFPrSXGZseAhUAhkW/iiH4PWLRo6VKi/E5x9pGnmo='),
+                                                                                                                                                                                     (6, 229000.00, '2023-11-30 00:00:00', 3, 'Nguyễn Trung Kiên', '0875488763', '31 Trần Phú, P, Mộ Lao, Hà Đông, Hà Nội', 50000.00, 6, NULL, 6, 'MCwCFC/s9a9K9eUgx1riIZYaaTeeYFbBAhQFfj/hEK9GYN9MO6f56GGckrvsvw=='),
+                                                                                                                                                                                     (7, 209000.00, '2023-12-01 00:00:00', 2, 'Nguyễn Ngọc Lan', '0875488766', '29 Tô Vĩnh Diện , Đông Hòa ,Dĩ An , Bình Dương', 30000.00, 1, NULL, 7, 'tEÌyguvbscuiă ken hacewsfcsdxkhesdc ưu càikhceáyh fchewydsbh fbvcsvsd sdcsdvsv'),
+                                                                                                                                                                                     (8, 209000.00, '2023-12-01 00:00:00', 3, 'Vương Thúy Kiều', '0112233445', '15 Trường Chinh, Phước Trung, Bà Rịa, Bà Rịa - Vũng Tàu', 30000.00, 8, NULL, 8, 'MCwCFHBVzsCD7Dg+al5uI9ln/wyjzZ6BAhRlw4v09dhtnQN8tg01BERHKtZtEQ=='),
+                                                                                                                                                                                     (9, 209000.00, '2023-12-01 00:00:00', 3, 'Vương Thúy Vân', '0875488763', '21 Võ Trường Toản, An Phú, Quận 2, Thành phố Hồ Chí Minh', 30000.00, 7, NULL, 9, 'MCwCFAdNNRpz5+zjXwvJqE8STMlVpNeDAhRQL6iFdzJOj8z47Zcv0WLeIe8DTw==');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `order_details`
---
-
-CREATE TABLE `order_details` (
-                                 `orderId` int(11) NOT NULL,
-                                 `productId` int(11) NOT NULL,
-                                 `quantity` int(11) NOT NULL,
-                                 `sellingPrice` decimal(10,2) NOT NULL,
-                                 `finalSellingPrice` decimal(10,2) NOT NULL,
-                                 `explainPriceDifference` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+-- Dumping structure for table handmadestore.order_details
+CREATE TABLE IF NOT EXISTS `order_details` (
+                                               `orderId` int(11) NOT NULL,
+    `productId` int(11) NOT NULL,
+    `quantity` int(11) NOT NULL,
+    `sellingPrice` decimal(10,2) NOT NULL,
+    `finalSellingPrice` decimal(10,2) NOT NULL,
+    `explainPriceDifference` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`orderId`,`productId`) USING BTREE,
+    KEY `fk_od2` (`productId`) USING BTREE,
+    CONSTRAINT `fk_od1` FOREIGN KEY (`orderId`) REFERENCES `order` (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `order_details`
 --
-
 INSERT INTO `order_details` (`orderId`, `productId`, `quantity`, `sellingPrice`, `finalSellingPrice`, `explainPriceDifference`) VALUES
                                                                                                                                     (1, 1, 2, 70000.00, 70000.00, NULL),
                                                                                                                                     (1, 7, 2, 50000.00, 50000.00, NULL),
@@ -1024,37 +989,23 @@ INSERT INTO `order_details` (`orderId`, `productId`, `quantity`, `sellingPrice`,
                                                                                                                                     (8, 118, 1, 39000.00, 39000.00, NULL),
                                                                                                                                     (9, 1, 2, 70000.00, 70000.00, NULL),
                                                                                                                                     (9, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (10, 1, 2, 70000.00, 70000.00, NULL),
-                                                                                                                                    (10, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (11, 1, 2, 70000.00, 70000.00, NULL),
-                                                                                                                                    (11, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (12, 1, 2, 70000.00, 70000.00, NULL),
-                                                                                                                                    (12, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (13, 1, 2, 70000.00, 70000.00, NULL),
-                                                                                                                                    (13, 118, 1, 39000.00, 39000.00, NULL),
-                                                                                                                                    (14, 122, 1, 135000.00, 135000.00, NULL);
+                                                                                                                                    (10, 1, 2, 70000.00, 70000.00, NULL);
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.product
+CREATE TABLE IF NOT EXISTS `product` (
+                                         `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) DEFAULT NULL,
+    `description` text NOT NULL,
+    `sellingPrice` decimal(10,2) NOT NULL,
+    `stock` int(11) NOT NULL,
+    `categoryId` smallint(6) NOT NULL,
+    `discountId` int(11) DEFAULT NULL,
+    `isSale` smallint(6) DEFAULT 1,
+    PRIMARY KEY (`id`),
+    KEY `fk_discount` (`discountId`) USING BTREE
+    ) ENGINE=InnoDB AUTO_INCREMENT=238 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Table structure for table `product`
---
-
-CREATE TABLE `product` (
-                           `id` int(11) NOT NULL,
-                           `name` varchar(255) DEFAULT NULL,
-                           `description` text NOT NULL,
-                           `sellingPrice` decimal(10,2) NOT NULL,
-                           `stock` int(11) NOT NULL,
-                           `categoryId` smallint(6) NOT NULL,
-                           `discountId` int(11) DEFAULT NULL,
-                           `isSale` smallint(6) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
---
--- Dumping data for table `product`
---
-
+-- Dumping data for table handmadestore.product: ~234 rows (approximately)
 INSERT INTO `product` (`id`, `name`, `description`, `sellingPrice`, `stock`, `categoryId`, `discountId`, `isSale`) VALUES
                                                                                                                        (1, 'Thiệp handmade vintage Beauty & the White', 'Kích thước lớn hơn thông thường: 11x18cm, gồm bì thư, giấy viết thông điệp và thiệp;\nChủ đề có sẵn: chúc mừng sinh nhật, valentine, 8/3, 20/10, 20/11;\nLiên lạc ngay với Craft & More Vietnam nếu bạn muốn làm thiệp theo chủ đề riêng;\nThiệp làm handmade tỉ mỉ với vật liệu giấy cứng, giấy mỹ thuật, hoa lá cỏ khô,,, rất thân thiện môi trường;\nTùy biến kích thước, câu chữ, logo cho nhóm, công ty, đoàn thể,,,\nLưu ý: Thiệp được làm thủ công-handmade với các vật liệu hoa, lá, cỏ, giấy,,, nên các chi tiết có thể khác đôi chút cho từng sản phẩm nhưng phong cách (concept) luôn thống nhất theo các mẫu,', 70000.00, 11, 1, 0, 1),
                                                                                                                        (2, 'Thiệp handmade Film de Paris', 'Mẫu thiệp chúc mừng FILM de PARIS đậm chất retro, vintage hoài cổ;\nKích thước lớn hơn thông thường: 11x18cm, gồm bì thư, giấy viết thông điệp và thiệp;\nChủ đề có sẵn: chúc mừng sinh nhật, valentine, 8/3, 20/10, 20/11;\nLiên lạc ngay với Craft & More Vietnam nếu bạn muốn làm thiệp theo chủ đề riêng;\nThiệp làm handmade tỉ mỉ với vật liệu giấy cứng, giấy mỹ thuật, hoa lá cỏ khô,,, rất thân thiện môi trường;\nTùy biến kích thước, câu chữ, logo cho nhóm, công ty, đoàn thể,,,\nLưu ý: Thiệp được làm thủ công-handmade với các vật liệu hoa, lá, cỏ, giấy,,, nên các chi tiết có thể khác đôi chút cho từng sản phẩm nhưng phong cách (concept) luôn thống nhất theo các mẫu,', 70000.00, 21, 1, NULL, 2),
@@ -1078,7 +1029,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `sellingPrice`, `stock`, `ca
                                                                                                                        (20, 'Khung ảnh gỗ 3 in 1', 'Thiết kế cực sang trọng với màu trắng làm chủ đạo, phù hợp với mọi không gian trong căn nhà bạn', 630000.00, 10, 1, NULL, 1),
                                                                                                                        (21, 'Khung ảnh, tủ móc khóa, móc treo 3 in 1', 'Kích thước: 21x28cm; \nChất liệu: gỗ;', 347000.00, 0, 1, NULL, 1),
                                                                                                                        (22, 'Khung hình vintage triple cỡ lớ', 'Kích thước khung 57x31cm; cỡ hình 10x15cm; trọng lượng 1,38kg; \nChất liệu: gỗ, thiết kế hoài cổ, vintage, cá tính,', 519000.00, 6, 1, NULL, 1),
-                                                                                                                       (23, 'Khung ảnh handmade - thiệp handmade đẹp 2 in 1', 'Sản phẩm được thiết kế cá tính và đậm chất Vintage cổ xưa sẽ là sản phẩm độc đáo dành cho bạn có nhu cầu lưu giữ những tấm ảnh \"hay ho\" hay ghi lại khoảnh khắc đáng nhớ, Bạn có thể dán hình hoặc câu chữ yêu thích đặt vào khung hình,', 29000.00, 0, 1, NULL, 0),
+                                                                                                                       (23, 'Khung ảnh handmade - thiệp handmade đẹp 2 in 1', 'Sản phẩm được thiết kế cá tính và đậm chất Vintage cổ xưa sẽ là sản phẩm độc đáo dành cho bạn có nhu cầu lưu giữ những tấm ảnh "hay ho" hay ghi lại khoảnh khắc đáng nhớ, Bạn có thể dán hình hoặc câu chữ yêu thích đặt vào khung hình,', 29000.00, 0, 1, NULL, 0),
                                                                                                                        (24, 'Khung ảnh kiểu Địa Trung Hải', 'Mang nắng, gió và biển Địa Trung Hải vào thiết kế không gian của bạn đơn giản chỉ với chiếc khung ảnh này, Kích thước: 19 x 23cm; Chất liệu: gỗ thông đẹp và bền bỉ,', 189000.00, 24, 1, NULL, 1),
                                                                                                                        (25, 'Khung ảnh vintage kiểu US Army', 'Bằng chất liệu kim loại, gỗ cùng một chút sáng tạo, khung ảnh US Army sẽ là điểm nhấn cho không gian thêm phần khác lạ, Kích thước khung 1 x 23 x 28cm; cỡ hình 10 x 15cm;', 167000.00, 21, 1, NULL, 1),
                                                                                                                        (26, 'Khung ảnh vintage trắng ngà', 'Khung hình thiết kế đơn giản, đẹp, tinh tế, nhẹ nhàng với tông màu trắng, Kích thước lần lượt cho các khổ ảnh 9x9cm giá 105k; 9x13cm giá 162k; 10x15cm giá 173k; 13x18cm giá 197k,', 97000.00, 16, 1, NULL, 1),
@@ -1091,7 +1042,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `sellingPrice`, `stock`, `ca
                                                                                                                        (33, 'Khung ảnh Staring time (lớn)', 'Khung ảnh gỗ đẹp Staring time Không chỉ là chiếc khung ảnh gỗ, mà nó còn là kỉ vật thời gian gắn bó với rất nhiều người, do đó, một chiếc khung ảnh luôn là món đồ vật được trân trọng,,,,', 212000.00, 2, 1, NULL, 1),
                                                                                                                        (34, 'Khung ảnh gỗ thông Rustic', 'Khung ảnh Rustic cỡ lớn Những điều ý nghĩa, những kỷ niệm đẹp hãy lưu lại và trân trọng điều đó bởi đó là những điều sẽ đi suốt cuộc đời của bạn, Chính vì thể hãy giữ cho những bức,,,', 227000.00, 15, 1, NULL, 1),
                                                                                                                        (35, 'Khung ảnh Hải Âu Mediterranea', 'Quà tặng khung ảnh Hải Âu Mediterranean Chất liệu: gỗ; Kích thước khung 18x23cm; khổ hình 10x15cm; Like FACEBOOK VIETGIFTCENTER,COM để được cập nhật nhanh nhất!', 189000.00, 13, 1, NULL, 1),
-                                                                                                                       (36, 'Khung trang trí bàn hoa hồng sứ C-rose frame', 'Phong cách \"mộc\" ấn tượng cho khung trang trí để bàn C-rose, Ngoài việc trang trí, khung trang trí còn là điểm nhấn phong thủy độc đáo cho nội thất của bạn, Khung trang trí để bàn hoa hồng Kích thước:13,9 x,,,', 317000.00, 18, 1, NULL, 1),
+                                                                                                                       (36, 'Khung trang trí bàn hoa hồng sứ C-rose frame', 'Phong cách "mộc" ấn tượng cho khung trang trí để bàn C-rose, Ngoài việc trang trí, khung trang trí còn là điểm nhấn phong thủy độc đáo cho nội thất của bạn, Khung trang trí để bàn hoa hồng Kích thước:13,9 x,,,', 317000.00, 18, 1, NULL, 1),
                                                                                                                        (37, 'KHUNG ẢNH NGÔI NHÀ CỬA SỔ NÂU (NGANG)', 'KÍCH THƯỚC: 24,5 * 20,5cm \nChất liệu: Gỗ', 240000.00, 4, 1, NULL, 1),
                                                                                                                        (38, 'KHUNG ẢNH NGÔI NHÀ XE ĐẠP', 'KÍCH THƯỚC: 19*26,5cm \nChất liệu: Gỗ', 240000.00, 1, 1, NULL, 1),
                                                                                                                        (39, 'KHUNG ẢNH VÒNG ĐU QUAY VINTAGE', 'Khung ảnh vòng đu quay vintage 2 \nKích thước: 33 x 18,5 cm \nChất liệu: kim loại', 189000.00, 0, 1, NULL, 0),
@@ -1113,7 +1064,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `sellingPrice`, `stock`, `ca
                                                                                                                        (55, 'Fly album handmade bicycle', 'Fly album handmade bicycle Chất liệu: giấy cứng cao cấp; Làm bằng tay hoàn toàn (100% handmade); Kích thước: 14,5*21,5 cm; Số trang: 14, Dán được được 30 hình khổ 6x9 cm, Like Fanpage vietgiftcenter,com để được hỗ trợ thông tin nhanh nhất,', 329000.00, 9, 2, NULL, 1),
                                                                                                                        (56, 'Fly album handmade Blue Pastel', '- Chất liệu: giấy cứng cao cấp; \n- Làm bằng tay hoàn toàn (100% handmade); \n- Kích thước: 14 cm*23 cm; \n- Số trang: 15, Dán được được 32 hình khổ 6 x 9cm,', 329000.00, 20, 2, NULL, 1),
                                                                                                                        (57, 'Fly album Love (Xanh)', 'Phiên bản độc quyền mang phong cách riêng của Craft & More, Mang màu sắc cùng thiết kế bí ẩn, fly album handmade Love có thể trang trí trên bàn làm việc, bàn học, không gian, Sản phẩm có hộp đựng vô cùng xinh xắn,', 329000.00, 17, 2, NULL, 1),
-                                                                                                                       (58, 'Fly album Sweet Moment', 'Nếu fly album Anchor với tông màu hồng xin xắn dành riêng cho mùa xuân thì fly album Sweet Moment lại khơi gợi nét nhẹ nhàng, lãng đãng của mùa thu dịu dàng, Sản phẩm vừa là cuốn album ảnh \"độc\", vừa là vật trang trí cực lãng mạn cho không gian,', 329000.00, 6, 2, NULL, 1),
+                                                                                                                       (58, 'Fly album Sweet Moment', 'Nếu fly album Anchor với tông màu hồng xin xắn dành riêng cho mùa xuân thì fly album Sweet Moment lại khơi gợi nét nhẹ nhàng, lãng đãng của mùa thu dịu dàng, Sản phẩm vừa là cuốn album ảnh "độc", vừa là vật trang trí cực lãng mạn cho không gian,', 329000.00, 6, 2, NULL, 1),
                                                                                                                        (59, 'Fly album Retro Clock', '- Chất liệu: giấy cứng cao cấp; \n- Làm bằng tay hoàn toàn (100% handmade); \n- Kích thước: 14 cm*23 cm; \n- Số trang: 15, Dán được được 32 hình khổ 6 x 9cm,', 329000.00, 11, 2, NULL, 1),
                                                                                                                        (60, 'Scrapbook độc đáo cho tình yêu THE JOURNEY OF LOVE', '- Màu sắc: Nâu trầm, \n\n- Kích thước: 21 x 21cm, gồm 11 trang giấy trang trí sẵn, \n\n- Sản phẩm mang thông điệp và màu sắc trung tính, có thể dùng làm quà tặng, album trang trí cho cả nam lẫn nữ, \n\n- Sản phẩm có 2 mẫu khác nhau, Vui lòng chọn mẫu khi đặt hàng,', 649000.00, 9, 2, NULL, 1),
                                                                                                                        (61, 'Album DIY Retro Clock', 'Thiết kế mang dáng vẻ cổ điển cùng lối trang trí đơn giản nhưng mang lại nét sang trọng, nhẹ nhàng cùng chi tiết bánh răng, đồng hồ, poscard,,,,', 222000.00, 0, 2, NULL, 0),
@@ -1159,7 +1110,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `sellingPrice`, `stock`, `ca
                                                                                                                        (101, 'Bình cắm hoa LYO', 'Bình cắm hoa LYON trang trí, Kích thước 12cm đường kính x 20cm cao, chất liệu: thiếc không gỉ', 404000.00, 10, 5, NULL, 1),
                                                                                                                        (102, 'Bình sứ trang trí Vintage', 'Bình sứ trang trí đẹp nhẹ nhàng phù hợp trang trí shop, studio, quán cafe, nhà hàng, phòng khách', 163000.00, 10, 5, NULL, 1),
                                                                                                                        (103, 'Bình cắm hoa trang trí dây thừng', 'Bình cắm hoa trang trí dây thừng\nkích thước: 14cm đường kính x 19,5cm cao\nChất liệu thiếc được sơn chống gỉ,', 404000.00, 10, 5, NULL, 1),
-                                                                                                                       (104, 'Chai thủy tinh quấn thừng lớ', 'Chai (lọ) thủy tinh quấn thừng xinh xắn dùng cắm hoa cực đẹp Với chai thủy tinh, sợi thừng nhỏ, Cổ & Cũ đã giúp thổi hồn vào sản phẩm một cách tinh tế và điệu đà, sản phẩm \"chất\" và \"mộc\" một,,,', 119000.00, 10, 5, NULL, 1),
+                                                                                                                       (104, 'Chai thủy tinh quấn thừng lớ', 'Chai (lọ) thủy tinh quấn thừng xinh xắn dùng cắm hoa cực đẹp Với chai thủy tinh, sợi thừng nhỏ, Cổ & Cũ đã giúp thổi hồn vào sản phẩm một cách tinh tế và điệu đà, sản phẩm "chất" và "mộc" một,,,', 119000.00, 10, 5, NULL, 1),
                                                                                                                        (105, 'Bình gốm cao giả cổ hoa văn vintage', 'Chất liệu: sứ; hoa văn vintage cổ điển;\nKích thước: chân bình 15,5 cm; miệng bình 26 cm; cao 28 cm,', 545000.00, 10, 5, NULL, 1),
                                                                                                                        (106, 'Khay sứ giả cổ', 'Chất liệu: sứ màu xanh ngọc; \nKích thước: cao 27cm, dài gồm tay cầm 43 cm, dài mặt trong khay 31cm, rộng 22cm, đường kính đáy khay 13cm,', 924000.00, 7, 5, NULL, 1),
                                                                                                                        (107, 'Giá để rượu vang gốm giả cổ', 'Chất liệu: gốm; \nKích thước: 18x30cm,', 499000.00, 14, 5, NULL, 1),
@@ -1262,8 +1213,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `sellingPrice`, `stock`, `ca
                                                                                                                        (204, 'Nút Bấm Gỗ Handmade', 'Nút bấm gỗ handmade là phụ kiện thủ công được làm từ gỗ tự nhiên và có thiết kế độc đáo. Sản phẩm làm đẹp cho trang trí quần áo hoặc đồ trang sức.', 50000.00, 30, 5, NULL, 1),
                                                                                                                        (205, 'Bức Tranh Trừu Tượng Màu Sắc', 'Bức tranh trừu tượng màu sắc là tác phẩm nghệ thuật thủ công với sự sáng tạo của nghệ sĩ. Sử dụng màu sắc tươi mới để tạo nên chi tiết độc đáo. Kích thước: 40cm x 60cm', 260000.00, 5, 5, NULL, 1),
                                                                                                                        (206, 'Bút Lông Handmade Chạm Khắc', 'Bút lông handmade chạm khắc là sản phẩm thủ công với thân bút được làm từ lông vũ và gỗ. Sử dụng bút để viết và làm quà tặng ý nghĩa. Thiết kế độc đáo và tinh tế.', 100000.00, 15, 3, NULL, 1),
-                                                                                                                       (207, 'Gối Trang Trí Vải Jean', 'Gối trang trí vải jean là sản phẩm thủ công với chất liệu vải jean và thiết kế độc đáo. Sản phẩm mang đến không gian sống phong cách và cá nhân. Kích thước: 45cm x 45cm', 120000.00, 20, 3, NULL, 1);
-INSERT INTO `product` (`id`, `name`, `description`, `sellingPrice`, `stock`, `categoryId`, `discountId`, `isSale`) VALUES
+                                                                                                                       (207, 'Gối Trang Trí Vải Jean', 'Gối trang trí vải jean là sản phẩm thủ công với chất liệu vải jean và thiết kế độc đáo. Sản phẩm mang đến không gian sống phong cách và cá nhân. Kích thước: 45cm x 45cm', 120000.00, 20, 3, NULL, 1),
                                                                                                                        (208, 'Bình Hoa Treo Tường Handmade', 'Bình hoa treo tường handmade là sản phẩm thủ công với chất liệu tre tự nhiên và thiết kế treo tường tiện lợi. Sản phẩm làm đẹp cho không gian sống. Kích thước: 25cm x 50cm', 200000.00, 12, 5, NULL, 1),
                                                                                                                        (209, 'Dây Chuyền Handmade Đá Mắt Hổ', 'Dây chuyền handmade với đá mắt hổ là sản phẩm thủ công mang lại vẻ đẹp tự nhiên và ý nghĩa phong thủy. Chất liệu an toàn cho da.', 120000.00, 18, 4, NULL, 1),
                                                                                                                        (210, 'Bức Tranh Mosaic Nghệ Thuật', 'Bức tranh mosaic nghệ thuật là sản phẩm thủ công với sự kết hợp của nhiều mảnh nhỏ để tạo nên hình ảnh độc đáo. Kích thước: 50cm x 70cm', 280000.00, 10, 5, NULL, 1),
@@ -1292,25 +1242,18 @@ INSERT INTO `product` (`id`, `name`, `description`, `sellingPrice`, `stock`, `ca
                                                                                                                        (236, 'Can bo', 'cha biet nua', 20000.00, 50, 1, 1, 1),
                                                                                                                        (237, 'Mặt hàng đông lạnh', 'Sản phẩm cực kỳ chất lượng với 200 ', 30000.00, 20, 5, 0, 1);
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.rate
+CREATE TABLE IF NOT EXISTS `rate` (
+                                      `productId` int(11) NOT NULL,
+    `userId` int(11) NOT NULL,
+    `starRatings` tinyint(1) NOT NULL,
+    `comment` text NOT NULL,
+    `createDate` datetime DEFAULT current_timestamp(),
+    `changeNumber` int(11) DEFAULT 0,
+    PRIMARY KEY (`productId`,`userId`) USING BTREE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Table structure for table `rate`
---
-
-CREATE TABLE `rate` (
-                        `productId` int(11) NOT NULL,
-                        `userId` int(11) NOT NULL,
-                        `starRatings` tinyint(1) NOT NULL,
-                        `comment` text NOT NULL,
-                        `createDate` datetime DEFAULT current_timestamp(),
-                        `changeNumber` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
---
--- Dumping data for table `rate`
---
-
+-- Dumping data for table handmadestore.rate: ~8 rows (approximately)
 INSERT INTO `rate` (`productId`, `userId`, `starRatings`, `comment`, `createDate`, `changeNumber`) VALUES
                                                                                                        (1, 1, 4, 'Sản phẩm tốt', '2023-11-29 00:00:00', 0),
                                                                                                        (1, 4, 5, 'Sản phẩm chất liệu tốt và rất đẹp', '2023-12-01 00:00:00', 0),
@@ -1321,82 +1264,59 @@ INSERT INTO `rate` (`productId`, `userId`, `starRatings`, `comment`, `createDate
                                                                                                        (118, 4, 5, 'Khung ảnh đẹp và tốt lắm ! 10điểm cho shop', '2023-12-01 00:00:00', 0),
                                                                                                        (118, 9, 5, 'Quá ưng ý với sản phẩm này!', '2023-12-03 00:00:00', 0);
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.receptitem
+CREATE TABLE IF NOT EXISTS `receptitem` (
+                                            `receptId` int(11) NOT NULL,
+    `productId` int(11) NOT NULL,
+    `quantity` int(11) NOT NULL,
+    `unitPrice` decimal(10,2) NOT NULL,
+    PRIMARY KEY (`receptId`,`productId`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Table structure for table `receptitem`
---
+-- Dumping data for table handmadestore.receptitem: ~0 rows (approximately)
 
-CREATE TABLE `receptitem` (
-                              `receptId` int(11) NOT NULL,
-                              `productId` int(11) NOT NULL,
-                              `quantity` int(11) NOT NULL,
-                              `unitPrice` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- Dumping structure for table handmadestore.role
+CREATE TABLE IF NOT EXISTS `role` (
+                                      `id` tinyint(4) NOT NULL DEFAULT 2,
+    `name` varchar(20) DEFAULT 'user',
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `role`
---
-
-CREATE TABLE `role` (
-                        `id` tinyint(4) NOT NULL DEFAULT 2,
-                        `name` varchar(20) DEFAULT 'user'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `role`
---
-
+-- Dumping data for table handmadestore.role: ~3 rows (approximately)
 INSERT INTO `role` (`id`, `name`) VALUES
+                                      (-1, 'owner'),
                                       (0, 'admin'),
-                                      (2, 'user'),
-                                      (-1, 'owner');
+                                      (2, 'user');
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.tips
+CREATE TABLE IF NOT EXISTS `tips` (
+                                      `title` varchar(50) NOT NULL,
+    `description` text DEFAULT NULL,
+    `img_path` text NOT NULL,
+    `video_link` varchar(255) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Table structure for table `tips`
---
-
-CREATE TABLE `tips` (
-                        `title` varchar(50) NOT NULL,
-                        `description` text DEFAULT NULL,
-                        `img_path` text NOT NULL,
-                        `video_link` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
---
--- Dumping data for table `tips`
---
-
+-- Dumping data for table handmadestore.tips: ~3 rows (approximately)
 INSERT INTO `tips` (`title`, `description`, `img_path`, `video_link`) VALUES
                                                                           ('Cách cắm hoa khô đẹp trong 5 phút', 'Hoa khô hay còn gọi là hoa không tàn, hoa vĩnh cửu luôn có nét đẹp riêng,\r\nĐể tăng thêm sự độc đáo và giá trị thì cách cắm hoa...', 'images/banner_tip/tip_1.jpg', 'https://youtu.be/t4Sjrj0MvUg'),
                                                                           ('Cách làm trang trí thiệp hoa khô handmade siêu dễ', 'Thiệp hoa khô tự nhiên có nét quyến rũ thú vị, thể hiện sự chỉnh chu của người tặng,\r\nTự tay làm chiếc thiệp hoa khô sẽ thật ý nghĩa...', 'images/banner_tip/tip_2.jpg', 'https://youtu.be/eA_cUtEO6zA'),
                                                                           ('Hướng dẫn cách làm scrapbook album ảnh handmade', 'Scrapbook là một dạng nhật ký ảnh, album hình được làm, trang trí thủ công có nội dung ,\r\ncâu chuyện hoàn chỉnh,Thời gian, sự kiện được ghi chú...', 'images/banner_tip/tip_3.jpg', 'https://youtu.be/U3kAyqvfWoc');
 
--- --------------------------------------------------------
+-- Dumping structure for table handmadestore.user
+CREATE TABLE IF NOT EXISTS `user` (
+                                      `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(40) NOT NULL,
+    `phoneNumber` varchar(12) NOT NULL,
+    `email` varchar(30) NOT NULL,
+    `password` varchar(30) NOT NULL,
+    `createDate` datetime DEFAULT current_timestamp(),
+    `status` varchar(25) DEFAULT 'Bình Thường',
+    `roleId` tinyint(4) NOT NULL DEFAULT 2,
+    PRIMARY KEY (`id`) USING BTREE,
+    KEY `fkuser` (`roleId`) USING BTREE
+    ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-                        `id` int(11) NOT NULL,
-                        `name` varchar(40) NOT NULL,
-                        `phoneNumber` varchar(12) NOT NULL,
-                        `email` varchar(30) NOT NULL,
-                        `password` varchar(30) NOT NULL,
-                        `createDate` datetime DEFAULT current_timestamp(),
-                        `status` varchar(25) DEFAULT 'Bình Thường',
-                        `roleId` tinyint(4) NOT NULL DEFAULT 2
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
---
--- Dumping data for table `user`
---
-
+-- Dumping data for table handmadestore.user: ~18 rows (approximately)
 INSERT INTO `user` (`id`, `name`, `phoneNumber`, `email`, `password`, `createDate`, `status`, `roleId`) VALUES
                                                                                                             (1, '1', '0865266994', 'handmadestore@gmail.com', 'j5Y57UE67Etm9o/3budppVPs26Y=', '2023-12-21 11:55:58', 'Bình Thường', 0),
                                                                                                             (2, 'Nguyễn Trung Kiên', '0336677141', '	21130408@st.hcmuaf.edu.vn', 'j5Y57UE67Etm9o/3budppVPs26Y=', '2023-12-21 11:55:58', 'Bình Thường', -1),
@@ -1412,192 +1332,24 @@ INSERT INTO `user` (`id`, `name`, `phoneNumber`, `email`, `password`, `createDat
                                                                                                             (12, 'Phan Thanh Hòa', '0324712889', 'pdl199@gmail.com', 'PT/lnWok0bM7NAadn1sCWRqTjUg=', '2023-12-21 12:01:28', 'Bình Thường', 1),
                                                                                                             (13, 'Tôn Ngộ Không', '0671821176', 'wukong99@gmail.com', 'HcAWujhP8PZAsYe/3icfc9N4b1s=', '2023-12-21 12:02:03', 'Bình Thường', -1),
                                                                                                             (14, 'Đường Tăng Tạng', '0315821901', 'thinhkinh008@gmail.com', 'jHdhq9r1HYxgovt/ST+OaNAaF/w=', '2023-12-21 12:02:30', 'Bình Thường', 1),
-                                                                                                            (15, 'Trư Bát Giới', '0871881103', 'packgioi77@gmail.com', 'SIBC9HV8hbf63+dVHRSjRaV+TWk=', '2023-12-21 12:03:06', 'Bình Thường', 1),
-                                                                                                            (16, 'Người Cồn', '0341007611', 'nguoicon88@gmail.com', 'En4OJjjx1rRcqPxSFAgmP4/82/w=', '2023-12-21 12:05:41', 'Bình Thường', 1),
+                                                                                                            (15, 'Trư Bát Giớ', '0871881103', 'packgioi77@gmail.com', 'SIBC9HV8hbf63+dVHRSjRaV+TWk=', '2023-12-21 12:03:06', 'Bình Thường', 1),
+                                                                                                            (16, 'Người Cồng', '0341007611', 'nguoicon88@gmail.com', 'En4OJjjx1rRcqPxSFAgmP4/82/w=', '2023-12-21 12:05:41', 'Bình Thường', 1),
                                                                                                             (17, 'Nguyễn Khư', '0765 122 822', 'coko@gmail.com', 'bkB6UP/uoLhvBxphkqHaxgRUGxU=', '2023-12-25 00:04:10', 'Bình Thường', 1),
                                                                                                             (18, 'Ngô Huy', '0756 788 192', 'huyngu92@go.vn', '3BMxq3cwKG/6fhkEG1SJMySX+58=', '2023-12-25 00:14:09', 'Bình Thường', 1);
 
---
--- Indexes for dumped tables
---
+-- Dumping structure for trigger handmadestore.set_default_costPriceUpdate
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
+DELIMITER //
+CREATE TRIGGER `set_default_costPriceUpdate` BEFORE INSERT ON `inventory` FOR EACH ROW BEGIN
+    IF NEW.costPriceUpdate IS NULL THEN
+        SET NEW.costPriceUpdate = NEW.costPrice;
+END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
 
---
--- Indexes for table `banner_items`
---
-ALTER TABLE `banner_items`
-    ADD PRIMARY KEY (`title`) USING BTREE;
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-    ADD PRIMARY KEY (`id`) USING BTREE;
-
---
--- Indexes for table `discount`
---
-ALTER TABLE `discount`
-    ADD PRIMARY KEY (`id`) USING BTREE;
-
---
--- Indexes for table `image`
---
-ALTER TABLE `image`
-    ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `fk_image` (`productId`) USING BTREE,
-  ADD KEY `productId` (`productId`);
-
---
--- Indexes for table `inventory`
---
-ALTER TABLE `inventory`
-    ADD PRIMARY KEY (`productId`);
-
---
--- Indexes for table `inventory_receipts`
---
-ALTER TABLE `inventory_receipts`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `log`
---
-ALTER TABLE `log`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `order`
---
-ALTER TABLE `order`
-    ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `fk_order` (`userId`) USING BTREE;
-
---
--- Indexes for table `order_details`
---
-ALTER TABLE `order_details`
-    ADD PRIMARY KEY (`orderId`,`productId`) USING BTREE,
-  ADD KEY `fk_od2` (`productId`) USING BTREE;
-
---
--- Indexes for table `product`
---
-ALTER TABLE `product`
-    ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_discount` (`discountId`) USING BTREE;
-
---
--- Indexes for table `rate`
---
-ALTER TABLE `rate`
-    ADD PRIMARY KEY (`productId`,`userId`) USING BTREE;
-
---
--- Indexes for table `receptitem`
---
-ALTER TABLE `receptitem`
-    ADD PRIMARY KEY (`receptId`,`productId`);
-
---
--- Indexes for table `role`
---
-ALTER TABLE `role`
-    ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tips`
---
-ALTER TABLE `tips`
-    ADD PRIMARY KEY (`title`) USING BTREE;
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-    ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `fkuser` (`roleId`) USING BTREE;
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-    MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `discount`
---
-ALTER TABLE `discount`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `image`
---
-ALTER TABLE `image`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=539;
-
---
--- AUTO_INCREMENT for table `inventory`
---
-ALTER TABLE `inventory`
-    MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
-
---
--- AUTO_INCREMENT for table `inventory_receipts`
---
-ALTER TABLE `inventory_receipts`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `log`
---
-ALTER TABLE `log`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `order`
---
-ALTER TABLE `order`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT for table `product`
---
-ALTER TABLE `product`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `image`
---
-ALTER TABLE `image`
-    ADD CONSTRAINT `fk_image` FOREIGN KEY (`productId`) REFERENCES `product` (`id`);
-
---
--- Constraints for table `order`
---
-ALTER TABLE `order`
-    ADD CONSTRAINT `fk_order` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
-
---
--- Constraints for table `order_details`
---
-ALTER TABLE `order_details`
-    ADD CONSTRAINT `fk_od1` FOREIGN KEY (`orderId`) REFERENCES `order` (`id`);
-COMMIT;
-
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

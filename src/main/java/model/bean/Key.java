@@ -1,7 +1,6 @@
 package model.bean;
 
 import lombok.*;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -12,7 +11,6 @@ import java.sql.Timestamp;
 @Setter
 @ToString
 public class Key implements Serializable {
-
     private int id;
     private String title;
     private String publicKey;
@@ -21,3 +19,4 @@ public class Key implements Serializable {
     private Timestamp updatedTime;
     private int userId;
 }
+

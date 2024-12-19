@@ -220,4 +220,9 @@ public class ImageService {
                     }
             );
     }
+
+    public static void main(String[] args) {
+        System.out.println(pathImageOnly(2));
+    }
+
 }

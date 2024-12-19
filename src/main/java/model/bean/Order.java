@@ -1,10 +1,15 @@
 package model.bean;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+@Getter
+@Setter
 
 public class Order implements Serializable {
     private int id;
@@ -15,9 +20,12 @@ public class Order implements Serializable {
     private String consigneePhoneNumber;
     private String address;
 
+    private int publicKeyId;
+
     private double shippingFee;
     private int userId;
     private String note;
+    private String signature;
 
 
     public Order() {

@@ -2,14 +2,10 @@ package model.dao;
 
 import model.bean.*;
 import model.db.JDBIConnector;
-import model.service.DiscountService;
 import model.service.OrderService;
-import model.service.UserService;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -301,15 +297,6 @@ public class OrderDAO {
         }
     }
 
-
-    public static void main(String[] args) {
-//
-        for (Order order : getAllOrder()) {
-            System.out.println(order.getId() + " - " + getExactlyTotalPriceNoShippingFee(order.getId() + ""));
-        }
-
-    }
-
     public static double getExactlyTotalPriceNoShippingFee(String orderId) {
         double re = 0;
         for (OrderDetail orderDetail : OrderService.getInstance().getOrderDetailsByOrderId(orderId))
@@ -317,6 +304,15 @@ public class OrderDAO {
 
         return re;
     }
+//Set lại status
+    public static void setStatusOrder(int id){
+         JDBIConnector.me().withHandle(handle ->
+                handle.createUpdate("Update `order` SET status = 4 WHERE id=:idOrder")
+                        .bind("idOrder",id)
+                        .execute());
+    }
 
-
+    public static void main(String[] args) {
+        setStatusOrder(1);
+    }
 }
