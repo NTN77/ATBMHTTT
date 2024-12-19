@@ -1,0 +1,168 @@
+* {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+#infor_center {
+    display: none;
+}
+
+#bankaccount_infor {
+    display: none;
+}
+
+.product-img {
+    width: 50px;
+    height: 50px;
+}
+
+.product-quantity {
+    background-color: #357ebd;
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-weight: bold;
+}
+
+#infor_center {
+    background-color: rgba(0, 0, 0, .75);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: auto;
+    display: none;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+}
+
+.modal-wrapper {
+    padding: 10px;
+    width: 70%;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#infor_center_content {
+    max-height: 600px;
+    max-width: 100%;
+    overflow: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.color-for-bg {
+    background-color: #357ebd;
+}
+
+.color-for-text {
+    color: #357ebd;
+}
+#total_amount {
+    font-weight: bold;
+    color: red;
+}
+
+#inform {
+    background-color: #FBFADA;
+}
+#count-down {
+    background-color: red;
+    color: #FFFFFF;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 0;
+    border-radius: 5px;
+}
+
+.btn-downOrder {
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: #FFC23C;
+}
+
+button.btn-downOrder[disabled] {
+    background-color: #d3d3d3;
+    color: #6c757d;
+    border-color: #d3d3d3;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.container-signature {
+    height: 300px;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 30px rgba(0, 0, 0, .2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 5px;
+    background-color: rgba(0, 110, 255, 0.041);
+}
+
+.header-signature {
+    flex: 1;
+    width: 100%;
+    border: 2px dashed royalblue;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.header-signature svg {
+    height: 100px;
+}
+
+.header-signature p {
+    text-align: center;
+    color: black;
+}
+
+.footer-signature {
+    background-color: rgba(0, 110, 255, 0.075);
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: black;
+    border: none;
+}
+
+.footer-signature svg {
+    height: 130%;
+    fill: royalblue;
+    background-color: rgba(70, 66, 66, 0.103);
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.205);
+}
+
+.footer-signature p {
+    flex: 1;
+    text-align: center;
+}
+
+#file-signature {
+    display: none;
+}
+
+
+
+
+
+

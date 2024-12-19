@@ -10,13 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/user-info/change_user_info.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AddCartController2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/AddCartController2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/Admin/changeUserInfo.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user-info/user_info.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/user-info/user_info.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +61,7 @@
     "Tomcat Server.Tomcat 9.0.87.executor": "Run",
     "Tomcat Server.Unnamed.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging feature/hash-order-infor",
+    "git-widget-placeholder": "feature/hash-order-infor",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/main-project/ATBMHTTT/Signature",
@@ -286,7 +283,7 @@
       <workItem from="1734444039404" duration="1280000" />
       <workItem from="1734507795582" duration="1614000" />
       <workItem from="1734513352062" duration="2852000" />
-      <workItem from="1734573375057" duration="2568000" />
+      <workItem from="1734573375057" duration="5322000" />
     </task>
     <servers />
   </component>

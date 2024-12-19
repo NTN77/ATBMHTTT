@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "formattedCreatedTime": "04/12/2024 10:20 AM",
+    "ipAddress": "192.168.1.1",
+    "city": "TH HCM",
+    "region": "TPHCM",
+    "countryName": "VN",
+    "level": "INFORM",
+    "action": "LOGIN",
+    "message": "Nhập mật khẩu quá 5 lần"
+  },
+  {
+    "id": 2,
+    "formattedCreatedTime": "04/12/2024 10:20 AM",
+    "ipAddress": "192.168.1.2",
+    "city": "TH HCM",
+    "region": "TPHCM",
+    "countryName": "VN",
+    "level": "WARNING",
+    "action": "UPDATE",
+    "message": "User updated profile with invalid data"
+  },
+  {
+    "id": 3,
+    "formattedCreatedTime": "04/12/2024 10:20 AM",
+    "ipAddress": "192.168.1.99",
+    "city": "TH HCM",
+    "region": "TPHCM",
+    "countryName": "VN",
+    "level": "ALERT",
+    "action": "DELETE",
+    "message": "User attempted to delete admin account"
+  }
+]
