@@ -1,3 +1,4 @@
+
 package model.service.JavaMail;
 
 import logs.Log;
@@ -10,42 +11,51 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MailService {
+    private final ExecutorService executor = Executors.newCachedThreadPool();
+
     public boolean send(String to, String subject, String messageContent) {
-        try {
-            // Get properties object
-            Properties props = new Properties();
-            props.put("mail.smtp.auth", MailProperties.auth);
-            props.put("mail.smtp.starttls.enable", MailProperties.ssl);
-            props.put("mail.smtp.host", MailProperties.host);
-            props.put("mail.smtp.port", MailProperties.port);
+        executor.submit(() -> {
+            try {
+                // Get properties object
+                Properties props = new Properties();
+                props.put("mail.smtp.auth", MailProperties.auth);
+                props.put("mail.smtp.starttls.enable", MailProperties.ssl);
+                props.put("mail.smtp.host", MailProperties.host);
+                props.put("mail.smtp.port", MailProperties.port);
 
-            // get Session
-            Session session = Session.getInstance(props,
-                    new Authenticator() {
-                        @Override
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(MailProperties.username, MailProperties.password);
-                        }
-                    });
+                // get Session
+                Session session = Session.getInstance(props,
+                        new Authenticator() {
+                            @Override
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(MailProperties.username, MailProperties.password);
+                            }
+                        });
 
-            // compose message
-            Message message = new MimeMessage(session);
+                // compose message
+                Message message = new MimeMessage(session);
 
-            message.setFrom(new InternetAddress(MailProperties.username, "Hand Made Store"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            message.setSubject(subject);
+                message.setFrom(new InternetAddress(MailProperties.username, "Hand Made Store"));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+                message.setSubject(subject);
 //            Vì bold bằng html nên thay vì setText thì setsetContent bên dưới
 //            message.setText(messageContent);
-            // Thiết lập nội dung là HTML
-            message.setContent(messageContent, "text/html; charset=utf-8");
-            // send message
-            Transport.send(message);
-            return true;
-        } catch (MessagingException | UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+                // Thiết lập nội dung là HTML
+                message.setContent(messageContent, "text/html; charset=utf-8");
+                // send message
+                Transport.send(message);
+                return true;
+            } catch (MessagingException | UnsupportedEncodingException e) {
+//                throw new RuntimeException(e);
+                return false;
+            }
+        });
+        executor.shutdown();
+        return true;
     }
 
     public static String getRandomCode(int length) {
@@ -116,6 +126,26 @@ public class MailService {
                         "Chi tiết: <p>" + log.getMessage() + "</p>");
     }
 
+    public static void sendNotifyReportKey(String to, int idKey, String reason, String titleKey) {
+        System.out.println("final check: " + reason);
+        MailService emailService = new MailService();
+        emailService.send(to,
+                "Thông báo: Bạn đã report key thành công!",
+                "Chào bạn, chúng tôi hy vọng email này sẽ đến được với bạn." +
+                        "<br> Chúng tôi thông báo với bạn rằng bạn vừa report key có mã <strong>" + " #" + titleKey + " </strong>" + "đã report thành công!." +
+                        ((reason != null && !reason.equals("")) ? "<br> Hoàn cảnh lộ key: <strong>" + reason + " </strong>" : "") +
+                        "<br> Vui lòng liên hệ với chúng tôi nếu bạn có thêm bất kỳ câu hỏi nào !" +
+                        "Chúng tôi đánh giá cao sự hỗ trợ của bạn và mong được phục vụ bạn trong tương lai." +
+                        "<br><strong>Handmadestore</strong>");
+    }
+    public static String sendCodeOTPReport(String to) {
+        String code = getRandomCode(5);
+        MailService emailService = new MailService();
+        emailService.send(to, "Xác thực email để báo lộ khóa", "Chào bạn,<br> Đây là mã xác thực báo lộ khóa từ Handmadestore, vui lòng không cung cấp mã xác thực cho người khác và chỉ có giá trị sử dụng cho 1 lần: " +
+                "<br> <strong>" + code + "</strong>");
+
+        return code;
+    }
     public static void main(String[] args) {
         System.out.println(sendCode("lebatrong2003@gmail.com"));
     }
