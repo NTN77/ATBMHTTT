@@ -69,7 +69,7 @@ import java.io.IOException;
                         }
                     }
                 } else
-                    req.getRequestDispatcher("./views/Admin/changeUserInfo.jsp").forward(req, resp);
+                    req.getRequestDispatcher("./views/Admin/change_user_info.jsp").forward(req, resp);
             } else {
                 resp.sendRedirect(req.getContextPath() + "/login");
             }
