@@ -24,6 +24,8 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/service/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/ImageService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/service/JavaMail/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/JavaMail/MailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/database/handmadestore.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/database/handmadestore.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +37,7 @@
       <list>
         <option value="Jsp File" />
         <option value="CSS File" />
+        <option value="Kotlin Class" />
         <option value="Class" />
       </list>
     </option>
@@ -64,14 +67,17 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.KeyUtil.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Tomcat 9.0.81.executor&quot;: &quot;Run&quot;,
     &quot;Tomcat Server.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS/Documents/TLH/ATBMHTTT&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -85,19 +91,24 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp\WEB-INF" />
+      <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\resources\database" />
+      <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="controller" />
     </key>
   </component>
-  <component name="RunManager" selected="Smart Tomcat.Unnamed">
-    <configuration name="ImageDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="model.dao.ImageDAO" />
+  <component name="RunManager" selected="Application.KeyUtil">
+    <configuration name="KeyUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="signature.KeyUtil" />
       <module name="HandMadeStore" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="model.dao.*" />
+          <option name="PATTERN" value="signature.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -170,6 +181,7 @@
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="7de20969-ea01-41f7-9eff-a436f4b7b791" />
         <option name="HTTPS_PORT" value="8443" />
+
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -178,6 +190,7 @@
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="55706" />
+
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -289,6 +302,7 @@
         <item itemvalue="Application.OrderDAO" />
         <item itemvalue="Application.ProductDAO" />
         <item itemvalue="Application.ImageDAO" />
+
       </list>
     </recent_temporary>
   </component>
@@ -352,6 +366,7 @@
       <workItem from="1734491471893" duration="1784000" />
       <workItem from="1734504431298" duration="3646000" />
       <workItem from="1734572018325" duration="7247000" />
+
     </task>
     <servers />
   </component>
@@ -380,6 +395,21 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java</url>
+          <line>954</line>
+          <properties class="model.dao.ProductDAO" method="main">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/webapp/views/Admin/admin.jsp</url>
+          <line>199</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
