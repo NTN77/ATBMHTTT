@@ -2,6 +2,7 @@ package controller.security;
 
 import com.google.common.collect.BoundType;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.bean.Cart;
 import model.bean.HashInput;
 import model.bean.User;
@@ -39,8 +40,7 @@ public class OrderHashController extends HttpServlet {
 
         String shippingFee = req.getParameter("shippingFee");
         String totalAmount = req.getParameter("totalAmount");
-        System.out.println("PHÍ SHIP NÈ: + " + shippingFee);
-        System.out.println("PHÍ TỔNG: + " + totalAmount);
+
 
 
         if (shippingFee == null || totalAmount == null) {
@@ -55,6 +55,7 @@ public class OrderHashController extends HttpServlet {
         hashInput.setCartInfo(cart);
         hashInput.setShippingFee(Integer.parseInt(shippingFee));
         hashInput.setTotalPrice(Integer.parseInt(totalAmount));
+        System.out.println(hashInput.toString());
         try {
             String hash = generateSHA256Hash(hashInput);
             File hashFile = createHashFile(hash);
@@ -80,10 +81,14 @@ public class OrderHashController extends HttpServlet {
     }
 
 
+
+
     private String generateSHA256Hash (HashInput hashInput) throws NoSuchAlgorithmException {
         //Chuyển đổi HashInput => JSON bằng GSON.
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String jsonString = gson.toJson(hashInput);
+        System.out.println("-------------------------");
+        System.out.println("File string"+ jsonString);
 
         //Tạo mã SHA-256.
         MessageDigest digest = MessageDigest.getInstance("SHA-256");

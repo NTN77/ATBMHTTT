@@ -1,5 +1,6 @@
 package model.bean;
 
+import com.google.gson.annotations.Expose;
 import model.service.ProductService;
 
 import java.util.HashMap;
@@ -7,7 +8,7 @@ import java.util.Map;
 
 public class Cart {
     //Giỏ hàng chứa danh sách các item
-
+    @Expose
     Map<Integer, Item> items = new HashMap<>();
 
     @Override
@@ -16,6 +17,15 @@ public class Cart {
                 "items=" + items +
                 '}';
     }
+
+    public String toStringForHash() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            sb.append(entry.getValue().toStringForHash());
+        }
+        return sb.toString();
+    }
+
 
     public Map<Integer, Item> getItems() {
         return items;

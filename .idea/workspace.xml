@@ -9,7 +9,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="" />
+    <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/KeyGenerate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/KeyGenerate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Cart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/HashInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/HashInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/security/OrderHashController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/controller/security/OrderHashController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/bean/Cart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/bean/Cart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/bean/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/bean/Item.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/bean/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/WEB-INF/classes/model/bean/Product.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HandMadeStore/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/HandMadeStore/views/PaymentPage/payment.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/security/OrderHashController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/security/OrderHashController.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,32 +61,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.KeyDAO.executor&quot;: &quot;Run&quot;,
-    &quot;Application.KeyService.executor&quot;: &quot;Run&quot;,
-    &quot;Application.UserService.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Tomcat Server.Tomcat 9.0.87.executor&quot;: &quot;Run&quot;,
-    &quot;Tomcat Server.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/hash-order-infor&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/main-project/ATBMHTTT/Signature&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.7275862&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.KeyDAO.executor": "Run",
+    "Application.KeyService.executor": "Run",
+    "Application.UserService.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Tomcat Server.Tomcat 9.0.87.executor": "Run",
+    "Tomcat Server.Unnamed.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feature/hash-order-infor",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/project-final-version1/ATBMHTTT",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.7275862",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp" />
@@ -278,7 +294,8 @@
       <workItem from="1734444039404" duration="1280000" />
       <workItem from="1734507795582" duration="1614000" />
       <workItem from="1734513352062" duration="2852000" />
-      <workItem from="1734573375057" duration="26124000" />
+      <workItem from="1734573375057" duration="27462000" />
+      <workItem from="1734844062301" duration="13682000" />
     </task>
     <servers />
   </component>

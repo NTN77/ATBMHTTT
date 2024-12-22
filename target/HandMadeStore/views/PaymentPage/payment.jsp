@@ -209,7 +209,7 @@
                         <div class="form-floating mb-3">
                             <select id="publicKeyDropdown" class="form-select"
                                     aria-label="Khoá công khai">
-                                <option value="">Chọn khoá công khai muốn sử dụng</option>
+                                <option value="">Chọn khoá sử dụng để ký đơn hàng tương ứng</option>
                             </select>
                             <label for="publicKeyDropdown">Khoá công khai</label>
                         </div>
@@ -750,6 +750,22 @@
                 responseType: 'blob' // Nhận file dưới dạng blob
             }
         });
+    });
+
+    // Tai chu ky dien tu len:
+    let signatureData = null; // Lưu nội dung chữ ký.
+    document.getElementById('file-signature').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                // Chuyển dữ liệu nhị phân sang Base64
+                const base64Signature = btoa(String.fromCharCode(...new Uint8Array(e.target.result)));
+                signatureData = base64Signature;
+                console.log('Signature Data Loaded:', signatureData);
+            };
+            reader.readAsArrayBuffer(file); // Đọc file dưới dạng nhị phân
+        }
     });
 
 
