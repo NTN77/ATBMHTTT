@@ -1,6 +1,5 @@
 package controller.security;
 
-import com.google.common.collect.BoundType;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.bean.Cart;
