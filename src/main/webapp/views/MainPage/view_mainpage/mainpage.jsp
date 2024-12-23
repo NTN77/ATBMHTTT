@@ -17,7 +17,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Cửa Hàng HandMade</title>
 </head>
-
+<%
+    String backUrl = request.getContextPath() + "/views/MainPage/view_mainpage/mainpage.jsp";
+    session.setAttribute("backUrl", backUrl);
+%>
 
 <body>
 <%

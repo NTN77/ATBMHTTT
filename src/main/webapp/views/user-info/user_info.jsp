@@ -291,10 +291,20 @@
 
 <div class="container p-4 rounded">
     <div class="fw-bold text-start" style="font-size: 30px; color: #0dcaf0">
+        <% String backUrl = (String) session.getAttribute("backUrl");
+        if (backUrl!=null) {%>
+        <div>
+            <a href="<%=backUrl%>">
+                <i
+                        class="fa-solid fa-arrow-left" style="color: #183153; cursor: pointer"></i>
+            </a>
+        </div>
+        <%}else{%>
         <div>
             <i onclick="goBack()"
                class="fa-solid fa-arrow-left" style="color: #183153; cursor: pointer"></i>
         </div>
+        <%}%>
     </div>
     <div>
         <h3 class="title-information">Chào bạn, <%=user.getName()%> !</h3>
