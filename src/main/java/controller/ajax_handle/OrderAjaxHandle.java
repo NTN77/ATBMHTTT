@@ -7,6 +7,7 @@ import logs.LoggingService;
 import model.bean.*;
 import model.service.*;
 import model.service.JavaMail.MailService;
+import org.eclipse.tags.shaded.org.apache.xpath.SourceTree;
 import org.eclipse.tags.shaded.org.apache.xpath.operations.Or;
 
 import javax.servlet.ServletException;
@@ -30,10 +31,10 @@ import java.util.List;
 
 @WebServlet("/order-ajax-handle")
 public class OrderAjaxHandle extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
-    }
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        doGet(req, resp);
+//    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -70,7 +71,7 @@ public class OrderAjaxHandle extends HttpServlet {
                     //1. Lấy toàn bộ thông tin đơn hàng (có publicKeyID và signatureID)
                     Order mainOrder = OrderService.getInstance().getOrderById(orderId);
                     if(mainOrder == null) {
-                        resp.getWriter().write("Không tìm thấy id đơn hàng.");
+                        resp.getWriter().write("Order is invalid");
                         return;
                     }
 
@@ -93,18 +94,18 @@ public class OrderAjaxHandle extends HttpServlet {
                         System.out.println("Signature in OrderAjaxHandle: " + signature);
 
                         boolean isSignatureValid = isValidOrder(publicKey, hashCode, signature);
+
                         if(isSignatureValid) {
                             //Chữ ký hợp lệ.
                             OrderService.getInstance().confirmOrder(orderId);
                             String message = sessionUser.nameAsRole() + " " + sessionUser.getName() + " đã xác nhận đơn hàng hợp lệ có mã " + orderId;
                             LoggingService.getInstance().log(ELevel.INFORM, EAction.UPDATE, req.getRemoteAddr(), message);
                             resp.getWriter().write("(" + OrderService.getInstance().waitConfirmOrdersNumber() + ")");
-
                         } else {
                             OrderService.getInstance().cancelOrder(orderId);
                             String message = "Đơn hàng của bạn có vẻ đã bị thay đổi thông tin, và đã bị huỷ.";
                             MailService.sendNotifyCanceledOrder(UserService.getInstance().getUserById(order.getUserId() + "").getEmail(), order, message);
-                            resp.getWriter().write("Đơn hàng đã bị huỷ vì không xác thực được chữ ký.");
+                            resp.getWriter().write("Order processed. Unit authentication failed, changed to status.");
                         }
 
 
@@ -115,12 +116,12 @@ public class OrderAjaxHandle extends HttpServlet {
                         OrderService.getInstance().cancelOrder(orderId);
                         String message = "Khoá mà bạn sử dụng để thực hiện ký đơn hàng " + orderId + "đã không còn hoạt động nữa. Đơn hàng của bạn đã bị huỷ!";
                         MailService.sendNotifyCanceledOrder(UserService.getInstance().getUserById(order.getUserId() + "").getEmail(), order, message);
-                        resp.getWriter().write("Đơn hàng bị huỷ vì khoá công khai không còn hoạt động.");
+                        resp.getWriter().write("Public key is no longer active. Order authentication failed, moved to canceled state.");
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
-                        resp.getWriter().write("Lỗi trong quá trình hash đơn hàng.");
+                        resp.getWriter().write("Error in order hashing process.");
                     } catch (Exception e) {
-                        resp.getWriter().write("Đã xảy ra lỗi không mong muốn.");
+                        resp.getWriter().write("An unexpected error occurred.");
                     }
                 } else if (action.equals("preparingOder")) {
                     OrderService.getInstance().preparingOder(orderId);

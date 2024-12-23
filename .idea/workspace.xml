@@ -11,12 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ajax_handle/OrderAjaxHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ajax_handle/OrderAjaxHandle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/Admin/order_management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/Admin/order_management.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,34 +51,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.KeyDAO.executor": "Run",
-    "Application.KeyService.executor": "Run",
-    "Application.OrderDAO.executor": "Run",
-    "Application.OrderService.executor": "Run",
-    "Application.UserService.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Tomcat Server.Tomcat 9.0.87.executor": "Run",
-    "Tomcat Server.Unnamed.executor": "Run",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feater/verify-signature-admin",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/project-final-version1/ATBMHTTT",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.7275862",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.KeyDAO.executor&quot;: &quot;Run&quot;,
+    &quot;Application.KeyService.executor&quot;: &quot;Run&quot;,
+    &quot;Application.OrderDAO.executor&quot;: &quot;Run&quot;,
+    &quot;Application.OrderService.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UserService.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Tomcat 9.0.87.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feater/verify-signature-admin&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/project-final-version1/ATBMHTTT&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.7275862&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp" />
@@ -324,6 +321,7 @@
       <workItem from="1734573375057" duration="27462000" />
       <workItem from="1734844062301" duration="15535000" />
       <workItem from="1734881437757" duration="15106000" />
+      <workItem from="1734957053775" duration="5825000" />
     </task>
     <servers />
   </component>

@@ -68,7 +68,6 @@ public class OrderHashController extends HttpServlet {
                 Files.copy(hashFile.toPath(), outputStream);
                 outputStream.flush(); // Đảm bảo dữ liệu được gửi hết
             } finally {
-                // Xóa file tạm sau khi gửi
                 if (hashFile.exists()) {
                     hashFile.delete();
                 }
