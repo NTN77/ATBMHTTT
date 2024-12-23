@@ -111,6 +111,10 @@ public class OrderService {
         return OrderDAO.getCancelOrderNumber(userId);
     }
 
+    public void setStatus(int orderId, int status) {
+        OrderDAO.setStatus(orderId, status);
+    }
+
     public static void main(String[] args) {
         System.out.println(getInstance().getOrderById("4444"));
     }

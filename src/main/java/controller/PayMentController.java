@@ -1,12 +1,14 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import logs.EAction;
 import logs.ELevel;
 import logs.LoggingService;
 import model.bean.*;
 import model.dao.OrderDAO;
 import model.service.KeyService;
+import model.service.OrderService;
 import model.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -16,6 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
 import java.text.NumberFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -137,6 +146,8 @@ public class PayMentController extends HttpServlet {
         String address = req.getParameter("formattedAddress");
         String shippingFee = req.getParameter("shippingFee");
         String totalAmount = req.getParameter("totalAmount");
+        String publicKeyId = req.getParameter("publicKeyId");
+        String signature = req.getParameter("signature");
 
 
 //check validation
@@ -145,9 +156,11 @@ public class PayMentController extends HttpServlet {
         validateRequireField("namePay", namePay, "Tên hiển thị", errors);
         validateRequireField("phonePay", phonePay, "Số điện thoại", errors);
         validateRequireField("formattedAddress", address, "Địa chỉ", errors);
+        validateRequireField("publicKeyId", publicKeyId, "Khoá công khai", errors);
+        validateRequireField("signature", signature, "Chữ ký", errors);
 
 
-        if (!errors.isEmpty() || shippingFee == null || totalAmount == null) {
+        if (!errors.isEmpty() || shippingFee == null || totalAmount == null || publicKeyId == null || signature == null) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST); // Trả về lỗi 400 nếu dữ liệu không hợp lệ
             resp.getWriter().print("{\"success\": false, \"message\": \"Validation errors occurred.\"}");
             return;
@@ -174,18 +187,53 @@ public class PayMentController extends HttpServlet {
         order.setAddress(address);
         order.setShippingFee(Integer.parseInt(shippingFee));
         order.setTotalPrice(Integer.parseInt(totalAmount));
+        order.setPublicKeyId(Integer.parseInt(publicKeyId));
+        order.setSignature(signature);
         Integer accessCount = (Integer) sessions.getAttribute("accessCount");
         if (accessCount != null) {
             accessCount = 0;
             sessions.setAttribute("accessCount", accessCount);
         }
-//           Xoasa sesion gio hàng
-        orderZ.addOrder(order, cart, user);
+//           Thêm dữ liệu vào database.
+        int orderID = orderZ.addOrder(order, cart, user);
+
+        // Hash đơn hàng nhoé.
+
+        HashInput hashInput = new HashInput();
+        hashInput.setUserId(user.getId());
+        hashInput.setCartInfo(cart);
+        hashInput.setShippingFee(Integer.parseInt(shippingFee));
+        hashInput.setTotalPrice(Integer.parseInt(totalAmount));
+
+        String hashOrderAfter = null;
+
+        try {
+            hashOrderAfter = generateSHA256Hash(hashInput);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            resp.getWriter().print("{\"success\": false, \"message\": \"Error generating hash.\"}");
+        }
+
+
+
+
         cart.clear();
         req.getSession().setAttribute("cart", cart);
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().print("{\"success\": true, \"message\": \"Đơn hàng đã được tạo.\"}");
 //        resp.sendRedirect(req.getContextPath() + "/views/MainPage/view_mainpage/mainpage.jsp");
+
+        // XÁC THỰC ĐƠN HÀNG
+        if (hashOrderAfter != null) { // Kiểm tra trước khi sử dụng
+            if (isValidOrder(publicKeyId, hashOrderAfter, signature)) {
+                OrderService.getInstance().setStatus(orderID, 1);
+            } else {
+                OrderService.getInstance().setStatus(orderID, 4);
+            }
+        }
+
+
     }
 
     public static void validateRequireField(String fieldName, String value, String viewName, Map<String, String> errors) {
@@ -220,4 +268,60 @@ public class PayMentController extends HttpServlet {
         Gson gson = new Gson();
         response.getWriter().write(gson.toJson(errorMessage));
     }
+
+
+//    Chữ ký điện tử.
+
+    private String generateSHA256Hash (HashInput hashInput) throws NoSuchAlgorithmException {
+        //Chuyển đổi HashInput => JSON bằng GSON.
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String jsonString = gson.toJson(hashInput);
+        System.out.println("-------------------------");
+        System.out.println("File string"+ jsonString);
+
+        //Tạo mã SHA-256.
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(jsonString.getBytes(StandardCharsets.UTF_8));
+
+        //chuyển đổi byte[] thành string.
+        StringBuilder hexString = new StringBuilder();
+        for(byte b: hash) {
+            hexString.append(String.format("%02x", b));
+        }
+        return hexString.toString();
+    }
+
+
+    private boolean isValidOrder(String publicKeyID, String hashOrder, String signature) {
+             // Lấy public key.
+            String publicKeyPem = KeyService.getInstance().getPublicKeyByKeyID(Integer.parseInt(publicKeyID));
+
+        try {
+            RSAPublicKey publicKey = getRSAPublicKeyFromPEM(publicKeyPem);
+
+            Signature sig = Signature.getInstance("SHA256withRSA");
+            sig.initVerify(publicKey);
+
+            sig.update(hashOrder.getBytes(StandardCharsets.UTF_8));
+            byte[] signatureBytes = Base64.getDecoder().decode(signature);
+
+            return sig.verify(signatureBytes);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    // Phương thức chuyển đổi PEM thành RSAPublicKey
+    private RSAPublicKey getRSAPublicKeyFromPEM(String publicKeyPem) throws Exception {
+        String publicKeyPEM = publicKeyPem.replace("-----BEGIN PUBLIC KEY-----", "")
+                .replace("-----END PUBLIC KEY-----", "")
+                .replaceAll("\\s", "");
+        byte[] encoded = Base64.getDecoder().decode(publicKeyPEM);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encoded);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        return (RSAPublicKey) keyFactory.generatePublic(keySpec);
+    }
+
 }

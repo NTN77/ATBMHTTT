@@ -58,6 +58,29 @@ public class KeyDAO {
         return keys;
     }
 
+    /**
+     * Phục vụ cho quá trình xác minh đơn hàng.
+     * 1. Từ id public key : Kiểm tra trạng thái key.
+     * + Nếu active =1, okey cho phép get key.
+     * + Nếu active #, okey key này đã hỏng.
+     */
+    public static String getActivePublicKeyByKeyID(int keyId) {
+        String sql = "SELECT publicKey, status FROM key_user WHERE id = :keyId";
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("keyId", keyId)
+                        .map((rs, ctx) -> {
+                            int status = rs.getInt("status");
+                            if (status == 1) {
+                                return rs.getString("publicKey");
+                            } else {
+                                throw new IllegalStateException("Khoá không hợp lệ. Trạng thái: " + status);
+                            }
+                        })
+                        .findOne()
+                        .orElseThrow(() -> new IllegalArgumentException("Khoá không tồn tại."))
+        );
+    }
 
     public static void main(String[] args) {
         System.out.println("key nè");
