@@ -103,7 +103,7 @@ public class OrderAjaxHandle extends HttpServlet {
                             resp.getWriter().write("(" + OrderService.getInstance().waitConfirmOrdersNumber() + ")");
                         } else {
                             OrderService.getInstance().cancelOrder(orderId);
-                            String message = "Đơn hàng của bạn có vẻ đã bị thay đổi thông tin, và đã bị huỷ.";
+                            String message = "Đơn hàng của bạn đã được huỷ do thông tin không khớp với hệ thống. Vui lòng kiểm tra lại và đặt hàng mới.";
                             MailService.sendNotifyCanceledOrder(UserService.getInstance().getUserById(order.getUserId() + "").getEmail(), order, message);
                             resp.getWriter().write("Order processed. Unit authentication failed, changed to status.");
                         }

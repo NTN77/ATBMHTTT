@@ -423,6 +423,11 @@
                         title: 'Đã xử lý đơn hàng!',
                         text: 'Đơn hàng xác thực thất bại, chuyển sang trạng thái huỷ.',
                         showConfirmButton: true
+
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();  // Reload lại trang khi người dùng nhấn OK
+                        }
                     });
                 }
                 else if(response.includes("Public key is no longer active. Order authentication failed, moved to canceled state.")) {
@@ -432,6 +437,10 @@
                         title: 'Đã xử lý đơn hàng!',
                         text: 'Đơn hàng xác thực thất bại vì khoá công khai không còn hoạt động, chuyển sang trạng thái huỷ.',
                         showConfirmButton: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();  // Reload lại trang khi người dùng nhấn OK
+                        }
                     });
                 }
                 else if (response.includes("Error in order hashing process.")) {
@@ -469,6 +478,7 @@
                             if ($('#loadingConfirmBox')) {
                                 $('#loadingConfirmBox').remove();
                             }
+                            location.reload();
                             reloadGUI();
                         }
                     });

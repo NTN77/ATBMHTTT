@@ -5,11 +5,12 @@ import model.service.ProductService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Cart {
     //Giỏ hàng chứa danh sách các item
     @Expose
-    Map<Integer, Item> items = new HashMap<>();
+    Map<Integer, Item> items = new TreeMap<>();
 
     @Override
     public String toString() {
