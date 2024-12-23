@@ -560,20 +560,41 @@
             },
             success: function (response) {
                 if (response.success) {
-                    alert(response.message);
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Thành công",
+                        text: response.message,
+                        showConfirmButton: true,
+                        confirmButtonText: "OK"
+                    }).then (() => {
+                        window.location.reload();
+                    });
                 } else {
-                    alert(response.message);
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Thất bại",
+                        text: response.message,
+                        showConfirmButton: true,
+                        confirmButtonText: "OK"
+                    });
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("AJAX Error: " + textStatus + " - " + errorThrown);
-                alert("Không thể thêm khoá vào cơ sở dữ liệu, vui lòng thử lại sau");
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Lỗi",
+                    text: "Không thể thêm khoá vào cơ sở dữ liệu, vui lòng thử lại sau",
+                    showConfirmButton: true,
+                    confirmButtonText: "OK"
+                });
             }
-
         });
-
-
     }
+
 
     // Upload public key lên giao diện.
     function uploadKey() {
@@ -735,23 +756,74 @@
             }
 
             keyElement.innerHTML = `
-            <div class="auth-key-header">
-                <i class="fa-solid fa-key img-key"></i>
-                <strong>${key.title}</strong>
-            </div>
-            <div class="auth-key-details">
-                <span>Nội dung khoá : <br> ${key.publicKey.slice(0, 30)}...${key.publicKey.slice(-30)}</span>
-                <span>Đã được thêm vào ${createdTime}</span>
-            </div>
-            <div class="auth-key-actions">
-                <span class="status">Lần cuối được sử dụng là ${updatedTime}</span>
-                <button onclick="deleteKey(${key.userId})">Xoá</button>
+            <div id="auth-key-${key.id}">
+                <div class="auth-key-header">
+                    <i class="fa-solid fa-key img-key"></i>
+                    <strong>${key.title}</strong>
+                </div>
+                <div class="auth-key-details">
+                    <span>Nội dung khoá : <br> ${key.publicKey.slice(0, 30)}...${key.publicKey.slice(-30)}</span>
+                    <span>Đã được thêm vào ${createdTime}</span>
+                </div>
+                <div class="auth-key-actions">
+                    <span class="status">Lần cuối được sử dụng là ${updatedTime}</span>
+                   <button onclick="deleteKey(${key.id}, 'auth-key-${key.id}')">Xoá</button>
+                </div>
             </div>
         `;
 
             keysContainer.appendChild(keyElement);
         });
     }
+
+    function deleteKey(publicKeyId, elementId) {
+        Swal.fire({
+            title: "Bạn có chắc muốn xóa không?",
+            text: "Thao tác này không thể hoàn tác!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Xóa",
+            cancelButtonText: "Hủy"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Gửi yêu cầu xóa nếu người dùng xác nhận
+                $.ajax({
+                    method: "POST",
+                    url: "/HandMadeStore/remove-public-key-ajax-handle",
+                    data: {
+                        action: "removePublicKey",
+                        publicKeyId: publicKeyId
+                    },
+                    success: function (response) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Xóa khóa công khai thành công",
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+
+                        // Xóa phần tử HTML có id là elementId
+                        const element = document.getElementById(elementId);
+                        if (element) {
+                            element.remove();
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: "Lỗi!",
+                            text: "Không thể xóa khóa công khai.",
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                });
+            }
+        });
+    }
+
 </script>
 </body>
 <%

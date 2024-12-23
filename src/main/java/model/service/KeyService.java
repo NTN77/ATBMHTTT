@@ -24,17 +24,27 @@ public class KeyService {
     }
 
     public List<KeyOrderDTO> getKeyOrderDTOByUserId(int userId) {
-        return  KeyDAO.getInformationPublicKeyForPayment(userId);
+        return KeyDAO.getInformationPublicKeyForPayment(userId);
     }
+
     public String getPublicKeyByKeyID(int keyID) {
         return KeyDAO.getActivePublicKeyByKeyID(keyID);
     }
+
     public int getStatusPublicKeyByKeyID(int keyID) {
         return KeyDAO.getStatusKey(keyID);
+    }
+
+    public void removePublicKey(int keyID) {
+        KeyDAO.removeKey(keyID);
     }
 
     public static void main(String[] args) {
         KeyService keyService = new KeyService();
         System.out.println(keyService.getPublicKeyActiveByUserId(15));
+    }
+
+    public boolean isExistPublicKey(int userId, String title) {
+        return KeyDAO.isExistPublicKey(userId, title);
     }
 }
