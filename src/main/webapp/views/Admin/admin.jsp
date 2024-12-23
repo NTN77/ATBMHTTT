@@ -10,6 +10,10 @@
 <% String func = (String) request.getAttribute("func");
     func = (func == null) ? "dashboard" : func;%>
 <%User u = (User) session.getAttribute("auth");%>
+<%
+    String backUrl = request.getContextPath() + "/admin";
+    session.setAttribute("backUrl", backUrl);
+%>
 <html lang="en">
 
 <head>
