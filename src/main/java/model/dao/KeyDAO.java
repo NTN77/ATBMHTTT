@@ -126,10 +126,25 @@ public class KeyDAO {
                         .execute());
     }
 
+    public static void removeKey(int idKey){
+        JDBIConnector.me().useHandle(handle ->
+                handle.createUpdate("UPDATE `key_user` SET status= 2 WHERE id=:idKey")
+                        .bind("idKey",idKey)
+                        .execute());
+    }
     public static void main(String[] args) {
         System.out.println(getStatusKey(12));
     }
 
 
-  
+    public static boolean isExistPublicKey(int userId, String title) {
+        String sql = "SELECT COUNT(*) FROM key_user WHERE userId = :userId AND title = :title";
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("userId", userId)
+                        .bind("title", title)
+                        .mapTo(Integer.class)
+                        .one() > 0
+        );
+    }
 }
