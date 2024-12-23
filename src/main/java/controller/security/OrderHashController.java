@@ -52,9 +52,9 @@ public class OrderHashController extends HttpServlet {
 
         HashInput hashInput = new HashInput();
         hashInput.setUserId(user.getId());
-        hashInput.setCartInfo(cart);
         hashInput.setShippingFee(Integer.parseInt(shippingFee));
         hashInput.setTotalPrice(Integer.parseInt(totalAmount));
+        hashInput.setCartInfo(cart);
         System.out.println(hashInput.toString());
         try {
             String hash = generateSHA256Hash(hashInput);

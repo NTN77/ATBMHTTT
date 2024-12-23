@@ -27,6 +27,8 @@ public class Order implements Serializable {
     private String note;
     private int publicKeyId;
     private String signature;
+    private String hashCode; // Mã băm của đơn hàng sẽ được lưu vào database phục vụ cho verify.
+
 
     public Order() {
     }

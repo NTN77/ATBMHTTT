@@ -332,6 +332,14 @@
         })
     }
 
+
+
+
+    // ============================================================= //
+
+
+
+
     function confirmOrder(orderId) {
         const rowIndex = document.getElementById("rowIndex").value;
         if ($('#loadingConfirmBox')) {
@@ -370,6 +378,10 @@
             }
         })
     }
+
+
+    // ============================================================= //
+
 
     function cancelOrder(orderId, rowIndex) {
         let cancelReason;

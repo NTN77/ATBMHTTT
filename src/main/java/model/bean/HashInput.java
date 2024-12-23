@@ -19,20 +19,20 @@ public class HashInput {
     @Expose
     private int userId;
     @Expose
-    private Cart cartInfo;
-
-    @Expose
     private double shippingFee;
     @Expose
     private double totalPrice;
+    @Expose
+    private Cart cartInfo;
+
 
     @Override
     public String toString() {
         return "HashInput{" +
                 "userId=" + userId +
-                ", cartInfo=" + cartInfo.toStringForHash() +
                 ", shippingFee=" + shippingFee +
                 ", totalPrice=" + totalPrice +
+                ", cartInfo=" + cartInfo.toStringForHash() +
                 '}';
     }
 }

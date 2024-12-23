@@ -11,14 +11,13 @@
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Signature/src/model/DS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Signature/src/model/DS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ReportKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ReportKey.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/HashInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/HashInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/ReportPKey/ReportKey.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/ReportPKey/ReportKey.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/Admin/order_management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/Admin/order_management.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +58,7 @@
   "keyToString": {
     "Application.KeyDAO.executor": "Run",
     "Application.KeyService.executor": "Run",
+    "Application.OrderDAO.executor": "Run",
     "Application.UserService.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -69,7 +69,7 @@
     "git-widget-placeholder": "feature/verify-signature",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/project-final/ATBMHTTT/Signature",
+    "last_opened_file_path": "E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/project-final-version1/ATBMHTTT",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -89,7 +89,7 @@
       <recent name="controller" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.87">
+  <component name="RunManager" selected="Application.OrderDAO">
     <configuration name="KeyDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.dao.KeyDAO" />
       <module name="HandMadeStore" />
@@ -116,6 +116,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="OrderDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.dao.OrderDAO" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UserService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.service.UserService" />
       <module name="HandMadeStore" />
@@ -130,6 +143,7 @@
       </method>
     </configuration>
     <configuration name="Tomcat 9.0.87" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.87" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="https://localhost:8443/HandMadeStore/" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="HandMadeStore:war">
@@ -140,6 +154,7 @@
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="8e58bdff-ced5-47be-94f3-7263c743d0ef" />
+        <option name="HTTPS_PORT" value="8443" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -217,6 +232,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.OrderDAO" />
       <item itemvalue="Application.KeyDAO" />
       <item itemvalue="Application.KeyService" />
       <item itemvalue="Application.UserService" />
@@ -224,6 +240,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.OrderDAO" />
         <item itemvalue="Application.KeyDAO" />
         <item itemvalue="Application.KeyService" />
         <item itemvalue="Application.UserService" />

@@ -348,9 +348,9 @@
                         <button id="btn-download-order" class="btn-downOrder p-2"  type="button">
 
                                 <i class="fa-solid fa-download"></i>
+                            <input type="hidden" id="hidden-hashCode" name="hashCode">
                             <span class="btn-downOrder-text">Tải đơn hàng về để ký</span>
                         </button>
-
                     </div>
 
                     <div class="row p-3 d-flex justify-content-center">
@@ -643,6 +643,17 @@
             var totalAmount = document.getElementById("totalAmountInput").value;
             var publicKeyId = window.selectedPublicKeyId;
             var signature = document.getElementById("hidden-signature").value;
+            var hashCode = document.getElementById("hidden-hashCode").value;
+
+            if(!signature || !hashCode) {
+                swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Vui lòng tải về đơn hàng và tải lên chữ ký trước khi đặt hàng',
+                    showConfirmButton: true
+                });
+                return;
+            }
 
             $.ajax({
                 type: "POST",
@@ -654,7 +665,8 @@
                     shippingFee: shippingFee,
                     totalAmount: totalAmount,
                     publicKeyId: publicKeyId,
-                    signature: signature
+                    signature: signature,
+                    hashCode: hashCode
                 },
                 dataType: "json",
                 success: function (response) {
@@ -672,7 +684,7 @@
                                                        no-repeat
                         `,
                             showConfirmButton: false,
-                            timer: 20000
+                            timer: 3000
                         }).then(function () {
                             window.location.href = "../../views/MainPage/view_mainpage/mainpage.jsp"; // Chuyển hướng về trang chủ
                         });
@@ -719,6 +731,18 @@
                 var disposition = xhr.getResponseHeader('Content-Disposition');
                 if (disposition && disposition.indexOf('attachment') !== -1) {
                     var blob = new Blob([response], { type: 'application/octet-stream' });
+                    /*
+                    đọc nội dung và lưu vào biến hash.
+                     */
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        var hashCode = reader.result.trim();
+                        document.getElementById("hidden-hashCode").value = hashCode;
+                    };
+                    reader.readAsText(blob);
+
+
+
                     var url = window.URL.createObjectURL(blob);
                     var a = document.createElement('a');
                     a.href = url;

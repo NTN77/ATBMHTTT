@@ -148,7 +148,7 @@ public class PayMentController extends HttpServlet {
         String totalAmount = req.getParameter("totalAmount");
         String publicKeyId = req.getParameter("publicKeyId");
         String signature = req.getParameter("signature");
-
+        String hashCode = req.getParameter("hashCode");
 
 //check validation
         Map<String, String> errors = new HashMap<>();
@@ -158,9 +158,9 @@ public class PayMentController extends HttpServlet {
         validateRequireField("formattedAddress", address, "Địa chỉ", errors);
         validateRequireField("publicKeyId", publicKeyId, "Khoá công khai", errors);
         validateRequireField("signature", signature, "Chữ ký", errors);
+        validateRequireField("hashCode", hashCode, "Mã băm", errors);
 
-
-        if (!errors.isEmpty() || shippingFee == null || totalAmount == null || publicKeyId == null || signature == null) {
+        if (!errors.isEmpty() || shippingFee == null || totalAmount == null || publicKeyId == null || signature == null || hashCode == null) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST); // Trả về lỗi 400 nếu dữ liệu không hợp lệ
             resp.getWriter().print("{\"success\": false, \"message\": \"Validation errors occurred.\"}");
             return;
@@ -189,62 +189,19 @@ public class PayMentController extends HttpServlet {
         order.setTotalPrice(Integer.parseInt(totalAmount));
         order.setPublicKeyId(Integer.parseInt(publicKeyId));
         order.setSignature(signature);
+        order.setHashCode(hashCode);
         Integer accessCount = (Integer) sessions.getAttribute("accessCount");
         if (accessCount != null) {
             accessCount = 0;
             sessions.setAttribute("accessCount", accessCount);
         }
-//           Thêm dữ liệu vào database.
-        int orderID = orderZ.addOrder(order, cart, user);
-
-        // Hash đơn hàng nhoé.
-
-        HashInput hashInput = new HashInput();
-        hashInput.setUserId(user.getId());
-        hashInput.setCartInfo(cart);
-        hashInput.setShippingFee(Integer.parseInt(shippingFee));
-        hashInput.setTotalPrice(Integer.parseInt(totalAmount));
-
-        String hashOrderAfter = null;
-
-        try {
-            hashOrderAfter = generateSHA256Hash(hashInput);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.getWriter().print("{\"success\": false, \"message\": \"Error generating hash.\"}");
-        }
-
-
-
+//      Xoá session giỏ hàng.
+        orderZ.addOrder(order, cart, user);
 
         cart.clear();
         req.getSession().setAttribute("cart", cart);
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().print("{\"success\": true, \"message\": \"Đơn hàng đã được tạo.\"}");
-//        resp.sendRedirect(req.getContextPath() + "/views/MainPage/view_mainpage/mainpage.jsp");
-
-        // XÁC THỰC ĐƠN HÀNG
-        if (hashOrderAfter != null) {
-
-            int statusPublicKey = KeyService.getInstance().getStatusPublicKeyByKeyID(Integer.parseInt(publicKeyId));
-
-            if(statusPublicKey != 1) {
-                OrderService.getInstance().setStatus(orderID, 4);
-                System.out.println("KHOÁ ĐÃ BỊ THU HỒI.");
-                return;
-            }
-
-
-            // Kiểm tra trước khi sử dụng
-            if (isValidOrder(publicKeyId, hashOrderAfter, signature)) {
-                OrderService.getInstance().setStatus(orderID, 1);
-            } else {
-                OrderService.getInstance().setStatus(orderID, 4);
-            }
-        }
-
-
     }
 
     public static void validateRequireField(String fieldName, String value, String viewName, Map<String, String> errors) {
