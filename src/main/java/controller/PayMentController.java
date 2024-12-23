@@ -8,7 +8,6 @@ import logs.LoggingService;
 import model.bean.*;
 import model.dao.OrderDAO;
 import model.service.KeyService;
-import model.service.OrderService;
 import model.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -149,7 +148,6 @@ public class PayMentController extends HttpServlet {
         String publicKeyId = req.getParameter("publicKeyId");
         String signature = req.getParameter("signature");
 
-
 //check validation
         Map<String, String> errors = new HashMap<>();
 
@@ -194,57 +192,13 @@ public class PayMentController extends HttpServlet {
             accessCount = 0;
             sessions.setAttribute("accessCount", accessCount);
         }
-//           Thêm dữ liệu vào database.
-        int orderID = orderZ.addOrder(order, cart, user);
-
-        // Hash đơn hàng nhoé.
-
-        HashInput hashInput = new HashInput();
-        hashInput.setUserId(user.getId());
-        hashInput.setCartInfo(cart);
-        hashInput.setShippingFee(Integer.parseInt(shippingFee));
-        hashInput.setTotalPrice(Integer.parseInt(totalAmount));
-
-        String hashOrderAfter = null;
-
-        try {
-            hashOrderAfter = generateSHA256Hash(hashInput);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.getWriter().print("{\"success\": false, \"message\": \"Error generating hash.\"}");
-        }
-
-
-
+//      Xoá session giỏ hàng.
+        orderZ.addOrder(order, cart, user);
 
         cart.clear();
         req.getSession().setAttribute("cart", cart);
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().print("{\"success\": true, \"message\": \"Đơn hàng đã được tạo.\"}");
-//        resp.sendRedirect(req.getContextPath() + "/views/MainPage/view_mainpage/mainpage.jsp");
-
-        // XÁC THỰC ĐƠN HÀNG
-        if (hashOrderAfter != null) {
-
-            int statusPublicKey = KeyService.getInstance().getStatusPublicKeyByKeyID(Integer.parseInt(publicKeyId));
-
-            if(statusPublicKey != 1) {
-                OrderService.getInstance().setStatus(orderID, 4);
-                System.out.println("KHOÁ ĐÃ BỊ THU HỒI.");
-                return;
-            }
-
-
-            // Kiểm tra trước khi sử dụng
-            if (isValidOrder(publicKeyId, hashOrderAfter, signature)) {
-                OrderService.getInstance().setStatus(orderID, 1);
-            } else {
-                OrderService.getInstance().setStatus(orderID, 4);
-            }
-        }
-
-
     }
 
     public static void validateRequireField(String fieldName, String value, String viewName, Map<String, String> errors) {

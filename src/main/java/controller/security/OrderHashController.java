@@ -52,10 +52,10 @@ public class OrderHashController extends HttpServlet {
 
         HashInput hashInput = new HashInput();
         hashInput.setUserId(user.getId());
-        hashInput.setCartInfo(cart);
         hashInput.setShippingFee(Integer.parseInt(shippingFee));
         hashInput.setTotalPrice(Integer.parseInt(totalAmount));
-        System.out.println(hashInput.toString());
+        hashInput.setCartInfo(cart);
+        System.out.println("In OrderHashController: " + hashInput);
         try {
             String hash = generateSHA256Hash(hashInput);
             File hashFile = createHashFile(hash);
@@ -68,7 +68,6 @@ public class OrderHashController extends HttpServlet {
                 Files.copy(hashFile.toPath(), outputStream);
                 outputStream.flush(); // Đảm bảo dữ liệu được gửi hết
             } finally {
-                // Xóa file tạm sau khi gửi
                 if (hashFile.exists()) {
                     hashFile.delete();
                 }

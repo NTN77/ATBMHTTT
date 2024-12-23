@@ -1,17 +1,18 @@
 package model.dao;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import model.bean.*;
 import model.db.JDBIConnector;
 import model.service.DiscountService;
 import model.service.OrderService;
 import model.service.UserService;
+import org.h2.util.json.JSONObject;
+import org.jdbi.v3.core.Jdbi;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class OrderDAO {
@@ -233,7 +234,7 @@ public class OrderDAO {
      * @param cart
      * @param u
      */
-    public int addOrder(Order order, Cart cart, User u) {
+    public void addOrder(Order order, Cart cart, User u) {
         // Kiểm tra order có null không?
         if (order == null) {
             throw new IllegalArgumentException("Order object is null");
@@ -246,56 +247,54 @@ public class OrderDAO {
         String sql = "INSERT INTO `order` (totalPrice, orderDate, status, consigneeName, consigneePhoneNumber, address, shippingFee, userId, note, publicKeyId, signature)"
                 + " VALUES(:totalPrice, :orderDate, :status, :consigneeName, :consigneePhoneNumber, :address, :shippingFee, :userId, :note, :publicKeyId, :signature)";
         try {
-            // Khai báo biến để lưu orderId
-            int orderId;
+            JDBIConnector.me().useHandle(handle -> {
 
-            // Thực hiện lệnh chèn và lấy orderId
-            orderId = JDBIConnector.me().withHandle(handle -> handle.createUpdate(sql)
-                    .bind("totalPrice", order.getTotalPrice())
-                    .bind("orderDate", date)
-                    .bind("status", 0)
-                    .bind("consigneeName", order.getConsigneeName())
-                    .bind("consigneePhoneNumber", order.getConsigneePhoneNumber())
-                    .bind("address", order.getAddress())
-                    .bind("shippingFee", order.getShippingFee())
-                    .bind("userId", u.getId())
-                    .bind("note", order.getNote())
-                    .bind("publicKeyId", order.getPublicKeyId())
-                    .bind("signature", order.getSignature())
-                    .executeAndReturnGeneratedKeys("id")
-                    .mapTo(Integer.class)
-                    .one());
+                //Lấy id của order
+                int orderId = handle.createUpdate(sql)
+                        .bind("totalPrice", order.getTotalPrice())
+                        .bind("orderDate", date)
+                        .bind("status", 0)
+                        .bind("consigneeName", order.getConsigneeName())
+                        .bind("consigneePhoneNumber", order.getConsigneePhoneNumber())
+                        .bind("address", order.getAddress())
+                        .bind("shippingFee", order.getShippingFee())
+                        .bind("userId", u.getId())
+                        .bind("note", order.getNote())
+                        .bind("publicKeyId", order.getPublicKeyId())
+                        .bind("signature", order.getSignature())
+                        .executeAndReturnGeneratedKeys("id")
+                        .mapTo(Integer.class)
+                        .one();
+                System.out.println("check 0: " + orderId);
+                for (Item i : cart.getItems().values()) {
+                    System.out.println("check 1: " + i.getProduct().getId());
+                    //add vào bảng order-details !
+                    String sql1 = "INSERT INTO `order_details` (orderId, productId, quantity, sellingPrice, finalSellingPrice)"
+                            + "VALUES(:orderId, :productId, :quantity, :sellingPrice, :finalSellingPrice)";
+                    JDBIConnector.me().useHandle(handle1 -> {
+                        handle1.createUpdate(sql1)
+                                .bind("orderId", orderId)
+                                .bind("productId", i.getProduct().getId())
+                                .bind("quantity", i.getQuantity())
+                                .bind("sellingPrice", i.getProduct().getSellingPrice())
+                                .bind("finalSellingPrice", i.getPrice())
+                                .execute();
+                    });
 
-            System.out.println("Generated Order ID: " + orderId);
+                    System.out.println("check final: ");
+                }
 
-            // Thêm dữ liệu vào bảng order_details
-            for (Item i : cart.getItems().values()) {
-                String sql1 = "INSERT INTO `order_details` (orderId, productId, quantity, sellingPrice, finalSellingPrice)"
-                        + "VALUES(:orderId, :productId, :quantity, :sellingPrice, :finalSellingPrice)";
-                JDBIConnector.me().useHandle(handle -> {
-                    handle.createUpdate(sql1)
-                            .bind("orderId", orderId)
-                            .bind("productId", i.getProduct().getId())
-                            .bind("quantity", i.getQuantity())
-                            .bind("sellingPrice", i.getProduct().getSellingPrice())
-                            .bind("finalSellingPrice", i.getPrice())
-                            .execute();
-                });
-            }
+            });
 
-            // Cập nhật số lượng sản phẩm
-            String sql3 = "UPDATE `inventory` SET soldOut = soldOut + :quantityOrder WHERE productId = :id";
+//            cập nhật lại số lượng sản phẩm
+            String sql3 = "UPDATE `inventory` SET soldOut= soldOut + :quantityOrder where productId= :id";
             for (Item item : cart.getItems().values()) {
-                JDBIConnector.me().useHandle(handle ->
-                        handle.createUpdate(sql3)
+                JDBIConnector.me().useHandle(handle3 ->
+                        handle3.createUpdate(sql3)
                                 .bind("quantityOrder", item.getQuantity())
                                 .bind("id", item.getProduct().getId())
                                 .execute());
             }
-
-            // Trả về orderId
-            return orderId;
-
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to insert order into the database", e);
@@ -320,11 +319,80 @@ public class OrderDAO {
     }
 
 
+    //Xây dựng file json dựa vào database đã insert vào server.
+    public static String getOrderJsonById(String orderId) {
+        Jdbi jdbi = JDBIConnector.me();
+
+        // Lấy thông tin đơn hàng từ bảng `order`
+        Map<String, Object> orderData = jdbi.withHandle(handle ->
+                handle.createQuery("SELECT userId, shippingFee, totalPrice FROM `order` WHERE id = :orderId")
+                        .bind("orderId", orderId)
+                        .mapToMap()
+                        .findOnly()
+        );
+
+        // Kiểm tra các giá trị `null`
+        int userId = orderData.get("userid") != null ? ((Number) orderData.get("userid")).intValue() : -1;
+        double shippingFee = orderData.get("shippingfee") != null ? ((Number) orderData.get("shippingfee")).doubleValue() : 0.0;
+        double totalPrice = orderData.get("totalprice") != null ? ((Number) orderData.get("totalprice")).doubleValue() : 0.0;
+
+        // Lấy chi tiết đơn hàng từ bảng `order_details`
+        List<Map<String, Object>> orderDetails = jdbi.withHandle(handle ->
+                handle.createQuery("SELECT productId, quantity, sellingPrice FROM `order_details` WHERE orderId = :orderId")
+                        .bind("orderId", orderId)
+                        .mapToMap()
+                        .list()
+        );
+
+        // Tạo đối tượng JSON với Gson
+        JsonObject orderJson = new JsonObject();
+        orderJson.addProperty("userId", userId);
+        orderJson.addProperty("shippingFee", shippingFee);
+        orderJson.addProperty("totalPrice", totalPrice);
+
+        JsonObject cartInfo = new JsonObject();
+        JsonObject items = new JsonObject();
+
+        if (!orderDetails.isEmpty()) {
+            for (Map<String, Object> detail : orderDetails) {
+                JsonObject productJson = new JsonObject();
+                productJson.addProperty("id", ((Number) detail.get("productid")).intValue());
+
+                JsonObject itemJson = new JsonObject();
+                itemJson.add("product", productJson);
+                itemJson.addProperty("quantity", ((Number) detail.get("quantity")).intValue());
+                itemJson.addProperty("price", ((Number) detail.get("sellingprice")).doubleValue());
+
+                items.add(String.valueOf(((Number) detail.get("productid")).intValue()), itemJson);
+            }
+        }
+
+        cartInfo.add("items", items);
+        orderJson.add("cartInfo", cartInfo);
+
+        // Chuyển đổi sang chuỗi JSON
+        Gson gson = new Gson();
+        return gson.toJson(orderJson);
+
+    }
+
+
 
     public static void main(String[] args) {
-//
-        for (Order order : getAllOrder()) {
-            System.out.println(order.getId() + " - " + getExactlyTotalPriceNoShippingFee(order.getId() + ""));
+        // Giả sử có Order ID trong cơ sở dữ liệu, ví dụ: "O123"
+        String orderId = "42";
+
+        try {
+            // Gọi phương thức getOrderJsonById để lấy JSON
+            String orderJson = OrderDAO.getOrderJsonById(orderId);
+
+            // In ra JSON kết quả
+            System.out.println("JSON Data for Order ID " + orderId + ":");
+            System.out.println(orderJson);
+        } catch (Exception e) {
+            // Xử lý ngoại lệ nếu có lỗi xảy ra
+            System.err.println("Error retrieving order data: " + e.getMessage());
+            e.printStackTrace();
         }
 
     }

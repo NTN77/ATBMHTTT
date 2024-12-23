@@ -350,7 +350,6 @@
                                 <i class="fa-solid fa-download"></i>
                             <span class="btn-downOrder-text">Tải đơn hàng về để ký</span>
                         </button>
-
                     </div>
 
                     <div class="row p-3 d-flex justify-content-center">
@@ -644,6 +643,16 @@
             var publicKeyId = window.selectedPublicKeyId;
             var signature = document.getElementById("hidden-signature").value;
 
+            if(!signature ) {
+                swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Vui lòng tải về đơn hàng và tải lên chữ ký trước khi đặt hàng',
+                    showConfirmButton: true
+                });
+                return;
+            }
+
             $.ajax({
                 type: "POST",
                 url: "/HandMadeStore/payment", // Đường dẫn đến servlet của bạn
@@ -654,7 +663,8 @@
                     shippingFee: shippingFee,
                     totalAmount: totalAmount,
                     publicKeyId: publicKeyId,
-                    signature: signature
+                    signature: signature,
+
                 },
                 dataType: "json",
                 success: function (response) {
@@ -672,7 +682,7 @@
                                                        no-repeat
                         `,
                             showConfirmButton: false,
-                            timer: 20000
+                            timer: 3000
                         }).then(function () {
                             window.location.href = "../../views/MainPage/view_mainpage/mainpage.jsp"; // Chuyển hướng về trang chủ
                         });
@@ -720,9 +730,22 @@
                 if (disposition && disposition.indexOf('attachment') !== -1) {
                     var blob = new Blob([response], { type: 'application/octet-stream' });
                     var url = window.URL.createObjectURL(blob);
+
+                    // Lấy thời gian hiện tại
+                    var now = new Date();
+                    var formattedTime = now.getFullYear() +
+                        String(now.getMonth() + 1).padStart(2, '0') +
+                        String(now.getDate()).padStart(2, '0') +
+                        String(now.getHours()).padStart(2, '0') +
+                        String(now.getMinutes()).padStart(2, '0') +
+                        String(now.getSeconds()).padStart(2, '0');
+
+                    // Đặt tên file với thời gian
+                    var fileName = `don_hang_${formattedTime}.txt`;
+
                     var a = document.createElement('a');
                     a.href = url;
-                    a.download = 'order_hash.txt'; // Tên file tải về
+                    a.download = fileName; // Tên file tải về
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);

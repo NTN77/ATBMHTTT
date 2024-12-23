@@ -5,11 +5,9 @@ import logs.EAction;
 import logs.ELevel;
 import logs.LoggingService;
 import model.bean.*;
-import model.service.ImageService;
+import model.service.*;
 import model.service.JavaMail.MailService;
-import model.service.OrderService;
-import model.service.ProductService;
-import model.service.UserService;
+import org.eclipse.tags.shaded.org.apache.xpath.SourceTree;
 import org.eclipse.tags.shaded.org.apache.xpath.operations.Or;
 
 import javax.servlet.ServletException;
@@ -19,16 +17,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 
 @WebServlet("/order-ajax-handle")
 public class OrderAjaxHandle extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
-    }
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        doGet(req, resp);
+//    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,7 +45,6 @@ public class OrderAjaxHandle extends HttpServlet {
 
         if (action != null && orderId != null) {
             Order order = OrderService.getInstance().getOrderById(orderId);
-//            admin handle
             if (sessionUser != null && (sessionUser.isOwn() || sessionUser.isAdmin())) {
                 if (action.equals("deliveredOrder")) {
                     OrderService.getInstance().deliveredOrder(orderId);
@@ -49,13 +54,75 @@ public class OrderAjaxHandle extends HttpServlet {
 
                     resp.getWriter().write("(" + OrderService.getInstance().waitConfirmOrdersNumber() + ")");
                 } else if (action.equals("confirmOrder")) {
-                    MailService.sendNotifyConfirmOrder(UserService.getInstance().getUserById(order.getUserId() + "").getEmail(), order);
-                    OrderService.getInstance().confirmOrder(orderId);
+                    /*
+                        LOGIC XỬ LÝ XÁC THỰC ĐƠN HÀNG.
+                        1. Dựa vào orderId, lấy file json của đơn hàng = method có trong OrderService.
+                        2. Hash nội dung file json này để tạo lại thành mã hash đơn hàng.
+                        3. Từ orderId, chúng ta lấy được publicKeyID và signature của đơn hàng.
+                        3.1. Kiểm tra publicKeyID. Kiểm tra trạng thái publicKeyID.
+                        + Nếu publicKeyID đã bị xoá/thu hồi => Nghiễm nhiên đơn hàng sẽ bị huỷ và gửi email: "Khoá mà bạn sử dụng blalba".
+                        + Nếu publicKeyID  trạng thái sẵn sàng -> Lấy ra nội dung của public key.
+                        => Ghi lock lại khi họ sử dụng publickeyID bị thu hồi hoặc xoá
+                        4. Có được nội dung public key, cũng như mã hash ở (2), tiến hành verify chữ ký
+                        + Nếu verify thành công, nghiễm nhiên chuyển sang trạng thái "Đang đóng gói" cho đơn hàng nhờ vào orderID.
+                        + Nếu verify thất bại, cũng sẽ huỷ đơn hàng và gửi email: "Đơn hàng của bạn có vẻ đã bị thay đổi thông tin, blabla".
+                     */
 
-                    String message = sessionUser.nameAsRole() + " " + sessionUser.getName() + " đã xác nhận đơn hàng có mã " + orderId;
-                    LoggingService.getInstance().log(ELevel.INFORM, EAction.UPDATE, req.getRemoteAddr(), message);
+                    //1. Lấy toàn bộ thông tin đơn hàng (có publicKeyID và signatureID)
+                    Order mainOrder = OrderService.getInstance().getOrderById(orderId);
+                    if(mainOrder == null) {
+                        resp.getWriter().write("Order is invalid");
+                        return;
+                    }
 
-                    resp.getWriter().write("(" + OrderService.getInstance().waitConfirmOrdersNumber() + ")");
+                    int getPublicKeyId = mainOrder.getPublicKeyId();
+                    String signature = mainOrder.getSignature();
+
+                    try {
+                        // key ở dạng pem
+                        String publicKeyPem = KeyService.getInstance().getPublicKeyByKeyID(getPublicKeyId);
+                        System.out.println("PublicKeyPem in OrderAjaxHandle: " + publicKeyPem);
+                        // Khoá công khai chính thức.
+                        RSAPublicKey publicKey = getRSAPublicKeyFromPEM(publicKeyPem);
+
+
+                        //File json của đơn hàng.
+                        String jsonHashOrder = OrderService.getInstance().getOrderJsonById(orderId);
+
+                        String hashCode = generateSHA256Hash(jsonHashOrder);
+                        System.out.println("Hash code by OrderAjaxHandle: " + hashCode);
+                        System.out.println("Signature in OrderAjaxHandle: " + signature);
+
+                        boolean isSignatureValid = isValidOrder(publicKey, hashCode, signature);
+
+                        if(isSignatureValid) {
+                            //Chữ ký hợp lệ.
+                            OrderService.getInstance().confirmOrder(orderId);
+                            String message = sessionUser.nameAsRole() + " " + sessionUser.getName() + " đã xác nhận đơn hàng hợp lệ có mã " + orderId;
+                            LoggingService.getInstance().log(ELevel.INFORM, EAction.UPDATE, req.getRemoteAddr(), message);
+                            resp.getWriter().write("(" + OrderService.getInstance().waitConfirmOrdersNumber() + ")");
+                        } else {
+                            OrderService.getInstance().cancelOrder(orderId);
+                            String message = "Đơn hàng của bạn có vẻ đã bị thay đổi thông tin, và đã bị huỷ.";
+                            MailService.sendNotifyCanceledOrder(UserService.getInstance().getUserById(order.getUserId() + "").getEmail(), order, message);
+                            resp.getWriter().write("Order processed. Unit authentication failed, changed to status.");
+                        }
+
+
+
+
+                    } catch (IllegalStateException e) {
+                        // Public Key không hợp lệ/ không tồn tại
+                        OrderService.getInstance().cancelOrder(orderId);
+                        String message = "Khoá mà bạn sử dụng để thực hiện ký đơn hàng " + orderId + "đã không còn hoạt động nữa. Đơn hàng của bạn đã bị huỷ!";
+                        MailService.sendNotifyCanceledOrder(UserService.getInstance().getUserById(order.getUserId() + "").getEmail(), order, message);
+                        resp.getWriter().write("Public key is no longer active. Order authentication failed, moved to canceled state.");
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                        resp.getWriter().write("Error in order hashing process.");
+                    } catch (Exception e) {
+                        resp.getWriter().write("An unexpected error occurred.");
+                    }
                 } else if (action.equals("preparingOder")) {
                     OrderService.getInstance().preparingOder(orderId);
                     String message = sessionUser.nameAsRole() + " " + sessionUser.getName() + " đã xác nhận đang giao đơn hàng có mã " + orderId;
@@ -158,5 +225,53 @@ public class OrderAjaxHandle extends HttpServlet {
                 }
             }
         }
+    }
+
+
+    private String generateSHA256Hash (String jsonString) throws NoSuchAlgorithmException {
+
+        System.out.println("-------------------------");
+        System.out.println("File string: " + jsonString);
+
+
+        //Tạo mã SHA-256.
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(jsonString.getBytes(StandardCharsets.UTF_8));
+
+        //chuyển đổi byte[] thành string.
+        StringBuilder hexString = new StringBuilder();
+        for(byte b: hash) {
+            hexString.append(String.format("%02x", b));
+        }
+        return hexString.toString();
+    }
+
+    private boolean isValidOrder(RSAPublicKey publicKey, String hashOrder, String signature) {
+
+
+        try {
+            Signature sig = Signature.getInstance("SHA256withRSA");
+            sig.initVerify(publicKey);
+
+            sig.update(hashOrder.getBytes(StandardCharsets.UTF_8));
+            byte[] signatureBytes = Base64.getDecoder().decode(signature);
+
+            return sig.verify(signatureBytes);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    // Phương thức chuyển đổi PEM thành RSAPublicKey
+    private RSAPublicKey getRSAPublicKeyFromPEM(String publicKeyPem) throws Exception {
+        String publicKeyPEM = publicKeyPem.replace("-----BEGIN PUBLIC KEY-----", "")
+                .replace("-----END PUBLIC KEY-----", "")
+                .replaceAll("\\s", "");
+        byte[] encoded = Base64.getDecoder().decode(publicKeyPEM);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encoded);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        return (RSAPublicKey) keyFactory.generatePublic(keySpec);
     }
 }

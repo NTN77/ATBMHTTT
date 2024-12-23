@@ -2,10 +2,6 @@
 <%@ page import="model.service.OrderService" %>
 <%@ page import="model.service.UserService" %>
 <%@ page import="model.bean.User" %>
-<%@ page import="model.bean.OrderDetail" %>
-<%@ page import="model.bean.Product" %>
-<%@ page import="model.service.ProductService" %>
-<%@ page import="java.io.StringReader" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -62,6 +58,7 @@
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/v/bs4-4.6.0/jq-3.7.0/dt-2.0.6/datatables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         #detailOrder {
             position: fixed;
@@ -69,11 +66,15 @@
             left: 50%;
             transform: translate(-50%, -50%);
             overflow: auto;
-            z-index: 9999;
+            z-index: 9990;
             background-color: #e0eaf4;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .swal2-container {
+            z-index: 9999 !important; /* Chỉnh z-index để đảm bảo SweetAlert hiển thị trên tất cả */
         }
 
         .pagination {
@@ -93,6 +94,33 @@
         #data td:nth-child(4) {
             width: 20%;
         }
+
+        #back_btn {
+            border:none;
+            padding: 6px;
+            border-radius: 50%;
+            color: #000000;
+            background-color: #f2f1f1;
+        }
+
+        .hr-information {
+            border: 0;
+            border-top: 2px dashed #000000;
+        }
+
+        .header-product-detail {
+            text-align: center;
+        }
+
+        #status {
+            background-color: #FADA7A;
+        }
+        table.dataTable {
+            font-size: 12px;
+        }
+
+
+
     </style>
 </head>
 <%
@@ -105,7 +133,7 @@
         <div class="customer_list  mt-5 ">
             <%--            form--%>
             <div class="row d-flex">
-                <div class="col-lg-5 col-sm-12">
+                <div class="col-lg-4 col-sm-12">
                     <div class="d-flex">
                         <div class="form-check mx-1">
                             <input class="form-check-input" type="radio" name="choiceFindType" id="orderId_rdo"
@@ -113,7 +141,7 @@
                                    checked
                             >
                             <label class="form-check-label" for="orderId_rdo">
-                                Tìm theo mã đơn hàng
+                                Mã đơn hàng
                             </label>
                         </div>
                         <div class="form-check mx-1">
@@ -121,7 +149,7 @@
                                    value="customerId_rdo"
                             >
                             <label class="form-check-label" for="customerId_rdo">
-                                Tìm theo mã khách hàng
+                                Mã khách hàng
                             </label>
                         </div>
 
@@ -130,7 +158,7 @@
                                    value="customerName_rdo"
                             >
                             <label class="form-check-label" for="customerName_rdo">
-                                Tìm tên khách hàng
+                                Tên khách hàng
                             </label>
                         </div>
                     </div>
@@ -139,36 +167,34 @@
                            id="searchInput"
                     >
                 </div>
-                <button type="submit" name="submit_filter" value="all" class="btn btn-secondary mx-2 col-lg-1 col-sm-1">
-                    Tất cả đơn
-                    hàng
+
+                <div class="col-lg-8 col-sm-12">
+                <button type="submit" name="submit_filter" value="all" class="btn btn-secondary m-1">
+                    Tất cả
                 </button>
                 <button type="submit" name="submit_filter" value="waitConfirmOrders"
-                        class="btn btn-warning mx-2 col-sm-1">
-                    Đơn
-                    hàng cần xác nhận
+                        class="btn btn-warning m-1">
+                    Chờ xác thực
                 </button>
                 <button type="submit" name="submit_filter" value="preparingOrders"
-                        class="btn mx-2 col-sm-1" style="background-color: cadetblue">
-                    Đơn hàng đang đóng gói
+                        class="btn m-1 " style="background-color: cadetblue" >
+                    Đang đóng gói
                 </button>
                 <button type="submit" name="submit_filter" value="deliveringOrders"
-                        class="btn btn-primary mx-2 col-sm-1">Đơn
-                    hàng đang giao
+                        class="btn btn-primary m-1">Đang vận chuyển
                 </button>
-                <button type="submit" name="submit_filter" value="canceledOrders" class="btn btn-danger mx-2 col-sm-1">
-                    Đơn
-                    hàng
-                    đã hủy
+                <button type="submit" name="submit_filter" value="canceledOrders" class="btn btn-danger m-1 ">
+                    Đã huỷ
                 </button>
                 <button type="submit" name="submit_filter" value="succcessfulOrders"
-                        class="btn btn-success mx-2 col-sm-1">
-                    Đơn
-                    hàng thành công
+                        class="btn btn-success m-1 ">
+                    Thành công
                 </button>
+
+                </div>
             </div>
             <div class="table-wrapper-scroll-y my-custom-scrollbar d-flex justify-content-center mt-3">
-                <table id="data" class="table table-striped table-hover">
+                <table id="data" class="table table-striped table-hover display compact" style="width:100%">
                     <thead>
                     <tr class="text-center sticky-top">
                         <th class="text-nowrap">Mã ĐH</th>
@@ -332,6 +358,42 @@
         })
     }
 
+
+
+
+    // ============================================================= //
+
+
+
+
+
+            // Truyền dữ liệu cần thiết cho Servlet
+            // success: function (response) {
+            //
+            //
+            //
+            //
+            //     if ($('#status')) {
+            //         $('#status').html(asNameStatus(1));
+            //     }
+            //     let parentDocument = window.parent.document;
+            //     let waitConfirmOrdersNumber = parentDocument.getElementById('waitConfirmOrdersNumber');
+            //     waitConfirmOrdersNumber.innerHTML = response;
+            //     //buttons handle: hủy + xác nhận
+            //     if ($('#handleButtons')) {
+            //         $('#handleButtons').remove()
+            //     }
+            //     //     xóa dòng
+            //     $('#data tbody tr').eq(rowIndex).remove();
+            //     if ($('#loadingConfirmBox')) {
+            //         $('#loadingConfirmBox').remove();
+            //     }
+            //     // reload log gui
+            //     reloadGUI();
+            // },
+            // error: function () {
+            //     alert("Error deleting user!");
+            // }
     function confirmOrder(orderId) {
         const rowIndex = document.getElementById("rowIndex").value;
         if ($('#loadingConfirmBox')) {
@@ -344,32 +406,89 @@
                 action: "confirmOrder",
                 orderId: orderId
             },
-            // Truyền dữ liệu cần thiết cho Servlet
             success: function (response) {
-                if ($('#status')) {
-                    console.log(response)
-                    $('#status').html(asNameStatus(1));
+                // Khi xác nhận thành công
+                if (response.includes("Order is invalid.")) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: "Không tìm thấy đơn hàng, Vui lòng thử lại sau!",  // Hiển thị thông báo lỗi từ response
+                        showConfirmButton: true
+                    });
                 }
-                let parentDocument = window.parent.document;
-                let waitConfirmOrdersNumber = parentDocument.getElementById('waitConfirmOrdersNumber');
-                waitConfirmOrdersNumber.innerHTML = response;
-                //buttons handle: hủy + xác nhận
-                if ($('#handleButtons')) {
-                    $('#handleButtons').remove()
+                else if(response.includes("Order processed. Unit authentication failed, changed to status.")) {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã xử lý đơn hàng!',
+                        text: 'Đơn hàng xác thực thất bại, chuyển sang trạng thái huỷ.',
+                        showConfirmButton: true
+                    });
                 }
-                //     xóa dòng
-                $('#data tbody tr').eq(rowIndex).remove();
-                if ($('#loadingConfirmBox')) {
-                    $('#loadingConfirmBox').remove();
+                else if(response.includes("Public key is no longer active. Order authentication failed, moved to canceled state.")) {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã xử lý đơn hàng!',
+                        text: 'Đơn hàng xác thực thất bại vì khoá công khai không còn hoạt động, chuyển sang trạng thái huỷ.',
+                        showConfirmButton: true
+                    });
                 }
-                // reload log gui
-                reloadGUI();
+                else if (response.includes("Error in order hashing process.")) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi hệ thống!',
+                        text: 'Đã xảy ra lỗi trong quá trình hash đơn hàng. Vui lòng thử lại.',
+                        showConfirmButton: true
+                    });
+                } else if (response.includes("An unexpected error occurred..")) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi không mong muốn!',
+                        text: 'Đã xảy ra lỗi không mong muốn. Vui lòng thử lại sau.',
+                        showConfirmButton: true
+                    });
+                } else {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã xử lý đơn hàng!',
+                        text: 'Đơn hàng xác thực thành công, chuyển sang trạng thái đang đóng gói.',
+                        showConfirmButton: true
+                    }).then((result) => {
+                        // Xử lý sau khi người dùng nhấn "OK"
+                        if (result.isConfirmed) {
+                            if ($('#status')) {
+                                $('#status').html(asNameStatus(1));
+                            }
+                            let parentDocument = window.parent.document;
+                            let waitConfirmOrdersNumber = parentDocument.getElementById('waitConfirmOrdersNumber');
+                            waitConfirmOrdersNumber.innerHTML = response;
+                            // Xóa dòng trong bảng
+                            $('#data tbody tr').eq(rowIndex).remove();
+                            if ($('#loadingConfirmBox')) {
+                                $('#loadingConfirmBox').remove();
+                            }
+                            reloadGUI();
+                        }
+                    });
+                }
             },
             error: function () {
-                alert("Error deleting user!");
+                // Nếu có lỗi, hiển thị thông báo lỗi
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Đã xảy ra lỗi khi xác thực đơn hàng.',
+                    showConfirmButton: true
+                });
             }
         })
     }
+
+
+    // ============================================================= //
+
 
     function cancelOrder(orderId, rowIndex) {
         let cancelReason;
@@ -462,11 +581,11 @@
                             <buton type="button" class="btn btn-success mx-2"
                             id="confirmButton"
                             onclick="confirmOrder(${orderDetailsResponse.order.id})"
-                             >Xác nhận đơn hàng</button>
+                             >Xác thực đơn hàng</button>
                              <div id="loadingConfirmBox" style="display:none;">
                                 <span class="spinner-border spinner-border-sm" role="status"
                                       aria-hidden="true"></span>
-                                Đang xác nhận đơn hàng
+                                Đang xác thực đơn hàng
                         </div>
                         </div>
                     `
@@ -493,20 +612,22 @@
                     `
                 }
                 let htmlContent = `
-                    <div class="fw-bold text-end" style="font-size: 30px;">
+
                         <button type="button" id="back_btn" onclick="hideDetailOrder()">
-                            <i class="fa-regular fa-rectangle-xmark"></i>
+                            <i class="fa-solid fa-arrow-left"></i>
                         </button>
-                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 style = "text-decoration: underline;">Chi tiết sản phẩm</h3>
+                            <h2 class="header-product-detail">Chi tiết sản phẩm</h3>
+                            <hr class="hr-information">
                             <div class="row" id="product-details" style="height: 500px;overflow-y: scroll;">
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class=" p-3 rounded">
-                                <h2 style = "text-decoration: underline;">Thông tin chi tiết đơn hàng</h2>
+                            <div class="rounded">
+                                <h2 class="header-product-detail">Thông tin chi tiết đơn hàng</h2>
+                                <hr class="hr-information">
                                 <p><strong>Mã đơn hàng:</strong> ${orderDetailsResponse.order.id}</p>
                                 <p><strong>Email tài khoản:</strong> ${orderDetailsResponse.user.email}</p>
                                 <p><strong>Ngày đặt hàng:</strong> ${formattedDate(orderDetailsResponse.order.orderDate)}</p>
@@ -518,7 +639,7 @@
                                 <p><strong>Phí vận chuyển:</strong> ${formattedPrice(orderDetailsResponse.order.shippingFee)}</p>
                                 <p><strong>Tổng tiền:</strong> ${formattedPrice(orderDetailsResponse.order.totalPrice)}</p>
                                 <p><strong>Ghi chú:</strong> ${orderDetailsResponse.order.note?orderDetailsResponse.order.note:""}</p>
-                                <div class="d-flex" id="handleButtons">
+                                <div class="d-flex justify-content-around" id="handleButtons">
                                 ` + (showCancelBox ? showCancelBox : "") + `
                                  ` + (waitConfirmHandleButton ? waitConfirmHandleButton : "") + `
                                   ` + (preparingHandleButton ? preparingHandleButton : "") + `
