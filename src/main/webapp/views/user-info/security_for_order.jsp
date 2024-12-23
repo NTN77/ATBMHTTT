@@ -275,7 +275,7 @@
 <div class="tab-pane fade show active" id="security" role="tabpanel" aria-labelledby="security-tab">
     <div class="header-security d-flex justify-content-between">
         <h3>Thiết lập bảo mật</h3>
-        <button class="btn btn-warning">Báo mất khoá</button>
+        <a class="btn btn-warning" href="<%=request.getContextPath()%>/views/ReportPKey/ReportKey.jsp">Báo mất khoá</a>
     </div>
     <hr class="hr-information">
     <div class="d-flex align-items-center expand_key_area">

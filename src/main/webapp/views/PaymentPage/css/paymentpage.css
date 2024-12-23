@@ -119,8 +119,9 @@ button.btn-downOrder[disabled] {
     flex-direction: column;
 }
 
-.header-signature svg {
-    height: 100px;
+.header-signature i {
+    font-size: 100px;
+    color: #4169e1;
 }
 
 .header-signature p {
@@ -150,6 +151,10 @@ button.btn-downOrder[disabled] {
     padding: 2px;
     cursor: pointer;
     box-shadow: 0 2px 30px rgba(0, 0, 0, 0.205);
+}
+.fa-trash {
+    color: #4169e1;
+    padding:5px;
 }
 
 .footer-signature p {

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="HandMadeStore:war" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Signature/src/model/DS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Signature/src/model/DS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ReportKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ReportKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/ReportPKey/ReportKey.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/ReportPKey/ReportKey.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2itt5BDVFSzMxnda4Vx8wpKyowJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.KeyDAO.executor": "Run",
+    "Application.KeyService.executor": "Run",
+    "Application.UserService.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Tomcat Server.Tomcat 9.0.87.executor": "Run",
+    "Tomcat Server.Unnamed.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feature/verify-signature",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/project-final/ATBMHTTT/Signature",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.7275862",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.87">
+    <configuration name="KeyDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.dao.KeyDAO" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KeyService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.service.KeyService" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.service.UserService" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tomcat 9.0.87" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.87" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="HandMadeStore:war">
+          <settings>
+            <option name="CONTEXT_PATH" value="/HandMadeStore" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="8e58bdff-ced5-47be-94f3-7263c743d0ef" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="54640" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="HandMadeStore:war" />
+        </option>
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.KeyDAO" />
+      <item itemvalue="Application.KeyService" />
+      <item itemvalue="Application.UserService" />
+      <item itemvalue="Tomcat Server.Tomcat 9.0.87" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.KeyDAO" />
+        <item itemvalue="Application.KeyService" />
+        <item itemvalue="Application.UserService" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="" />
+      <created>1720321520167</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1720321520167</updated>
+      <workItem from="1720321522029" duration="5739000" />
+      <workItem from="1720362774932" duration="1264000" />
+      <workItem from="1720578880395" duration="2770000" />
+      <workItem from="1720583578014" duration="592000" />
+      <workItem from="1720670125569" duration="6491000" />
+      <workItem from="1720684221789" duration="5960000" />
+      <workItem from="1720747168899" duration="1393000" />
+      <workItem from="1720754322453" duration="7846000" />
+      <workItem from="1720839401214" duration="2779000" />
+      <workItem from="1720856022346" duration="3945000" />
+      <workItem from="1721010834358" duration="1959000" />
+      <workItem from="1721012851899" duration="178000" />
+      <workItem from="1721027376430" duration="3994000" />
+      <workItem from="1721051336346" duration="1832000" />
+      <workItem from="1721139842341" duration="2068000" />
+      <workItem from="1721185907759" duration="1870000" />
+      <workItem from="1721223957205" duration="1986000" />
+      <workItem from="1721262961665" duration="190000" />
+      <workItem from="1721263495050" duration="3184000" />
+      <workItem from="1721270768728" duration="3341000" />
+      <workItem from="1721278407521" duration="594000" />
+      <workItem from="1721828655129" duration="390000" />
+      <workItem from="1727185570833" duration="158000" />
+      <workItem from="1727339736549" duration="598000" />
+      <workItem from="1727947165474" duration="84000" />
+      <workItem from="1733280708460" duration="1793000" />
+      <workItem from="1733282583788" duration="350000" />
+      <workItem from="1733653216179" duration="1222000" />
+      <workItem from="1733654477820" duration="228000" />
+      <workItem from="1733655322289" duration="21000" />
+      <workItem from="1734019565939" duration="4939000" />
+      <workItem from="1734055779007" duration="1877000" />
+      <workItem from="1734057851305" duration="46000" />
+      <workItem from="1734062862776" duration="16169000" />
+      <workItem from="1734090301420" duration="1510000" />
+      <workItem from="1734144583214" duration="2824000" />
+      <workItem from="1734177818503" duration="7516000" />
+      <workItem from="1734231419523" duration="27270000" />
+      <workItem from="1734311273487" duration="33513000" />
+      <workItem from="1734444039404" duration="1280000" />
+      <workItem from="1734507795582" duration="1614000" />
+      <workItem from="1734513352062" duration="2852000" />
+      <workItem from="1734573375057" duration="27462000" />
+      <workItem from="1734844062301" duration="15535000" />
+      <workItem from="1734881437757" duration="15106000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/model/dao/ProductDAO.java</url>
+          <line>954</line>
+          <properties class="model.dao.ProductDAO" method="AllOrderBeweenDate">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/webapp/views/Admin/admin.jsp</url>
+          <line>199</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

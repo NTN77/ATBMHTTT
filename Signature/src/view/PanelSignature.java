@@ -7,13 +7,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.SignatureException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PanelSignature extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -32,7 +34,7 @@ public class PanelSignature extends JPanel {
 
 	public PanelSignature() {
 		try {
-			ds = new DS("DSA", "SHA1PRNG", "SUN");
+			ds = new DS("SHA256withRSA");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -106,7 +108,7 @@ public class PanelSignature extends JPanel {
 		tf_privateKey.setEditable(false);
 		panel_1.add(tf_privateKey, BorderLayout.CENTER);
 
-		btn_loadPrivateKey = new JButton("Tải Khóa Riêng Tư Của Bạn");
+		btn_loadPrivateKey = new JButton("Tải khoá riêng tư của bạn");
 		panel_1.add(btn_loadPrivateKey, BorderLayout.EAST);
 
 		eventHandler();
@@ -119,10 +121,25 @@ public class PanelSignature extends JPanel {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setCurrentDirectory(new File(lastDirectory));
 				fileChooser.setDialogTitle("Tải khóa riêng tư");
+
+//					Khoá riêng tư lưu dưới dạng tệp .pem
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Khoá riêng tư PEM", "pem");
+				fileChooser.setFileFilter(filter);
+
+
+
 				int result = fileChooser.showOpenDialog(PanelSignature.this);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 					lastDirectory = selectedFile.getParent();
+
+					//Kiểm tra định dạng file
+					if(!selectedFile.getName().endsWith(".pem")) {
+						JOptionPane.showMessageDialog(PanelSignature.this, "Vui lòng chọn tệp .pem", "Lỗi", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+
+
 					try {
 						ds.privateKey = DS.loadPrivateKey(selectedFile.getAbsolutePath());
 						JOptionPane.showMessageDialog(PanelSignature.this, "Đã tải khóa riêng tư!", "Thông báo",
@@ -143,12 +160,21 @@ public class PanelSignature extends JPanel {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setCurrentDirectory(new File(lastDirectory));
 				fileChooser.setDialogTitle("Tải thông tin đơn hàng");
+
+				//Thêm bộ lọc để chỉ cho phép chọn file .txt
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files (*.txt)", "txt");
+				fileChooser.setFileFilter(filter);
+
+
+
 				int result = fileChooser.showOpenDialog(PanelSignature.this);
 				if (result == JFileChooser.APPROVE_OPTION) {
+
 					File selectedFile = fileChooser.getSelectedFile();
 					lastDirectory = selectedFile.getParent();
 					String hash = DS.loadOrderHashFromFile(selectedFile.getAbsolutePath());
 					textArea_orderHash.setText(hash);
+					textArea_orderHash.setEditable(false);
 				}
 			}
 		});
@@ -187,9 +213,27 @@ public class PanelSignature extends JPanel {
 					try {
 						JFileChooser fileChooser = new JFileChooser();
 						fileChooser.setCurrentDirectory(new File(lastDirectory));
+						fileChooser.setDialogTitle("Lưu chữ ký");
+						// Tạo them thời gian cho tệp.
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+						String timestamp = dateFormat.format(new Date());
+
+						//Tạo tên tệp
+						fileChooser.setSelectedFile(new File(fileChooser.getCurrentDirectory(), "chuky_"+ timestamp + ".sig"));
+
+
+
+
 						int result = fileChooser.showSaveDialog(PanelSignature.this);
 						if (result == JFileChooser.APPROVE_OPTION) {
 							File selectedFile = fileChooser.getSelectedFile();
+
+							//Kiểm tra ếu người dùng không nhập .sig.
+							if(!selectedFile.getName().endsWith(".sig")) {
+								selectedFile = new File(selectedFile.getParent(), selectedFile.getName() + ".sig");
+							}
+
+
 							lastDirectory = selectedFile.getParent();
 							DS.saveSignatureToFile(signature, selectedFile.getAbsolutePath());
 							JOptionPane.showMessageDialog(PanelSignature.this, "Đã lưu chữ ký!", "Thông báo",
@@ -211,10 +255,12 @@ public class PanelSignature extends JPanel {
 		EventQueue.invokeLater(() -> {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				JFrame frame = new JFrame("Digital Signature - HandmadeStore");
+				JFrame frame = new JFrame("Tạo chữ ký điện tử - HandmadeStore");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.getContentPane().add(new PanelSignature());
-				frame.pack();
+
+
+				frame.setSize(800, 600);
 				frame.setLocationRelativeTo(null);
 
 				JMenuBar menuBar = new JMenuBar();
@@ -223,28 +269,28 @@ public class PanelSignature extends JPanel {
 				guideMenuItem.addActionListener(e -> {
 					// Tạo nội dung hướng dẫn với định dạng HTML
 					String guideMessage = """
-							    <html>
-							    <body style='font-family: Arial, sans-serif; font-size: 12px; line-height: 1.6;'>
-							        <h2 style='color: #2a9d8f;'>HƯỚNG DẪN SỬ DỤNG</h2>
-							        <ol>
-							            <li><b>Tải khóa riêng tư:</b><br>
-							                Nhấn <i>"Tải Khóa Riêng Tư Của Bạn"</i> để chọn và tải lên file chứa khóa riêng tư.
-							                <span style='color: #e76f51;'><br>Lưu ý:</span> Đảm bảo file khóa riêng tư đã được tạo từ dịch vụ của website HandmadeStore để đảm bảo tính tương thích.
-							            </li>
-							            <li><b>Nhập thông tin đơn hàng (đã mã hóa):</b><br>
-							                Sao chép và dán trực tiếp thông tin đơn hàng đã được mã hóa từ website HandmadeStore vào ô tương ứng.<br>
-							                Hoặc, nhấn <i>"Tải Thông Tin Đơn Hàng"</i> để tải file chứa thông tin đơn hàng đã mã hóa.
-							            </li>
-							            <li><b>Tạo chữ ký:</b><br>
-							                Sau khi đã cung cấp đầy đủ khóa riêng tư và thông tin đơn hàng, nhấn nút <i>"Tạo Chữ Ký"</i> để tiến hành ký thông tin đơn hàng.
-							            </li>
-							            <li><b>Lưu chữ ký:</b><br>
-							                Nhấn nút <i>"Lưu Chữ Ký"</i> để lưu chữ ký thành file trên máy tính của bạn. File này dùng để gửi lên HandmadeStore.
-							            </li>
-							        </ol>
-							    </body>
-							    </html>
-							""";
+									<html>
+									<body style='font-family: Arial, sans-serif; font-size: 12px; line-height: 1.6;'>
+										<h2 style='color: #2a9d8f;'>HƯỚNG DẪN SỬ DỤNG</h2>
+										<ol>
+											<li><b>Tải khóa riêng tư:</b><br>
+												Nhấn <i>"Tải Khóa Riêng Tư Của Bạn"</i> để chọn và tải lên file chứa khóa riêng tư.
+												<span style='color: #e76f51;'><br>Lưu ý:</span> Đảm bảo file khóa riêng tư đã được tạo từ dịch vụ của website HandmadeStore để đảm bảo tính tương thích.
+											</li>
+											<li><b>Nhập thông tin đơn hàng (đã mã hóa):</b><br>
+												Sao chép và dán trực tiếp thông tin đơn hàng đã được mã hóa từ website HandmadeStore vào ô tương ứng.<br>
+												Hoặc, nhấn <i>"Tải Thông Tin Đơn Hàng"</i> để tải file chứa thông tin đơn hàng đã mã hóa.
+											</li>
+											<li><b>Tạo chữ ký:</b><br>
+												Sau khi đã cung cấp đầy đủ khóa riêng tư và thông tin đơn hàng, nhấn nút <i>"Tạo Chữ Ký"</i> để tiến hành ký thông tin đơn hàng.
+											</li>
+											<li><b>Lưu chữ ký:</b><br>
+												Nhấn nút <i>"Lưu Chữ Ký"</i> để lưu chữ ký thành file trên máy tính của bạn. File này dùng để gửi lên HandmadeStore.
+											</li>
+										</ol>
+									</body>
+									</html>
+								""";
 
 					JEditorPane editorPane = new JEditorPane("text/html", guideMessage);
 					editorPane.setEditable(false);

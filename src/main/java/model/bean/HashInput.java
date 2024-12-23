@@ -1,5 +1,6 @@
 package model.bean;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 /**
@@ -15,9 +16,23 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 public class HashInput {
+    @Expose
     private int userId;
+    @Expose
     private Cart cartInfo;
+
+    @Expose
     private double shippingFee;
+    @Expose
     private double totalPrice;
 
+    @Override
+    public String toString() {
+        return "HashInput{" +
+                "userId=" + userId +
+                ", cartInfo=" + cartInfo.toStringForHash() +
+                ", shippingFee=" + shippingFee +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }

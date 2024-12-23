@@ -1,5 +1,6 @@
 package model.bean;
 
+import com.google.gson.annotations.Expose;
 import lombok.ToString;
 
 @ToString
@@ -9,13 +10,20 @@ public class Item {
      * quantity: Số lượng saản phẩm muốn lấy
      * price: Giá hiện tai (bao gồm khuyến mãi v..v)
      */
+    @Expose
     private Product product;
+
+    @Expose
     private int quantity;
+
+    @Expose
     private double price;
 
     public Item() {
 
     }
+
+
 
     public Item(Product product, int quantity, double price) {
         this.product = product;
@@ -23,6 +31,14 @@ public class Item {
         this.price = price;
     }
 
+
+    public String toStringForHash() {
+        return "Item{" +
+                "productId=" + product.getId() +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
     public Product getProduct() {
         return product;
     }

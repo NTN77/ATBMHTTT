@@ -1,6 +1,7 @@
 <%@ page import="model.service.ImageService" %>
 <%@ page import="model.bean.*" %>
 <%@ page import="model.dao.KeyDAO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,7 +17,7 @@
 <body>
 
 
-<div class="header">
+<div class="header visually-hidden">
     <%@include file="/views/MenuBar/menu.jsp" %>
 </div>
 
@@ -75,9 +76,9 @@
 <div class="text-danger text-center fw-bold fs-4 mb-5" >Chưa đăng nhập không có dữ liệu</div>
 <%}%>
 
-<div class="footer" >
-    <%@include file="../Footer/footer.jsp" %>
-</div>
+<%--<div class="footer" >--%>
+<%--    <%@include file="../Footer/footer.jsp" %>--%>
+<%--</div>--%>
 </body>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
