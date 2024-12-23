@@ -193,7 +193,7 @@ public class ReportKey extends HttpServlet {
             if(!idOrderCancel.isEmpty()){
                 String[] orderIds = idOrderCancel.split(",");
                 for(int i = 0 ; i < orderIds.length ; i++) {
-                    OrderDAO.setStatusOrder(Integer.parseInt(orderIds[i]));
+                    OrderDAO.setStatus(Integer.parseInt(orderIds[i]),4);
                     Order order = OrderDAO.getOrderById(orderIds[i]);
                     assert order != null;
                     MailService.sendNotifyCanceledOrder(user.getEmail(),order,"Không phải người dùng đặt trong thời gian lộ key!");

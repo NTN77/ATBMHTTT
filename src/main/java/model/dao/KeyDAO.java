@@ -106,6 +106,17 @@ public class KeyDAO {
                         .mapTo(Integer.class)
                         .one());
     }
+
+    public static int getStatusKey(int keyId){
+        return JDBIConnector.me().withHandle(
+                handle -> handle.createQuery("Select status from key_user WHERE id=:id")
+                        .bind("id", keyId)
+                        .mapTo(Integer.class)
+                        .one()
+        );
+    }
+
+
     //Set trạng thái không dùng nữa của khóa key là 0
     public static void updateKey(int idKey, Timestamp expiredDate){
         JDBIConnector.me().useHandle(handle ->
@@ -114,5 +125,11 @@ public class KeyDAO {
                         .bind("idKey",idKey)
                         .execute());
     }
+
+    public static void main(String[] args) {
+        System.out.println(getStatusKey(12));
+    }
+
+
   
 }

@@ -29,6 +29,9 @@ public class KeyService {
     public String getPublicKeyByKeyID(int keyID) {
         return KeyDAO.getActivePublicKeyByKeyID(keyID);
     }
+    public int getStatusPublicKeyByKeyID(int keyID) {
+        return KeyDAO.getStatusKey(keyID);
+    }
 
     public static void main(String[] args) {
         KeyService keyService = new KeyService();

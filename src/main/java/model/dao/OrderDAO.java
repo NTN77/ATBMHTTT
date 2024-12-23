@@ -7,6 +7,7 @@ import model.service.OrderService;
 import model.service.UserService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -232,74 +233,92 @@ public class OrderDAO {
      * @param cart
      * @param u
      */
-    public void addOrder(Order order, Cart cart, User u) {
-//        Kiểm tra order có null không?
+    public int addOrder(Order order, Cart cart, User u) {
+        // Kiểm tra order có null không?
         if (order == null) {
             throw new IllegalArgumentException("Order object is null");
         }
 
-        LocalDate curDate = LocalDate.now();
+        LocalDateTime curDate = LocalDateTime.now();
         String date = curDate.toString();
-        /*        Add vào bảng order trước -> Tạo orderId.
 
-
-         */
-        String sql = "INSERT INTO `order` ( totalPrice, orderDate, status, consigneeName, consigneePhoneNumber, address ,shippingFee,  userId, note)"
-                +
-                " VALUES(:totalPrice, :orderDate, :status, :consigneeName, :consigneePhoneNumber , :address,:shippingFee, :userId, :note)";
-
+        // Lệnh SQL chèn vào bảng order
+        String sql = "INSERT INTO `order` (totalPrice, orderDate, status, consigneeName, consigneePhoneNumber, address, shippingFee, userId, note, publicKeyId, signature)"
+                + " VALUES(:totalPrice, :orderDate, :status, :consigneeName, :consigneePhoneNumber, :address, :shippingFee, :userId, :note, :publicKeyId, :signature)";
         try {
-            JDBIConnector.me().useHandle(handle -> {
+            // Khai báo biến để lưu orderId
+            int orderId;
 
-                //Lấy id của order
-                int orderId = handle.createUpdate(sql)
-                        .bind("totalPrice", order.getTotalPrice())
-                        .bind("orderDate", date)
-                        .bind("status", 0)
-                        .bind("consigneeName", order.getConsigneeName())
-                        .bind("consigneePhoneNumber", order.getConsigneePhoneNumber())
-                        .bind("address", order.getAddress())
-                        .bind("shippingFee", order.getShippingFee())
-                        .bind("userId", u.getId())
-                        .bind("note", order.getNote())
-                        .executeAndReturnGeneratedKeys("id")
-                        .mapTo(Integer.class)
-                        .one();
-                System.out.println("check 0: " + orderId);
-                for (Item i : cart.getItems().values()) {
-                    System.out.println("check 1: " + i.getProduct().getId());
-                    //add vào bảng order-details !
-                    String sql1 = "INSERT INTO `order_details` (orderId, productId, quantity, sellingPrice, finalSellingPrice)"
-                            + "VALUES(:orderId, :productId, :quantity, :sellingPrice, :finalSellingPrice)";
-                    JDBIConnector.me().useHandle(handle1 -> {
-                        handle1.createUpdate(sql1)
-                                .bind("orderId", orderId)
-                                .bind("productId", i.getProduct().getId())
-                                .bind("quantity", i.getQuantity())
-                                .bind("sellingPrice", i.getProduct().getSellingPrice())
-                                .bind("finalSellingPrice", i.getPrice())
-                                .execute();
-                    });
+            // Thực hiện lệnh chèn và lấy orderId
+            orderId = JDBIConnector.me().withHandle(handle -> handle.createUpdate(sql)
+                    .bind("totalPrice", order.getTotalPrice())
+                    .bind("orderDate", date)
+                    .bind("status", 0)
+                    .bind("consigneeName", order.getConsigneeName())
+                    .bind("consigneePhoneNumber", order.getConsigneePhoneNumber())
+                    .bind("address", order.getAddress())
+                    .bind("shippingFee", order.getShippingFee())
+                    .bind("userId", u.getId())
+                    .bind("note", order.getNote())
+                    .bind("publicKeyId", order.getPublicKeyId())
+                    .bind("signature", order.getSignature())
+                    .executeAndReturnGeneratedKeys("id")
+                    .mapTo(Integer.class)
+                    .one());
 
-                    System.out.println("check final: ");
-                }
+            System.out.println("Generated Order ID: " + orderId);
 
-            });
+            // Thêm dữ liệu vào bảng order_details
+            for (Item i : cart.getItems().values()) {
+                String sql1 = "INSERT INTO `order_details` (orderId, productId, quantity, sellingPrice, finalSellingPrice)"
+                        + "VALUES(:orderId, :productId, :quantity, :sellingPrice, :finalSellingPrice)";
+                JDBIConnector.me().useHandle(handle -> {
+                    handle.createUpdate(sql1)
+                            .bind("orderId", orderId)
+                            .bind("productId", i.getProduct().getId())
+                            .bind("quantity", i.getQuantity())
+                            .bind("sellingPrice", i.getProduct().getSellingPrice())
+                            .bind("finalSellingPrice", i.getPrice())
+                            .execute();
+                });
+            }
 
-//            cập nhật lại số lượng sản phẩm
-            String sql3 = "UPDATE `inventory` SET soldOut= soldOut + :quantityOrder where productId= :id";
+            // Cập nhật số lượng sản phẩm
+            String sql3 = "UPDATE `inventory` SET soldOut = soldOut + :quantityOrder WHERE productId = :id";
             for (Item item : cart.getItems().values()) {
-                JDBIConnector.me().useHandle(handle3 ->
-                        handle3.createUpdate(sql3)
+                JDBIConnector.me().useHandle(handle ->
+                        handle.createUpdate(sql3)
                                 .bind("quantityOrder", item.getQuantity())
                                 .bind("id", item.getProduct().getId())
                                 .execute());
             }
+
+            // Trả về orderId
+            return orderId;
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to insert order into the database", e);
         }
     }
+
+    public static void setStatus (int orderId, int status) {
+        String sql = "UPDATE `order` SET status = :status WHERE id = :orderId";
+
+        try {
+            JDBIConnector.me().useHandle(handle -> {
+                handle.createUpdate(sql)
+                        .bind("status", status)      // Gắn giá trị status
+                        .bind("orderId", orderId)    // Gắn giá trị orderId
+                        .execute();                  // Thực thi câu lệnh
+            });
+            System.out.println("Order status updated successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to update order status", e);
+        }
+    }
+
 
 
     public static void main(String[] args) {

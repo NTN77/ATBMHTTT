@@ -225,7 +225,18 @@ public class PayMentController extends HttpServlet {
 //        resp.sendRedirect(req.getContextPath() + "/views/MainPage/view_mainpage/mainpage.jsp");
 
         // XÁC THỰC ĐƠN HÀNG
-        if (hashOrderAfter != null) { // Kiểm tra trước khi sử dụng
+        if (hashOrderAfter != null) {
+
+            int statusPublicKey = KeyService.getInstance().getStatusPublicKeyByKeyID(Integer.parseInt(publicKeyId));
+
+            if(statusPublicKey != 1) {
+                OrderService.getInstance().setStatus(orderID, 4);
+                System.out.println("KHOÁ ĐÃ BỊ THU HỒI.");
+                return;
+            }
+
+
+            // Kiểm tra trước khi sử dụng
             if (isValidOrder(publicKeyId, hashOrderAfter, signature)) {
                 OrderService.getInstance().setStatus(orderID, 1);
             } else {
@@ -297,6 +308,9 @@ public class PayMentController extends HttpServlet {
             String publicKeyPem = KeyService.getInstance().getPublicKeyByKeyID(Integer.parseInt(publicKeyID));
 
         try {
+
+
+
             RSAPublicKey publicKey = getRSAPublicKeyFromPEM(publicKeyPem);
 
             Signature sig = Signature.getInstance("SHA256withRSA");
