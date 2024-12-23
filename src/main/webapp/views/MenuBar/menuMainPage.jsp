@@ -369,17 +369,21 @@
         letter-spacing: 0;
 
     }
-    #menubar .itemNav .titleNav{
+
+    #menubar .itemNav .titleNav {
         color: black;
         font-size: 18px;
         font-weight: bold;
     }
-    #menubar .itemNav .titleNav:hover{
+
+    #menubar .itemNav .titleNav:hover {
         color: red;
     }
-    #submenuNav{
+
+    #submenuNav {
         color: black;
     }
+
     #submenuNav:hover {
         background: red;
         color: white;
@@ -393,19 +397,23 @@
             <a class="item_a" href="<%=request.getContextPath()%>/views/MainPage/view_mainpage/mainpage.jsp"> <img
                     src="<%=request.getContextPath()%>/images/logo.png" style="width: 15vh"></a>
         </li>
-<%--        --%>
+        <%--        --%>
         <li class="nav-item dropdown itemNav my-auto" id="ProductList">
-            <a class="nav-link dropdown-toggle titleNav" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle titleNav" href="" id="navbarDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Danh Mục
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-top: 33px">
-                <%for(Category categoryProduct : categoryP){%>
-                <a id="submenuNav" class="dropdown-item" href="<%=request.getContextPath()%>/productsPage?categoryFilter=<%=categoryProduct.getId()%>"><%=categoryProduct.getName()%></a>
+                <%for (Category categoryProduct : categoryP) {%>
+                <a id="submenuNav" class="dropdown-item"
+                   href="<%=request.getContextPath()%>/productsPage?categoryFilter=<%=categoryProduct.getId()%>"><%=categoryProduct.getName()%>
+                </a>
                 <%}%>
             </div>
         </li>
         <li class="itemNav my-auto">
-            <a class="titleNav" href="<%=request.getContextPath()%>/productsPage?categoryFilter=all">Danh sách sản Phẩm</a>
+            <a class="titleNav" href="<%=request.getContextPath()%>/productsPage?categoryFilter=all">Danh sách sản
+                Phẩm</a>
         </li>
         <li class="itemNav my-auto">
             <a class="titleNav" href="#bikip">Bí Kíp HandMade</a>
@@ -413,7 +421,7 @@
         <li class="itemNav my-auto">
             <a class="titleNav" href="#footer">Liên hệ</a>
         </li>
-<%--        --%>
+        <%--        --%>
         <li class="search d-flex py-4 my-auto">
             <form action="<%=request.getContextPath()%>/findProduct" method="post" id="find" class="d-flex">
                 <input name="findProducts" type="search" placeholder="Bạn tìm gì...">
@@ -439,6 +447,9 @@
                 <%}%>
                 <li><a class="dropdown-item" href="<%=request.getContextPath()%>/user-info"><i
                         class="fa-solid fa-user-pen"></i>Thông Tin Tài Khoản</a></li>
+                <li style="cursor: pointer">
+                    <a class="dropdown-item" href="<%=request.getContextPath()%>/signature-tool">
+                        <i class="fa-solid fa-signature"></i>Tải Tool ký đơn hàng</a></li>
                 <li><a class="dropdown-item" href="<%=request.getContextPath()%>/logout"><i
                         class="fa-solid fa-right-from-bracket"></i> Đăng
                     Xuất</a></li>
@@ -552,6 +563,7 @@
         currentValue += 1;
         totalItem.innerText = currentValue;
     }
+
     function handleDeleteToCart(response) {
         let totalItem = document.getElementById('badge');
         console.log(totalItem);

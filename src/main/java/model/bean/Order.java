@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Getter
 @Setter
 @ToString
@@ -24,15 +25,11 @@ public class Order implements Serializable {
     private double shippingFee;
     private int userId;
     private String note;
-
     private int publicKeyId;
     private String signature;
 
-
     public Order() {
     }
-
-
 
     public boolean isWaitConfirmOrder() {
         return this.getStatus() == 0;
