@@ -348,7 +348,6 @@
                         <button id="btn-download-order" class="btn-downOrder p-2"  type="button">
 
                                 <i class="fa-solid fa-download"></i>
-                            <input type="hidden" id="hidden-hashCode" name="hashCode">
                             <span class="btn-downOrder-text">Tải đơn hàng về để ký</span>
                         </button>
                     </div>
@@ -643,9 +642,8 @@
             var totalAmount = document.getElementById("totalAmountInput").value;
             var publicKeyId = window.selectedPublicKeyId;
             var signature = document.getElementById("hidden-signature").value;
-            var hashCode = document.getElementById("hidden-hashCode").value;
 
-            if(!signature || !hashCode) {
+            if(!signature ) {
                 swal.fire({
                     icon: 'error',
                     title: 'Lỗi',
@@ -666,7 +664,7 @@
                     totalAmount: totalAmount,
                     publicKeyId: publicKeyId,
                     signature: signature,
-                    hashCode: hashCode
+
                 },
                 dataType: "json",
                 success: function (response) {
@@ -731,18 +729,6 @@
                 var disposition = xhr.getResponseHeader('Content-Disposition');
                 if (disposition && disposition.indexOf('attachment') !== -1) {
                     var blob = new Blob([response], { type: 'application/octet-stream' });
-                    /*
-                    đọc nội dung và lưu vào biến hash.
-                     */
-                    var reader = new FileReader();
-                    reader.onload = function() {
-                        var hashCode = reader.result.trim();
-                        document.getElementById("hidden-hashCode").value = hashCode;
-                    };
-                    reader.readAsText(blob);
-
-
-
                     var url = window.URL.createObjectURL(blob);
                     var a = document.createElement('a');
                     a.href = url;

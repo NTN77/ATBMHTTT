@@ -12,11 +12,11 @@
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ajax_handle/OrderAjaxHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ajax_handle/OrderAjaxHandle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/security/OrderHashController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/HashInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/HashInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/OrderDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/Admin/order_management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/Admin/order_management.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,6 +59,7 @@
     "Application.KeyDAO.executor": "Run",
     "Application.KeyService.executor": "Run",
     "Application.OrderDAO.executor": "Run",
+    "Application.OrderService.executor": "Run",
     "Application.UserService.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -66,7 +67,7 @@
     "Tomcat Server.Tomcat 9.0.87.executor": "Run",
     "Tomcat Server.Unnamed.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/verify-signature",
+    "git-widget-placeholder": "feater/verify-signature-admin",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/project-final-version1/ATBMHTTT",
@@ -89,7 +90,7 @@
       <recent name="controller" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.OrderDAO">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.87">
     <configuration name="KeyDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.dao.KeyDAO" />
       <module name="HandMadeStore" />
@@ -122,6 +123,19 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="model.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.service.OrderService" />
+      <module name="HandMadeStore" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -233,6 +247,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.OrderDAO" />
+      <item itemvalue="Application.OrderService" />
       <item itemvalue="Application.KeyDAO" />
       <item itemvalue="Application.KeyService" />
       <item itemvalue="Application.UserService" />
@@ -240,6 +255,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.OrderService" />
         <item itemvalue="Application.OrderDAO" />
         <item itemvalue="Application.KeyDAO" />
         <item itemvalue="Application.KeyService" />

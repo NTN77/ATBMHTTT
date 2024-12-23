@@ -8,7 +8,6 @@ import logs.LoggingService;
 import model.bean.*;
 import model.dao.OrderDAO;
 import model.service.KeyService;
-import model.service.OrderService;
 import model.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -148,7 +147,6 @@ public class PayMentController extends HttpServlet {
         String totalAmount = req.getParameter("totalAmount");
         String publicKeyId = req.getParameter("publicKeyId");
         String signature = req.getParameter("signature");
-        String hashCode = req.getParameter("hashCode");
 
 //check validation
         Map<String, String> errors = new HashMap<>();
@@ -158,9 +156,9 @@ public class PayMentController extends HttpServlet {
         validateRequireField("formattedAddress", address, "Địa chỉ", errors);
         validateRequireField("publicKeyId", publicKeyId, "Khoá công khai", errors);
         validateRequireField("signature", signature, "Chữ ký", errors);
-        validateRequireField("hashCode", hashCode, "Mã băm", errors);
 
-        if (!errors.isEmpty() || shippingFee == null || totalAmount == null || publicKeyId == null || signature == null || hashCode == null) {
+
+        if (!errors.isEmpty() || shippingFee == null || totalAmount == null || publicKeyId == null || signature == null) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST); // Trả về lỗi 400 nếu dữ liệu không hợp lệ
             resp.getWriter().print("{\"success\": false, \"message\": \"Validation errors occurred.\"}");
             return;
@@ -189,7 +187,6 @@ public class PayMentController extends HttpServlet {
         order.setTotalPrice(Integer.parseInt(totalAmount));
         order.setPublicKeyId(Integer.parseInt(publicKeyId));
         order.setSignature(signature);
-        order.setHashCode(hashCode);
         Integer accessCount = (Integer) sessions.getAttribute("accessCount");
         if (accessCount != null) {
             accessCount = 0;

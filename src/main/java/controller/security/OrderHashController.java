@@ -55,7 +55,7 @@ public class OrderHashController extends HttpServlet {
         hashInput.setShippingFee(Integer.parseInt(shippingFee));
         hashInput.setTotalPrice(Integer.parseInt(totalAmount));
         hashInput.setCartInfo(cart);
-        System.out.println(hashInput.toString());
+        System.out.println("In OrderHashController: " + hashInput);
         try {
             String hash = generateSHA256Hash(hashInput);
             File hashFile = createHashFile(hash);

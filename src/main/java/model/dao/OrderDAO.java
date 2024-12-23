@@ -244,8 +244,8 @@ public class OrderDAO {
         String date = curDate.toString();
 
         // Lệnh SQL chèn vào bảng order
-        String sql = "INSERT INTO `order` (totalPrice, orderDate, status, consigneeName, consigneePhoneNumber, address, shippingFee, userId, note, publicKeyId, signature, hashCode)"
-                + " VALUES(:totalPrice, :orderDate, :status, :consigneeName, :consigneePhoneNumber, :address, :shippingFee, :userId, :note, :publicKeyId, :signature, :hashCode)";
+        String sql = "INSERT INTO `order` (totalPrice, orderDate, status, consigneeName, consigneePhoneNumber, address, shippingFee, userId, note, publicKeyId, signature)"
+                + " VALUES(:totalPrice, :orderDate, :status, :consigneeName, :consigneePhoneNumber, :address, :shippingFee, :userId, :note, :publicKeyId, :signature)";
         try {
             JDBIConnector.me().useHandle(handle -> {
 
@@ -262,7 +262,6 @@ public class OrderDAO {
                         .bind("note", order.getNote())
                         .bind("publicKeyId", order.getPublicKeyId())
                         .bind("signature", order.getSignature())
-                        .bind("hashCode", order.getHashCode())
                         .executeAndReturnGeneratedKeys("id")
                         .mapTo(Integer.class)
                         .one();

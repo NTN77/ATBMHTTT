@@ -115,7 +115,12 @@ public class OrderService {
         OrderDAO.setStatus(orderId, status);
     }
 
+    public String getOrderJsonById(String orderId) {
+
+        return OrderDAO.getOrderJsonById(orderId);
+    }
+
     public static void main(String[] args) {
-        System.out.println(getInstance().getOrderById("4444"));
+        System.out.println(getInstance().getOrderJsonById("42"));
     }
 }
