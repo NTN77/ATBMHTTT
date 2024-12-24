@@ -523,7 +523,6 @@
                 document.getElementById("privateKey").value = "";
                 document.querySelector(".download-icon").style.display = "none";
                 privateKeyCountdownText.style.display = "none";
-                alert("Private key đã hết hạn và bị xoá.");
             }
         }, 1000);
     }
@@ -614,7 +613,15 @@
                 };
 
                 reader.onerror = () => {
-                    alert('Loi khi doc tep . Vui long thu lai')
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Lỗi",
+                        text: "Lỗi khi đọc tệp. Vui lòng thử lại",
+                        showConfirmButton: true,
+                        confirmButtonText: "OK"
+                    });
+
                 };
 
                 reader.readAsText(file);
@@ -638,12 +645,20 @@
         const title = document.getElementById("ukeyName").value;
         const publicKey = document.getElementById("upublicKey").value;
 
+        // Kiểm tra định dạng Public Key
         if (!validatePublicKey(publicKey)) {
-            alert("Public key không đúng định dạng PEM!");
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Lỗi",
+                text: "Public key không đúng định dạng PEM!",
+                showConfirmButton: true,
+                confirmButtonText: "OK"
+            });
             return;
         }
 
-
+        // Gửi AJAX request
         $.ajax({
             method: "POST",
             url: "/HandMadeStore/add-public-key",
@@ -654,20 +669,41 @@
             },
             success: function (response) {
                 if (response.success) {
-                    alert(response.message);
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Thành công",
+                        text: response.message,
+                        showConfirmButton: true,
+                        confirmButtonText: "OK"
+                    }).then(() => {
+                        window.location.reload();
+                    });
                 } else {
-                    alert(response.message);
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Thất bại",
+                        text: response.message,
+                        showConfirmButton: true,
+                        confirmButtonText: "OK"
+                    });
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("AJAX Error: " + textStatus + " - " + errorThrown);
-                alert("Không thể thêm khoá vào cơ sở dữ liệu, vui lòng thử lại sau");
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Lỗi",
+                    text: "Không thể thêm khoá vào cơ sở dữ liệu, vui lòng thử lại sau",
+                    showConfirmButton: true,
+                    confirmButtonText: "OK"
+                });
             }
-
         });
-
-
     }
+
 
 
     /** Xử lý nút xem khoá */
