@@ -88,6 +88,38 @@ public class KeyDAO {
         );
     }
 
+    public static String getPublicKeyByKeyID(int keyId) {
+        String sql = "SELECT publicKey FROM key_user WHERE id = :keyId";
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("keyId", keyId)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElseThrow(() -> new IllegalArgumentException("Khoá không tồn tại."))
+        );
+    }
+
+    //Verify đơn hàng trước khi ký.
+    public static boolean verifyPublicKey(int keyId) {
+        String sql = "SELECT status FROM key_user WHERE id = :keyId";
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("keyId", keyId)
+                        .mapTo(Integer.class)
+                        .findOne()
+                        .map(status -> status == 1)
+                        .orElse(false));
+    }
+
+    // Cập nhật thời gian dùng khoá.
+    public static void updateKeyUseTime(int keyId, Timestamp updateTime) {
+        JDBIConnector.me().useHandle(handle ->
+                handle.createUpdate("UPDATE `key_user` SET updatedTime=:updatedTime WHERE id=:keyId")
+                        .bind("updatedTime", updateTime)
+                        .bind("keyId", keyId)
+                        .execute());
+    }
+
   
 // Nghĩa làm
 
@@ -143,6 +175,17 @@ public class KeyDAO {
                 handle.createQuery(sql)
                         .bind("userId", userId)
                         .bind("title", title)
+                        .mapTo(Integer.class)
+                        .one() > 0
+        );
+    }
+
+
+    public static boolean hasActiveKey(int userId) {
+        String sql = "SELECT COUNT(*) FROM key_user WHERE userId = :userId AND status = 1";
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery(sql)
+                        .bind("userId", userId)
                         .mapTo(Integer.class)
                         .one() > 0
         );

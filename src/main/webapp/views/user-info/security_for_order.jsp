@@ -523,7 +523,6 @@
                 document.getElementById("privateKey").value = "";
                 document.querySelector(".download-icon").style.display = "none";
                 privateKeyCountdownText.style.display = "none";
-                alert("Private key đã hết hạn và bị xoá.");
             }
         }, 1000);
     }
@@ -767,7 +766,7 @@
                 </div>
                 <div class="auth-key-actions">
                     <span class="status">Lần cuối được sử dụng là ${updatedTime}</span>
-                   <button onclick="deleteKey(${key.id}, 'auth-key-${key.id}')">Xoá</button>
+
                 </div>
             </div>
         `;

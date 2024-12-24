@@ -397,7 +397,6 @@ function tangSL(btn,idProduct,priceProduct,stockProduct){
                 num: num
             },
             success: function (response){
-                console.log("Thành công tang");
                 let  quantityAfter = parseInt(quantity) +1;
                 quantityInput.value = quantityAfter;
                 let formatTotalItem = numberFomat.format(quantityAfter * priceProduct);

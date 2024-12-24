@@ -79,7 +79,6 @@ public class MailService {
     }
 
     public static void sendNotifyCanceledOrder(String to, Order order, String canceledReason) {
-        System.out.println("final check: " + canceledReason);
         MailService emailService = new MailService();
         emailService.send(to,
                 "Thông báo hủy đơn hàng của bạn",

@@ -11,9 +11,14 @@
   <component name="ChangeListManager">
     <list default="true" id="023c0e93-c4ee-4b6c-b096-35437ff20f09" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PayMentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ajax_handle/OrderAjaxHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ajax_handle/OrderAjaxHandle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/bean/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/bean/Cart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/Admin/order_management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/Admin/order_management.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/dao/KeyDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/JavaMail/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/JavaMail/MailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/service/KeyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/CartPage/view/cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/CartPage/view/cart.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/PaymentPage/payment.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/user-info/security_for_order.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +71,7 @@
     "git-widget-placeholder": "feater/verify-signature-admin",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/project-final/ATBMHTTT/Signature",
+    "last_opened_file_path": "E:/Nong_Lam_University/HK7/An_Toan_Thong_tin/project-final/ATBMHTTT/src/main/webapp/images/banner_tip",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -80,6 +85,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Nong_Lam_University\HK7\An_Toan_Thong_tin\project-final\ATBMHTTT\src\main\webapp\images\banner_tip" />
       <recent name="E:\Nong_Lam_University\HK7\An_Toan_Thong_tin\project-final\ATBMHTTT\src\main\resources\database" />
       <recent name="C:\Users\DELL\Desktop\Handmadestore-ATBM\ATBMHTTT\src\main\webapp" />
     </key>
@@ -321,7 +327,8 @@
       <workItem from="1734573375057" duration="27462000" />
       <workItem from="1734844062301" duration="15535000" />
       <workItem from="1734881437757" duration="15106000" />
-      <workItem from="1734957053775" duration="12195000" />
+      <workItem from="1734957053775" duration="17489000" />
+      <workItem from="1735000840834" duration="8018000" />
     </task>
     <servers />
   </component>

@@ -697,12 +697,22 @@
                     }
                 },
                 error: function (xhr, status, error) {
+                    let errorMessage = "Đã xảy ra lỗi, vui lòng thử lại.";
+
+                    // Nếu server trả về lỗi JSON với thông báo cụ thể
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+
+
+
+
 
                     // Xử lý lỗi nếu có
                     Swal.fire({
                         icon: 'error',
                         title: 'Vui lòng điền đầy đủ thông tin.',
-                        text: 'Bạn chỉ có thể bỏ trống trường ghi chú.',
+                        text: errorMessage,
                         showConfirmButton: true
                     });
                 }
