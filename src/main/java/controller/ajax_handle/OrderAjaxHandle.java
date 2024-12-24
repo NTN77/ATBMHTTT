@@ -111,12 +111,12 @@ public class OrderAjaxHandle extends HttpServlet {
 
 
 
-                    } catch (IllegalStateException e) {
-                        // Public Key không hợp lệ/ không tồn tại
-                        OrderService.getInstance().cancelOrder(orderId);
-                        String message = "Khoá mà bạn sử dụng để thực hiện ký đơn hàng " + orderId + "đã không còn hoạt động nữa. Đơn hàng của bạn đã bị huỷ!";
-                        MailService.sendNotifyCanceledOrder(UserService.getInstance().getUserById(order.getUserId() + "").getEmail(), order, message);
-                        resp.getWriter().write("Public key is no longer active. Order authentication failed, moved to canceled state.");
+//                    } catch (IllegalStateException e) {
+//                        // Public Key không hợp lệ/ không tồn tại
+//                        OrderService.getInstance().cancelOrder(orderId);
+//                        String message = "Khoá mà bạn sử dụng để thực hiện ký đơn hàng " + orderId + "đã không còn hoạt động nữa. Đơn hàng của bạn đã bị huỷ!";
+//                        MailService.sendNotifyCanceledOrder(UserService.getInstance().getUserById(order.getUserId() + "").getEmail(), order, message);
+//                        resp.getWriter().write("Public key is no longer active. Order authentication failed, moved to canceled state.");
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                         resp.getWriter().write("Error in order hashing process.");

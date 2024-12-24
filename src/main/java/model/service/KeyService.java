@@ -4,6 +4,7 @@ import model.bean.Key;
 import model.bean.KeyOrderDTO;
 import model.dao.KeyDAO;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class KeyService {
@@ -23,13 +24,25 @@ public class KeyService {
         return KeyDAO.getPublicKeyActiveByUserId(userId);
     }
 
+    public void updateKeyUseTime(int keyId, Timestamp updateTime) {
+        KeyDAO.updateKeyUseTime(keyId, updateTime);
+    }
+    public boolean hasActiveKey(int userId) {
+        return KeyDAO.hasActiveKey(userId);
+    }
+
     public List<KeyOrderDTO> getKeyOrderDTOByUserId(int userId) {
         return KeyDAO.getInformationPublicKeyForPayment(userId);
     }
 
     public String getPublicKeyByKeyID(int keyID) {
-        return KeyDAO.getActivePublicKeyByKeyID(keyID);
+        return KeyDAO.getPublicKeyByKeyID(keyID);
     }
+    public boolean verifyPublicKey(int keyId) {
+        return KeyDAO.verifyPublicKey(keyId);
+    }
+
+
 
     public int getStatusPublicKeyByKeyID(int keyID) {
         return KeyDAO.getStatusKey(keyID);

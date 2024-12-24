@@ -24,6 +24,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Signature;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.X509EncodedKeySpec;
+import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -67,6 +68,18 @@ public class PayMentController extends HttpServlet {
         System.out.println("publicKeys TRONG CONTROLLER:  " + publicKeys);
         req.setAttribute("publicKeys", publicKeys);
 
+        boolean publicKeyCheck = KeyService.getInstance().hasActiveKey(user.getId());
+        if (!publicKeyCheck) {
+            List<String> errorMessage = new ArrayList<>();
+            String redirectUrl = req.getContextPath() + "/user-info?page=security-order";
+            errorMessage.add("Bạn cần có ít nhất một khóa công khai đang hoạt động trước khi thanh toán. Vui lòng truy cập: <a href='" + redirectUrl+ "' style='color: blue; text-decoration: underline;'>Thông tin tài khoản > Thiết lập bảo mật > Thêm khoá mới</a>");
+            sendErrorResponse(resp, errorMessage);
+            return;
+        }
+
+
+
+
 
         String backToCart = req.getParameter("backToCart");
         if (backToCart != null && backToCart.equals("true")) {
@@ -85,6 +98,9 @@ public class PayMentController extends HttpServlet {
             Product p = ProductService.getInstance().getProductById(productId);
 
             double price = ProductService.getInstance().productPriceIncludeDiscount(p);
+
+
+
 
             if (p.getIsSale() != 1) {
                 isValidCart = false;
@@ -119,7 +135,7 @@ public class PayMentController extends HttpServlet {
                 LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
                 System.out.println("Thời gian bắt đầu : " + LocalDateTime.ofInstant(instant, ZoneId.systemDefault()));
 
-                //         giảm so luong stock + 5 phut bat dau
+
                 sessions.setAttribute("paymentStartTime", paymentStartTime);
                 sessions.setAttribute("timeCounter", TIMEOUT_MINUTES);
                 reduceStockCheckout(cart);
@@ -158,9 +174,18 @@ public class PayMentController extends HttpServlet {
         validateRequireField("signature", signature, "Chữ ký", errors);
 
 
+        boolean checkPublicKey = KeyService.getInstance().verifyPublicKey(Integer.parseInt(publicKeyId));
+        if (!checkPublicKey) {
+            resp.setCharacterEncoding("UTF-8"); // Đặt mã hóa UTF-8
+            resp.setContentType("application/json; charset=UTF-8"); // Đặt Content-Type là JSON với UTF-8
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST); // Trả về lỗi 400
+            resp.getWriter().print("{\"success\": false, \"message\": \"Khoá bạn chọn không còn hoạt động. Vui lòng thử với khoá khác!\"}");
+            return;
+        }
+
         if (!errors.isEmpty() || shippingFee == null || totalAmount == null || publicKeyId == null || signature == null) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST); // Trả về lỗi 400 nếu dữ liệu không hợp lệ
-            resp.getWriter().print("{\"success\": false, \"message\": \"Validation errors occurred.\"}");
+            resp.getWriter().print("{\"success\": false, \"message\": \"Không được bỏ trống các trường ngoài ghi chú.\"}");
             return;
         }
 //             KIEM TRA THOI GIAN GIAO DỊCH
@@ -179,6 +204,11 @@ public class PayMentController extends HttpServlet {
             resp.getWriter().print("{\"success\": false, \"message\": \"Thời gian đặt hàng đã hết.\"}");
             return;
         }
+
+
+
+
+
         Order order = new Order();
         order.setConsigneeName(namePay);
         order.setConsigneePhoneNumber(phonePay);
@@ -186,6 +216,8 @@ public class PayMentController extends HttpServlet {
         order.setShippingFee(Integer.parseInt(shippingFee));
         order.setTotalPrice(Integer.parseInt(totalAmount));
         order.setPublicKeyId(Integer.parseInt(publicKeyId));
+
+
         order.setSignature(signature);
         Integer accessCount = (Integer) sessions.getAttribute("accessCount");
         if (accessCount != null) {
@@ -194,6 +226,9 @@ public class PayMentController extends HttpServlet {
         }
 //      Xoá session giỏ hàng.
         orderZ.addOrder(order, cart, user);
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        KeyService.getInstance().updateKeyUseTime(Integer.parseInt(publicKeyId), currentTime);
+
 
         cart.clear();
         req.getSession().setAttribute("cart", cart);

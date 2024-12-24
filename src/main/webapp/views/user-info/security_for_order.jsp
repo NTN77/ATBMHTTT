@@ -803,7 +803,7 @@
                 </div>
                 <div class="auth-key-actions">
                     <span class="status">Lần cuối được sử dụng là ${updatedTime}</span>
-                   <button onclick="deleteKey(${key.id}, 'auth-key-${key.id}')">Xoá</button>
+
                 </div>
             </div>
         `;
