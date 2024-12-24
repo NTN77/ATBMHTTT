@@ -398,10 +398,8 @@
 <input type="hidden" id="statusNumber" value="-1">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/vi.js"></script>
 <script>
 
-    moment.locale('vi');
 
     <%--    Thiết lập ẩn hiện các tab:--%>
     document.querySelectorAll('.nav-link').forEach(tab => {
@@ -769,6 +767,89 @@
         });
     }
 
+    <%--function displayKeys(keys) {--%>
+    <%--    const keysContainer = document.getElementById("authKeysContainer");--%>
+    <%--    keysContainer.innerHTML = '';--%>
+
+    <%--    // Duyệt qua danh sách các khoá và hiển thị chúng--%>
+    <%--    keys.forEach(key => {--%>
+    <%--        const keyElement = document.createElement("div");--%>
+    <%--        keyElement.classList.add("auth-key", "mt-2");--%>
+
+
+    <%--        // Format thời gian với moment.js--%>
+    <%--        const createdTime = moment(key.createdTime).locale('vi').format('DD/MM/YYYY [lúc] HH:mm:ss');--%>
+
+    <%--        let updatedTime;--%>
+
+    <%--        // Kiểm tra nếu updatedTime là null--%>
+    <%--        if (key.updatedTime) {--%>
+    <%--            updatedTime = moment(key.updatedTime).locale('vi').format('DD/MM/YYYY [lúc] HH:mm:ss');--%>
+    <%--        } else {--%>
+    <%--            updatedTime = "chưa sử dụng";--%>
+    <%--        }--%>
+
+    <%--        keyElement.innerHTML = `--%>
+    <%--        <div id="auth-key-${key.id}">--%>
+    <%--            <div class="auth-key-header">--%>
+    <%--                <i class="fa-solid fa-key img-key"></i>--%>
+    <%--                <strong>${key.title}</strong>--%>
+    <%--            </div>--%>
+    <%--            <div class="auth-key-details">--%>
+    <%--                <span>Nội dung khoá : <br> ${key.publicKey.slice(0, 30)}...${key.publicKey.slice(-30)}</span>--%>
+    <%--                <span>Đã được thêm vào ${createdTime}</span>--%>
+    <%--            </div>--%>
+    <%--            <div class="auth-key-actions">--%>
+    <%--                <span class="status">Lần cuối được sử dụng là ${updatedTime}</span>--%>
+
+    <%--            </div>--%>
+    <%--        </div>--%>
+    <%--    `;--%>
+
+    <%--        keysContainer.appendChild(keyElement);--%>
+    <%--    });--%>
+    <%--}--%>
+    <%--function displayKeys(keys) {--%>
+    <%--    const keysContainer = document.getElementById("authKeysContainer");--%>
+    <%--    keysContainer.innerHTML = '';--%>
+
+    <%--    // Duyệt qua danh sách các khoá và hiển thị chúng--%>
+    <%--    keys.forEach(key => {--%>
+    <%--        const keyElement = document.createElement("div");--%>
+    <%--        keyElement.classList.add("auth-key", "mt-2");--%>
+
+    <%--        // Không cần chuyển đổi múi giờ, vì dữ liệu đã đúng múi giờ Việt Nam--%>
+    <%--        const createdTime = moment(key.createdTime).format('DD/MM/YYYY [lúc] HH:mm:ss');--%>
+
+    <%--        let updatedTime;--%>
+
+    <%--        // Kiểm tra nếu updatedTime là null--%>
+    <%--        if (key.updatedTime) {--%>
+    <%--            updatedTime = moment(key.updatedTime).format('DD/MM/YYYY [lúc] HH:mm:ss');--%>
+    <%--        } else {--%>
+    <%--            updatedTime = "chưa sử dụng";--%>
+    <%--        }--%>
+
+    <%--        keyElement.innerHTML = `--%>
+    <%--    <div id="auth-key-${key.id}">--%>
+    <%--        <div class="auth-key-header">--%>
+    <%--            <i class="fa-solid fa-key img-key"></i>--%>
+    <%--            <strong>${key.title}</strong>--%>
+    <%--        </div>--%>
+    <%--        <div class="auth-key-details">--%>
+    <%--            <span>Nội dung khoá : <br> ${key.publicKey.slice(0, 30)}...${key.publicKey.slice(-30)}</span>--%>
+    <%--            <span>Đã được thêm vào ${createdTime}</span>--%>
+    <%--        </div>--%>
+    <%--        <div class="auth-key-actions">--%>
+    <%--            <span class="status">Lần cuối được sử dụng là ${updatedTime}</span>--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
+    <%--`;--%>
+
+    <%--        keysContainer.appendChild(keyElement);--%>
+    <%--    });--%>
+    <%--}--%>
+
     function displayKeys(keys) {
         const keysContainer = document.getElementById("authKeysContainer");
         keysContainer.innerHTML = '';
@@ -778,40 +859,43 @@
             const keyElement = document.createElement("div");
             keyElement.classList.add("auth-key", "mt-2");
 
-
-            // Format thời gian với moment.js
-            const createdTime = moment(key.createdTime).locale('vi').format('DD/MM/YYYY [lúc] HH:mm:ss');
+            // Không cần chuyển đổi múi giờ, vì dữ liệu đã đúng múi giờ Việt Nam
+            const createdDate = new Date(key.createdTime);
+            createdDate.setHours(createdDate.getHours() - 7); // Trừ đi 7 giờ
+            const createdTime = createdDate.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+                ' [lúc] ' + createdDate.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
             let updatedTime;
 
             // Kiểm tra nếu updatedTime là null
             if (key.updatedTime) {
-                updatedTime = moment(key.updatedTime).locale('vi').format('DD/MM/YYYY [lúc] HH:mm:ss');
+                const updatedDate = new Date(key.updatedTime);
+                updatedDate.setHours(updatedDate.getHours() - 7); // Trừ đi 7 giờ
+                updatedTime = updatedDate.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+                    ' [lúc] ' + updatedDate.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             } else {
                 updatedTime = "chưa sử dụng";
             }
 
             keyElement.innerHTML = `
-            <div id="auth-key-${key.id}">
-                <div class="auth-key-header">
-                    <i class="fa-solid fa-key img-key"></i>
-                    <strong>${key.title}</strong>
-                </div>
-                <div class="auth-key-details">
-                    <span>Nội dung khoá : <br> ${key.publicKey.slice(0, 30)}...${key.publicKey.slice(-30)}</span>
-                    <span>Đã được thêm vào ${createdTime}</span>
-                </div>
-                <div class="auth-key-actions">
-                    <span class="status">Lần cuối được sử dụng là ${updatedTime}</span>
-
-                </div>
+        <div id="auth-key-${key.id}">
+            <div class="auth-key-header">
+                <i class="fa-solid fa-key img-key"></i>
+                <strong>${key.title}</strong>
             </div>
-        `;
+            <div class="auth-key-details">
+                <span>Nội dung khoá : <br> ${key.publicKey.slice(0, 30)}...${key.publicKey.slice(-30)}</span>
+                <span>Đã được thêm vào ${createdTime}</span>
+            </div>
+            <div class="auth-key-actions">
+                <span class="status">Lần cuối được sử dụng là ${updatedTime}</span>
+            </div>
+        </div>
+    `;
 
             keysContainer.appendChild(keyElement);
         });
     }
-
     function deleteKey(publicKeyId, elementId) {
         Swal.fire({
             title: "Bạn có chắc muốn xóa không?",
